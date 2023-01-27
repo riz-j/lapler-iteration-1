@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Mvc;
 using rest_api_v2.Data;
 using rest_api_v2.Models;
 
 namespace rest_api_v2.Services;
 
-public class ProjectsService
+public class ProjectsService : ControllerBase
 {
     private AppDbContext _db;
     public ProjectsService(AppDbContext db)
@@ -11,7 +12,7 @@ public class ProjectsService
         _db = db;
     }
 
-    public void CreateProject(ProjectDTO projectDTO)
+    public ActionResult<Project> CreateProject(ProjectDTO projectDTO)
     {
         var _project = new Project()
         {
@@ -21,9 +22,11 @@ public class ProjectsService
         };
         _db.Projects.Add(_project);
         _db.SaveChanges();
+
+        return Ok(_project);
     }
 
-    public void AddUsersToProject(int projectId, AddUsersToProjectDTO addUsersToProjectDTO)
+    public IActionResult AddUsersToProject(int projectId, AddUsersToProjectDTO addUsersToProjectDTO)
     {
         var _project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
         if (_project != null)
@@ -38,6 +41,37 @@ public class ProjectsService
                     _db.Users_Projects.Add(_user_project);
                     _db.SaveChanges();
             }
+            return Ok();
         }
+        return NoContent();
+    }
+
+    public ActionResult<Project> UpdateProject(int projectId, ProjectDTO projectDTO)
+    {
+        var _project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+        
+        if (_project == null)
+        {
+            return NotFound();
+        }
+
+        _project.Name = projectDTO.Name;
+        _project.AdminId = projectDTO.AdminId;
+
+        return Ok(_project);
+    }
+
+    public IActionResult DeleteProject(int projectId)
+    {
+        var _project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+        
+        if (_project != null)
+        {
+            _db.Projects.Remove(_project);
+            _db.SaveChanges();
+            return Ok();
+        }
+
+        return NotFound();
     }
 }

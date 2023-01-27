@@ -15,16 +15,32 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateProject(ProjectDTO projectDTO)
+    public ActionResult<Project> CreateProject(ProjectDTO projectDTO)
     {
-        _projectsService.CreateProject(projectDTO);
-        return Ok();
+        return _projectsService.CreateProject(projectDTO);
     }
 
     [HttpPost("{id:int}")]
     public IActionResult AddUsersToProject(int id, [FromBody]AddUsersToProjectDTO addUsersToProjectDTO)
     {
-        _projectsService.AddUsersToProject(id, addUsersToProjectDTO);
-        return Ok();
+        return _projectsService.AddUsersToProject(id, addUsersToProjectDTO);
+    }
+
+    /*
+    /*
+    /*     NEED TO CREATE ENDPOINT FOR [HTTPGET]
+    /*
+    */
+
+    [HttpPut]
+    public ActionResult<Project> UpdateProject(int id, [FromBody]ProjectDTO projectDTO)
+    {
+        return _projectsService.UpdateProject(id, projectDTO);
+    }
+
+    [HttpDelete("{id:int}")]
+    public IActionResult DeleteProject(int id)
+    {
+        return _projectsService.DeleteProject(id);
     }
 }

@@ -18,32 +18,30 @@ public class UsersController : ControllerBase
     [HttpGet]
     public ActionResult<List<User>> GetUsers()
     {
-        return Ok(_usersService.GetAllUsers());
+        return _usersService.GetAllUsers();
     }
 
     [HttpGet("{id:int}")]
-    public ActionResult<List<User>> GetUserById(int id)
+    public ActionResult<User> GetUserById(int id)
     {
-        return Ok(_usersService.GetUserById(id));
+        return _usersService.GetUserById(id);
     }
 
     [HttpPost]
-    public IActionResult CreateUser([FromBody]UserDTO userDTO)
+    public ActionResult<User> CreateUser([FromBody]UserDTO userDTO)
     {
-        _usersService.CreateUser(userDTO);
-        return Ok();
+        return _usersService.CreateUser(userDTO);
     }
 
     [HttpPut("{id:int}")]
     public ActionResult<User> UpdateUser(int id, UserDTO userDTO)
     {
-        return Ok(_usersService.UpdateUser(id, userDTO));
+        return _usersService.UpdateUser(id, userDTO);
     }
 
     [HttpDelete("{id:int}")]
     public IActionResult DeleteUser(int id)
     {
-        _usersService.DeleteUser(id);
-        return Ok();
+        return _usersService.DeleteUser(id);
     } 
 }
