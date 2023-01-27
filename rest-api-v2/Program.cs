@@ -1,6 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using rest_api_v2.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<AppDbContext>(option => 
+{
+    option.UseNpgsql("Host=172.104.46.87:5432;Username=rizki;Password=arrahman;Database=lapler-api-v2");
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
