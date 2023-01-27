@@ -9,12 +9,12 @@ namespace rest_api.Data
             new Channel { 
                 Id = 1, 
                 CreatedAt = DateTime.Now, 
-                UserAdmin = new List<User> { UsersMockData.userList.First(user => user.Id == 1) }
+                Users = new List<User> { UsersMockData.userList.First(user => user.Id == 1) }
             },
             new Channel { 
                 Id = 2, 
                 CreatedAt = DateTime.Now, 
-                UserAdmin = new List<User> { UsersMockData.userList.First(user => user.Id == 2) }
+                Users = new List<User> { UsersMockData.userList.First(user => user.Id == 2) }
             } 
         };
     }

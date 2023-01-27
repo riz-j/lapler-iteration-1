@@ -48,5 +48,42 @@ namespace rest_api.Controllers
             ChannelsMockData.channelList.Add(_channel);
             return _channel;
         }
+
+        [HttpPut("{id:int}")]
+        public IActionResult UpdateChannel(int id, [FromBody]Channel _channel) 
+        {
+            if (id != _channel.Id || _channel == null)
+            {
+                return BadRequest();
+            }
+
+            var channelToChange = ChannelsMockData.channelList.FirstOrDefault(channel => channel.Id == id);
+
+            channelToChange.Id = _channel.Id;
+            channelToChange.Users = _channel.Users;
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id:int}")]
+        public IActionResult DeleteChannel(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
+            var channelToDelete = ChannelsMockData.channelList.FirstOrDefault(channel => channel.Id == id);
+            
+            if (channelToDelete == null)
+            {
+                return NotFound();
+            }
+
+            ChannelsMockData.channelList.Remove(channelToDelete);
+            
+            return NoContent();
+        }
+
     }
 }

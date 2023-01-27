@@ -1,0 +1,21 @@
+-Models
+  -User -- SEMI-DONE
+  -Project -- SEMI-DONE
+  -User_Project -- DONE
+  -Issue
+  -DTO
+    -UserDTO
+    -ProjectDTO
+    -IssueDTO
+-Data
+  -AppDbContext
+-Services
+  -UserServices
+  -ProjectServices
+  -IssueServices
+-Controllers
+  -UserController
+  -ProjectController
+  -IssueController
+  
+  

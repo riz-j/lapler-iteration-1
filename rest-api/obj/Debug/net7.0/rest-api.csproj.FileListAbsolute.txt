@@ -31,3 +31,13 @@
 /home/rizki/Desktop/lapler-iteration-1/rest-api/obj/Debug/net7.0/rest-api.pdb
 /home/rizki/Desktop/lapler-iteration-1/rest-api/obj/Debug/net7.0/rest-api.genruntimeconfig.cache
 /home/rizki/Desktop/lapler-iteration-1/rest-api/obj/Debug/net7.0/ref/rest-api.dll
+/home/rizki/Desktop/lapler-iteration-1/rest-api/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.dll
+/home/rizki/Desktop/lapler-iteration-1/rest-api/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/home/rizki/Desktop/lapler-iteration-1/rest-api/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Relational.dll
+/home/rizki/Desktop/lapler-iteration-1/rest-api/bin/Debug/net7.0/Npgsql.dll
+/home/rizki/Desktop/lapler-iteration-1/rest-api/bin/Debug/net7.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+/home/rizki/Desktop/lapler-iteration-1/rest-api/bin/Debug/net7.0/Humanizer.dll
+/home/rizki/Desktop/lapler-iteration-1/rest-api/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Design.dll
+/home/rizki/Desktop/lapler-iteration-1/rest-api/bin/Debug/net7.0/Microsoft.Extensions.DependencyModel.dll
+/home/rizki/Desktop/lapler-iteration-1/rest-api/bin/Debug/net7.0/Mono.TextTemplating.dll
+/home/rizki/Desktop/lapler-iteration-1/rest-api/bin/Debug/net7.0/System.CodeDom.dll
