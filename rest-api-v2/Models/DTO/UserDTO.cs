@@ -8,9 +8,9 @@ public class UserDTO
     public string Password { get; set; }
 
     /* Relations */ 
-    public List<int> ProjectId { get; set; }
-    public List<int> AssignedToMeIssueIds { get; set; }
-    public List<int> ReportedByMeIssueIds { get; set; }
+    public List<int>? ProjectId { get; set; }
+    public List<int>? AssignedToMeIssueIds { get; set; }
+    public List<int>? ReportedByMeIssueIds { get; set; }
 }
 
 public class UserWithNamesDTO
