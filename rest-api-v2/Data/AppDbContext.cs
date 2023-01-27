@@ -12,6 +12,9 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User_Project>()
+                .HasKey(k => new { k.ProjectId, k.UserId });
+
+        modelBuilder.Entity<User_Project>()
                 .HasOne(b => b.User)
                 .WithMany(ba => ba.User_Projects)
                 .HasForeignKey(bi => bi.UserId);
