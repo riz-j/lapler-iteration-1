@@ -20,6 +20,16 @@ public class AppDbContext : DbContext
                 .HasOne(b => b.Project)
                 .WithMany(ba => ba.User_Projects)
                 .HasForeignKey(bi => bi.ProjectId);
+
+        modelBuilder.Entity<Issue>()
+                .HasOne(b => b.Assignee)
+                .WithMany(ba => ba.AssignedToMe)
+                .HasForeignKey(bi => bi.AssigneeId);
+
+        modelBuilder.Entity<Issue>()
+                .HasOne(b => b.Reporter)
+                .WithMany(ba => ba.ReportedByMe)
+                .HasForeignKey(bi => bi.ReporterId);
     }
 
     public DbSet<User> Users { get; set; }

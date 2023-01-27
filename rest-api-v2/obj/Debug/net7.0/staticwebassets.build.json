@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "GStyr+SaaNdaCjgcHQ5Oy2RXHUKBhUhgc9CMifp51DE=",
+  "Source": "rest-api-v2",
+  "BasePath": "_content/rest-api-v2",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

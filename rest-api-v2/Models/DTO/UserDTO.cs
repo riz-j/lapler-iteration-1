@@ -9,5 +9,7 @@ public class UserDTO
 
     /* Relations */ 
     public List<string> ProjectNames { get; set; }
-    public List<int> IssueIds { get; set; }
+    public List<int> AssignedToMeIssueIds { get; set; }
+    public List<int> ReportedByMeIssueIds { get; set; }
+
 }

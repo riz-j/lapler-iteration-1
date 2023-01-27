@@ -11,5 +11,6 @@ public class User
 
     /* Relations */ 
     public List<User_Project> User_Projects { get; set; }
-    public List<Issue> Issues { get; set; }
+    public List<Issue> AssignedToMe { get; set; }
+    public List<Issue> ReportedByMe { get; set; }
 }
