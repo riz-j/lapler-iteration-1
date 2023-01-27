@@ -7,6 +7,6 @@ public class ProjectDTO
 
     /* Relations */
     public string AdminName { get; set; }
-    public List<string> UsersNames { get; set; }
+    public List<int> UsersIds { get; set; }
     public List<int> IssuesIds { get; set; }
 }

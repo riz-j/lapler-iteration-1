@@ -8,8 +8,20 @@ public class UserDTO
     public string Password { get; set; }
 
     /* Relations */ 
+    public List<int> ProjectId { get; set; }
+    public List<int> AssignedToMeIssueIds { get; set; }
+    public List<int> ReportedByMeIssueIds { get; set; }
+}
+
+public class UserWithNamesDTO
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+
+    /* Relations */ 
     public List<string> ProjectNames { get; set; }
     public List<int> AssignedToMeIssueIds { get; set; }
     public List<int> ReportedByMeIssueIds { get; set; }
-
 }

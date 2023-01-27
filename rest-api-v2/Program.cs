@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using rest_api_v2.Data;
+using rest_api_v2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<UsersService>();
 
 var app = builder.Build();
 

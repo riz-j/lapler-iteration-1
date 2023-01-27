@@ -12,7 +12,7 @@ public class IssueDTO
     public DateTime UpdatedAt { get; set; }
 
     /* Relations */
-    public string ProjectName { get; set; }
-    public string AssigneeName { get; set; }
-    public string ReporterName { get; set; }
+    public string ProjectId { get; set; }
+    public string AssigneeId { get; set; }
+    public string ReporterId { get; set; }
 }
