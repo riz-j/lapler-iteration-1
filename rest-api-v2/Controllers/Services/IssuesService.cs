@@ -34,8 +34,14 @@ public class IssuesService : ControllerBase
         return Ok(_issue);
     }
 
-    public ActionResult<List<User>> GetAllIssues()
+    public ActionResult<List<Issue>> GetAllIssues()
     {
-        return Ok(_db.Users.ToList());
+        return Ok(_db.Issues.ToList());
     }
+
+    public ActionResult<List<Issue>> GetIssuesByProject(int projectId)
+    {
+        return Ok(_db.Issues.Where(i => i.ProjectId == projectId));
+    }
+
 }
