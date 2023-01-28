@@ -26,11 +26,11 @@ public class ProjectsController : ControllerBase
         return _projectsService.AddUsersToProject(id, addUsersToProjectDTO);
     }
 
-    /*
-    /*
-    /*     NEED TO CREATE ENDPOINT FOR [HTTPGET]
-    /*
-    */
+    [HttpGet("{id:int}")]
+    public ActionResult<ProjectWithNamesDTO> GetProjectWithNames(int id)
+    {
+        return _projectsService.GetProjectWithNames(id);
+    }
 
     [HttpPut]
     public ActionResult<Project> UpdateProject(int id, [FromBody]ProjectDTO projectDTO)

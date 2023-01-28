@@ -18,8 +18,8 @@ public class ProjectWithNamesDTO
 
     /* Relations */
     public string? AdminName { get; set; }
-    public List<string>? UsersNames { get; set; }
-    public List<string>? IssuesNames { get; set; }
+    public IEnumerable<string>? UsersNames { get; set; }
+    public IEnumerable<string>? IssuesNames { get; set; }
 }
 
 public class AddUsersToProjectDTO

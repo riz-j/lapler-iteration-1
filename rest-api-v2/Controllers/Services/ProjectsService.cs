@@ -46,6 +46,26 @@ public class ProjectsService : ControllerBase
         return NoContent();
     }
 
+    public ActionResult<ProjectWithNamesDTO> GetProjectWithNames(int projectId)
+    {
+        var _project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+        
+        if (_project == null)
+        {
+            return NotFound();
+        }
+
+        var _projectWithNames = _db.Projects.Where(p => p.Id == projectId).Select(project => new ProjectWithNamesDTO {
+            Name = _project.Name,
+            CreatedAt = project.CreatedAt,
+            AdminName = project.Admin.FirstName,
+            UsersNames = project.User_Projects.Select(n => n.User.FirstName),
+            IssuesNames = project.Issues.Select(n => n.Summary)
+        }).FirstOrDefault();
+
+        return _projectWithNames;
+    }
+
     public ActionResult<Project> UpdateProject(int projectId, ProjectDTO projectDTO)
     {
         var _project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
