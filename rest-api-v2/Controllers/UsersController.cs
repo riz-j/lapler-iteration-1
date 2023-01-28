@@ -14,6 +14,12 @@ public class UsersController : ControllerBase
     {
         _usersService = usersService;
     }
+    
+    [HttpPost]
+    public ActionResult<User> CreateUser([FromBody]UserDTO userDTO)
+    {
+        return _usersService.CreateUser(userDTO);
+    }
 
     [HttpGet]
     public ActionResult<List<User>> GetUsers()
@@ -27,11 +33,6 @@ public class UsersController : ControllerBase
         return _usersService.GetUserById(id);
     }
 
-    [HttpPost]
-    public ActionResult<User> CreateUser([FromBody]UserDTO userDTO)
-    {
-        return _usersService.CreateUser(userDTO);
-    }
 
     [HttpPut("{id:int}")]
     public ActionResult<User> UpdateUser(int id, UserDTO userDTO)

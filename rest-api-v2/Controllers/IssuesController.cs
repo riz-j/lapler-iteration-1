@@ -9,25 +9,6 @@ namespace rest_api_v2.Controllers;
 [Route("api/[controller]")]
 public class IssuesController : ControllerBase
 {
-    // private AppDbContext _db;
-    // public IssuesController(AppDbContext db)
-    // {
-    //     _db = db;
-    // }
-
-    // [HttpGet]
-    // public ActionResult<List<User>> GetUsers()
-    // {
-    //     return Ok(_db.Issues.ToList());
-    // }
-
-    // [HttpGet("{id:int}")]
-    // public ActionResult<List<User>> GetIssue(int id)
-    // {
-    //     return Ok(_db.Issues.Where(i => i.ProjectId == id));
-    // }
-
-
     private IssuesService _issuesService;
     public IssuesController(IssuesService issuesService)
     {
@@ -50,5 +31,17 @@ public class IssuesController : ControllerBase
     public ActionResult<List<Issue>> GetIssuesByProject(int id)
     {
         return _issuesService.GetIssuesByProject(id);
+    }
+
+    [HttpPut("{id:int}")]
+    public ActionResult<Issue> UpdateIssue(int id, [FromBody]IssueDTO issueDTO)
+    {
+        return _issuesService.UpdateIssue(id, issueDTO);   
+    }
+
+    [HttpDelete("{id:int}")]
+    public IActionResult DeleteIssue(int id)
+    {
+        return _issuesService.DeleteIssue(id);
     }
 }
