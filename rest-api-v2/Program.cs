@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<UsersService>();
 builder.Services.AddTransient<ProjectsService>();
+builder.Services.AddTransient<IssuesService>();
 
 var app = builder.Build();
 
