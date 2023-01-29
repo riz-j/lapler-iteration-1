@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using rest_api_v2.Data;
+using rest_api_v2.Security;
+using rest_api_v2.Security.Interfaces;
 using rest_api_v2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,8 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseNpgsql("Host=172.104.46.87:5432;Username=rizki;Password=arrahman;Database=lapler-api-v2");
 });
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
