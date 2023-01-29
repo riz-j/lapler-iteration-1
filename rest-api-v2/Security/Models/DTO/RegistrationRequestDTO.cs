@@ -1,0 +1,9 @@
+namespace rest_api_v2.Security.Models;
+
+public class RegistrationRequestDTO
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+}
