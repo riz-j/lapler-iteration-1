@@ -79,7 +79,8 @@ public class UserRepository : IUserRepository
             FirstName = registrationRequestDTO.FirstName,
             LastName = registrationRequestDTO.LastName,
             Email = registrationRequestDTO.Email,
-            Password = registrationRequestDTO.Password
+            Password = registrationRequestDTO.Password,
+            CreatedAt = DateTime.UtcNow
         };
         _db.Users.Add(_user);
         await _db.SaveChangesAsync();
