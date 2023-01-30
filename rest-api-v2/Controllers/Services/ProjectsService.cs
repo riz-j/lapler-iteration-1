@@ -111,4 +111,22 @@ public class ProjectsService : ControllerBase
         bool projectContainsMember = ProjectMemberIds.Contains<int>(_userId);
         return projectContainsMember;
     }
+
+    public bool IsProjectAdmin(int projectId, string Authorization)
+    {
+        int _userId = JWTService.ParseBearerString(Authorization).UniqueName;
+
+        var _project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+        if (_project == null)
+        {
+            return false;
+        }
+
+        if (_project.AdminId != _userId)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

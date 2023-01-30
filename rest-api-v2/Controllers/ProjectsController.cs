@@ -31,8 +31,19 @@ public class ProjectsController : ControllerBase
             return Forbid();
         }
 
+        if (!_projectsService.IsProjectAdmin(projectId, Authorization))
+        {
+            return Forbid();
+        }
+
         return _projectsService.AddUsersToProject(projectId, addUsersToProjectDTO);
     }
+
+    /*
+    /*
+    /*     Remove Users From Project
+    /*
+    */
 
     [Authorize]
     [HttpGet("{projectId:int}")]
@@ -55,6 +66,11 @@ public class ProjectsController : ControllerBase
             return Forbid();
         }
 
+        if (!_projectsService.IsProjectAdmin(projectId, Authorization))
+        {
+            return Forbid();
+        }
+
         return _projectsService.UpdateProject(projectId, projectDTO);
     }
 
@@ -63,6 +79,11 @@ public class ProjectsController : ControllerBase
     public IActionResult DeleteProject(int projectId, [FromHeader]string Authorization)
     {
         if (!_projectsService.IsProjectMember(projectId, Authorization))
+        {
+            return Forbid();
+        }
+
+        if (!_projectsService.IsProjectAdmin(projectId, Authorization))
         {
             return Forbid();
         }
