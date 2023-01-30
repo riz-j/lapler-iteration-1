@@ -2,7 +2,6 @@ using rest_api_v2.Data;
 using rest_api_v2.Models;
 using rest_api_v2.Security.Interfaces;
 using rest_api_v2.Security.Models;
-using rest_api_v2.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;

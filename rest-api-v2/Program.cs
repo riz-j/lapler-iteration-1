@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using rest_api_v2.Controllers.Services;
 using rest_api_v2.Data;
 using rest_api_v2.Security;
 using rest_api_v2.Security.Interfaces;
-using rest_api_v2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

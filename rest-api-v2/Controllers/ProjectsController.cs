@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using rest_api_v2.Controllers.Services;
 using rest_api_v2.Models;
-using rest_api_v2.Services;
 
 namespace rest_api_v2;
 
@@ -28,10 +28,15 @@ public class ProjectsController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet("{id:int}")]
-    public ActionResult<ProjectWithNamesDTO> GetProjectWithNames(int id)
+    [HttpGet("{projectId:int}")]
+    public ActionResult<ProjectWithNamesDTO> GetProjectWithNames(int projectId, [FromHeader]string Authorization)
     {
-        return _projectsService.GetProjectWithNames(id);
+        if (!_projectsService.IsProjectMember(projectId, Authorization))
+        {
+            return Unauthorized(new { Message = "You are not a member of this project" });
+        }
+
+        return _projectsService.GetProjectWithNames(projectId);
     }
 
     [HttpPut]

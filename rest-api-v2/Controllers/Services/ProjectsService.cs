@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using rest_api_v2.Data;
 using rest_api_v2.Models;
+using rest_api_v2.Security.Services;
 
-namespace rest_api_v2.Services;
+namespace rest_api_v2.Controllers.Services;
 
 public class ProjectsService : ControllerBase
 {
@@ -93,5 +94,21 @@ public class ProjectsService : ControllerBase
         }
 
         return NotFound();
+    }
+
+    public bool IsProjectMember(int projectId, string Authorization)
+    {
+        int _userId = JWTService.ParseBearerString(Authorization).UniqueName;
+
+        var _project = _db.Projects.FirstOrDefault(p => p.Id == projectId);
+        if (_project == null)
+        {
+            return false; 
+        }
+        
+        List<int> ProjectMemberIds = _db.Users_Projects.Where(p => p.ProjectId == projectId).Select(p => p.UserId).ToList();
+            
+        bool projectContainsMember = ProjectMemberIds.Contains<int>(_userId);
+        return projectContainsMember;
     }
 }

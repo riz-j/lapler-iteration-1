@@ -1,7 +1,7 @@
 using rest_api_v2.Models;
-using rest_api_v2.Services;
 using Microsoft.AspNetCore.Mvc;
 using rest_api_v2.Models.DTO;
+using rest_api_v2.Controllers.Services;
 
 namespace rest_api_v2.Controllers;
 

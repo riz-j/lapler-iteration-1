@@ -3,7 +3,7 @@ using rest_api_v2.Data;
 using rest_api_v2.Models;
 using rest_api_v2.Models.DTO;
 
-namespace rest_api_v2.Services;
+namespace rest_api_v2.Controllers.Services;
 
 public class UsersService : ControllerBase
 {
