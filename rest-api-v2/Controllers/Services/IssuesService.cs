@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using rest_api_v2.Data;
 using rest_api_v2.Models;
 using rest_api_v2.Models.DTO;
@@ -12,7 +13,7 @@ public class IssuesService : ControllerBase
     {
         _db = db; 
     }
-    public ActionResult<Issue> CreateIssue(IssueDTO issueDTO)
+    public async Task<Issue> CreateIssueAsync(IssueDTO issueDTO)
     {
         var _issue = new Issue() 
         {
@@ -28,29 +29,44 @@ public class IssuesService : ControllerBase
             AssigneeId = (issueDTO.AssigneeId != null) ? issueDTO.AssigneeId : null,
             ReporterId = issueDTO.ReporterId
         };
-        _db.Issues.Add(_issue);
-        _db.SaveChanges();
+        await _db.Issues.AddAsync(_issue);
+        await _db.SaveChangesAsync();
 
-        return Ok(_issue);
+        return _issue;
     }
 
-    public ActionResult<List<Issue>> GetAllIssues()
+    public async Task<List<Issue>> GetAllIssuesAsync()
     {
-        return Ok(_db.Issues.ToList());
+        var result = await _db.Issues.ToListAsync();
+        return result;
     }
 
-    public ActionResult<List<Issue>> GetIssuesByProject(int projectId)
+    public async Task<List<Issue>> GetIssuesByProjectAsync(int projectId)
     {
-        return Ok(_db.Issues.Where(i => i.ProjectId == projectId));
+        var result = await _db.Issues.Where(i => i.ProjectId == projectId).ToListAsync();
+        return result;
     }
 
-    public ActionResult<Issue> UpdateIssue(int id, IssueDTO issueDTO)
+    // Need to make ALL endpoints like this: 
+    // Do not return ActionResult. Let ActionResult be handled by Controller.
+    public async Task<Issue?> GetIssueByIdAsync(int issueId)
     {
-        var _issue = _db.Issues.FirstOrDefault(i => i.Id == id);
+        var result = await _db.Issues.FirstOrDefaultAsync(i => i.Id == issueId);
+        if (result == null)
+        {
+            return null;
+        }
+        
+        return result;
+    }
+
+    public async Task<Issue?> UpdateIssueAsync(int issueId, IssueDTO issueDTO)
+    {
+        var _issue = await _db.Issues.FirstOrDefaultAsync(i => i.Id == issueId);
 
         if (_issue == null)
         {
-            return BadRequest();
+            return null;
         }
 
         _issue.TypeOfIssue = issueDTO.TypeOfIssue;
@@ -63,21 +79,22 @@ public class IssuesService : ControllerBase
         _issue.AssigneeId = issueDTO.AssigneeId;
         _issue.ReporterId = issueDTO.ReporterId;
         
-        _db.SaveChanges();
-        return Ok(_issue);
+        await _db.SaveChangesAsync();
+        return _issue;
     }
 
-    public IActionResult DeleteIssue(int id)
+    public async Task<Issue?> DeleteIssueAsync(int issueId)
     {
-        var _issue = _db.Issues.FirstOrDefault(i => i.Id == id);
+        var _issue = await _db.Issues.FirstOrDefaultAsync(i => i.Id == issueId);
        
         if (_issue == null)
         {
-            return NotFound();
+            return null;
         }
         
         _db.Issues.Remove(_issue);
-        return Ok();
+        await _db.SaveChangesAsync();
+        return(_issue);
     }
 
 }

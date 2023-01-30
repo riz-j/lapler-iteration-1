@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using rest_api_v2.Controllers.Services;
 using rest_api_v2.Data;
 using rest_api_v2.Models;
+using rest_api_v2.Security.Services;
 
 namespace rest_api_v2.Controllers;
 
@@ -10,38 +12,76 @@ namespace rest_api_v2.Controllers;
 public class IssuesController : ControllerBase
 {
     private IssuesService _issuesService;
-    public IssuesController(IssuesService issuesService)
+    private AuthService _authService;
+    public IssuesController(IssuesService issuesService, AuthService authService)
     {
         _issuesService = issuesService;
+        _authService = authService;
     }
 
+    [Authorize]
     [HttpPost]
-    public ActionResult<Issue> CreateIssue([FromBody]IssueDTO issueDTO)
+    public async Task<ActionResult<Issue>> CreateIssueAsync([FromBody] IssueDTO issueDTO, [FromHeader]string Authorization)
     {
-        return _issuesService.CreateIssue(issueDTO);
+        int _projectId = issueDTO.ProjectId;
+        if (!_authService.IsProjectMember(_projectId, Authorization))
+        {
+            return Forbid();
+        }
+
+        var _issue = await _issuesService.CreateIssueAsync(issueDTO);
+        return Ok(_issue);
     }
 
+    // Only for Superuser
     [HttpGet]
-    public ActionResult<List<Issue>> GetIssues()
+    public async Task<ActionResult<List<Issue>>> GetIssues()
     {
-        return _issuesService.GetAllIssues();
+        var result = await _issuesService.GetAllIssuesAsync();
+        return Ok(result);
     }
 
-    [HttpGet("{id:int}")]
-    public ActionResult<List<Issue>> GetIssuesByProject(int id)
+    [Authorize]
+    [HttpGet("{projectId:int}")]
+    public async Task<ActionResult<List<Issue>>> GetIssuesByProject(int projectId, [FromHeader]string Authorization)
     {
-        return _issuesService.GetIssuesByProject(id);
+        if (!_authService.IsProjectMember(projectId, Authorization))
+        {
+            return Forbid();
+        }
+
+        var result = await _issuesService.GetIssuesByProjectAsync(projectId);
+        return Ok(result);
     }
 
-    [HttpPut("{id:int}")]
-    public ActionResult<Issue> UpdateIssue(int id, [FromBody]IssueDTO issueDTO)
+    [Authorize]
+    [HttpPut("{issueId:int}")]
+    public async Task<ActionResult<Issue>> UpdateIssue(int issueId, [FromBody]IssueDTO issueDTO, [FromHeader]string Authorization)
     {
-        return _issuesService.UpdateIssue(id, issueDTO);   
+        if (!_authService.IsProjectMember(issueDTO.ProjectId, Authorization))
+        {
+            return Forbid();
+        }
+
+        var result = await _issuesService.UpdateIssueAsync(issueId, issueDTO);
+        return Ok(result);   
     }
 
-    [HttpDelete("{id:int}")]
-    public IActionResult DeleteIssue(int id)
+    [Authorize]
+    [HttpDelete("{projectId:int}/{issueId:int}")]
+    public async Task<ActionResult<Issue>> DeleteIssueAsync(int projectId, int issueId, [FromHeader]string Authorization)
     {
-        return _issuesService.DeleteIssue(id);
+        if (!_authService.IsProjectMember(projectId, Authorization))
+        {
+            return Forbid();
+        }
+
+        var result = await _issuesService.DeleteIssueAsync(issueId);
+        if (result == null)
+        {
+            return NotFound();
+        }
+        
+        return Ok(result);
     }
 }

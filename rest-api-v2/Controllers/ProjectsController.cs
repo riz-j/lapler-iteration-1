@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using rest_api_v2.Controllers.Services;
 using rest_api_v2.Models;
+using rest_api_v2.Security.Services;
 
 namespace rest_api_v2;
 
@@ -10,9 +11,11 @@ namespace rest_api_v2;
 public class ProjectsController : ControllerBase
 {
     private ProjectsService _projectsService;
-    public ProjectsController(ProjectsService projectsService)
+    private AuthService _authService;
+    public ProjectsController(ProjectsService projectsService, AuthService authService)
     {
         _projectsService = projectsService;
+        _authService = authService;
     }
 
     [Authorize]
@@ -26,12 +29,12 @@ public class ProjectsController : ControllerBase
     [HttpPost("{projectId:int}")]
     public IActionResult AddUsersToProject(int projectId, [FromBody]AddUsersToProjectDTO addUsersToProjectDTO, [FromHeader]string Authorization)
     {
-        if (!_projectsService.IsProjectMember(projectId, Authorization))
+        if (!_authService.IsProjectMember(projectId, Authorization))
         {
             return Forbid();
         }
 
-        if (!_projectsService.IsProjectAdmin(projectId, Authorization))
+        if (!_authService.IsProjectAdmin(projectId, Authorization))
         {
             return Forbid();
         }
@@ -49,7 +52,7 @@ public class ProjectsController : ControllerBase
     [HttpGet("{projectId:int}")]
     public ActionResult<ProjectWithNamesDTO> GetProjectWithNames(int projectId, [FromHeader]string Authorization)
     {
-        if (!_projectsService.IsProjectMember(projectId, Authorization))
+        if (!_authService.IsProjectMember(projectId, Authorization))
         {
             return Forbid();
         }
@@ -61,12 +64,12 @@ public class ProjectsController : ControllerBase
     [HttpPut("{projectId:int}")]
     public ActionResult<Project> UpdateProject(int projectId, [FromBody]ProjectDTO projectDTO, [FromHeader]string Authorization)
     {
-        if (!_projectsService.IsProjectMember(projectId, Authorization))
+        if (!_authService.IsProjectMember(projectId, Authorization))
         {
             return Forbid();
         }
 
-        if (!_projectsService.IsProjectAdmin(projectId, Authorization))
+        if (!_authService.IsProjectAdmin(projectId, Authorization))
         {
             return Forbid();
         }
@@ -78,12 +81,12 @@ public class ProjectsController : ControllerBase
     [HttpDelete("{projectId:int}")]
     public IActionResult DeleteProject(int projectId, [FromHeader]string Authorization)
     {
-        if (!_projectsService.IsProjectMember(projectId, Authorization))
+        if (!_authService.IsProjectMember(projectId, Authorization))
         {
             return Forbid();
         }
 
-        if (!_projectsService.IsProjectAdmin(projectId, Authorization))
+        if (!_authService.IsProjectAdmin(projectId, Authorization))
         {
             return Forbid();
         }

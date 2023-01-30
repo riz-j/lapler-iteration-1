@@ -7,6 +7,7 @@ using rest_api_v2.Controllers.Services;
 using rest_api_v2.Data;
 using rest_api_v2.Security;
 using rest_api_v2.Security.Interfaces;
+using rest_api_v2.Security.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,6 +69,7 @@ builder.Services.AddSwaggerGen(options => {
 builder.Services.AddTransient<UsersService>();
 builder.Services.AddTransient<ProjectsService>();
 builder.Services.AddTransient<IssuesService>();
+builder.Services.AddTransient<AuthService>();
 
 var app = builder.Build();
 
