@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using rest_api_v2.Models;
 using rest_api_v2.Services;
@@ -26,6 +27,7 @@ public class ProjectsController : ControllerBase
         return _projectsService.AddUsersToProject(id, addUsersToProjectDTO);
     }
 
+    [Authorize]
     [HttpGet("{id:int}")]
     public ActionResult<ProjectWithNamesDTO> GetProjectWithNames(int id)
     {
