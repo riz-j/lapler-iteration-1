@@ -26,7 +26,7 @@ public class ProjectsService : ControllerBase
 
         return Ok(_project);
     }
-
+    
     public IActionResult AddUsersToProject(int projectId, AddUsersToProjectDTO addUsersToProjectDTO)
     {
         var _project = _db.Projects.FirstOrDefault(p => p.Id == projectId);

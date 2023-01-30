@@ -15,16 +15,23 @@ public class ProjectsController : ControllerBase
         _projectsService = projectsService;
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult<Project> CreateProject(ProjectDTO projectDTO)
     {
         return _projectsService.CreateProject(projectDTO);
     }
 
-    [HttpPost("{id:int}")]
-    public IActionResult AddUsersToProject(int id, [FromBody]AddUsersToProjectDTO addUsersToProjectDTO)
+    [Authorize]
+    [HttpPost("{projectId:int}")]
+    public IActionResult AddUsersToProject(int projectId, [FromBody]AddUsersToProjectDTO addUsersToProjectDTO, [FromHeader]string Authorization)
     {
-        return _projectsService.AddUsersToProject(id, addUsersToProjectDTO);
+        if (!_projectsService.IsProjectMember(projectId, Authorization))
+        {
+            return Forbid();
+        }
+
+        return _projectsService.AddUsersToProject(projectId, addUsersToProjectDTO);
     }
 
     [Authorize]
@@ -33,21 +40,33 @@ public class ProjectsController : ControllerBase
     {
         if (!_projectsService.IsProjectMember(projectId, Authorization))
         {
-            return Unauthorized(new { Message = "You are not a member of this project" });
+            return Forbid();
         }
 
         return _projectsService.GetProjectWithNames(projectId);
     }
 
-    [HttpPut]
-    public ActionResult<Project> UpdateProject(int id, [FromBody]ProjectDTO projectDTO)
+    [Authorize]
+    [HttpPut("{projectId:int}")]
+    public ActionResult<Project> UpdateProject(int projectId, [FromBody]ProjectDTO projectDTO, [FromHeader]string Authorization)
     {
-        return _projectsService.UpdateProject(id, projectDTO);
+        if (!_projectsService.IsProjectMember(projectId, Authorization))
+        {
+            return Forbid();
+        }
+
+        return _projectsService.UpdateProject(projectId, projectDTO);
     }
 
-    [HttpDelete("{id:int}")]
-    public IActionResult DeleteProject(int id)
+    [Authorize]
+    [HttpDelete("{projectId:int}")]
+    public IActionResult DeleteProject(int projectId, [FromHeader]string Authorization)
     {
-        return _projectsService.DeleteProject(id);
+        if (!_projectsService.IsProjectMember(projectId, Authorization))
+        {
+            return Forbid();
+        }
+
+        return _projectsService.DeleteProject(projectId);
     }
 }
