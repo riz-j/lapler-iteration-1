@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using rest_api_v2.Controllers.Services;
@@ -12,34 +14,40 @@ public class ProjectsController : ControllerBase
 {
     private ProjectsService _projectsService;
     private AuthService _authService;
-    public ProjectsController(ProjectsService projectsService, AuthService authService)
+    private JWTService _JWTService;
+    public ProjectsController(ProjectsService projectsService, AuthService authService, JWTService JWTService)
     {
         _projectsService = projectsService;
         _authService = authService;
+        _JWTService = JWTService;
     }
 
     [Authorize]
     [HttpPost]
-    public ActionResult<Project> CreateProject(ProjectDTO projectDTO)
+    public async Task<ActionResult<Project>> CreateProjectAsync(ProjectDTO projectDTO, [FromHeader]string Authorization)
     {
-        return _projectsService.CreateProject(projectDTO);
+        int creatorId = _JWTService.ParseBearerString(Authorization).UniqueName;        
+        
+        Project result = await _projectsService.CreateProjectAsync(projectDTO, creatorId);
+
+        await _projectsService.AddUsersToProjectAsync(result.Id, new AddUsersToProjectDTO() { 
+            UserIdsToAdd =  new List<int>() { creatorId }
+        });
+
+        return Ok(result);
     }
 
     [Authorize]
     [HttpPost("{projectId:int}")]
-    public IActionResult AddUsersToProject(int projectId, [FromBody]AddUsersToProjectDTO addUsersToProjectDTO, [FromHeader]string Authorization)
+    public async Task<IActionResult> AddUsersToProjectAsync(int projectId, [FromBody]AddUsersToProjectDTO addUsersToProjectDTO, [FromHeader]string Authorization)
     {
         if (!_authService.IsProjectMember(projectId, Authorization))
         {
             return Forbid();
         }
 
-        if (!_authService.IsProjectAdmin(projectId, Authorization))
-        {
-            return Forbid();
-        }
-
-        return _projectsService.AddUsersToProject(projectId, addUsersToProjectDTO);
+        await _projectsService.AddUsersToProjectAsync(projectId, addUsersToProjectDTO);
+        return Ok();
     }
 
     /*
@@ -50,47 +58,44 @@ public class ProjectsController : ControllerBase
 
     [Authorize]
     [HttpGet("{projectId:int}")]
-    public ActionResult<ProjectWithNamesDTO> GetProjectWithNames(int projectId, [FromHeader]string Authorization)
+    public async Task<ActionResult<ProjectWithNamesDTO>> GetProjectWithNamesAsync(int projectId, [FromHeader]string Authorization)
     {
         if (!_authService.IsProjectMember(projectId, Authorization))
         {
             return Forbid();
         }
 
-        return _projectsService.GetProjectWithNames(projectId);
+        var result = await _projectsService.GetProjectWithNamesAsync(projectId);
+        return Ok(result);
     }
 
     [Authorize]
     [HttpPut("{projectId:int}")]
-    public ActionResult<Project> UpdateProject(int projectId, [FromBody]ProjectDTO projectDTO, [FromHeader]string Authorization)
+    public async Task<ActionResult<Project>> UpdateProjectAsync(int projectId, [FromBody]ProjectDTO projectDTO, [FromHeader]string Authorization)
     {
         if (!_authService.IsProjectMember(projectId, Authorization))
         {
             return Forbid();
         }
 
-        if (!_authService.IsProjectAdmin(projectId, Authorization))
+        var result = await _projectsService.UpdateProjectAsync(projectId, projectDTO);
+        if (result == null)
         {
-            return Forbid();
+            return NotFound();
         }
-
-        return _projectsService.UpdateProject(projectId, projectDTO);
+        return result;
     }
 
     [Authorize]
     [HttpDelete("{projectId:int}")]
-    public IActionResult DeleteProject(int projectId, [FromHeader]string Authorization)
+    public async Task<IActionResult> DeleteProjectAsync(int projectId, [FromHeader]string Authorization)
     {
-        if (!_authService.IsProjectMember(projectId, Authorization))
-        {
-            return Forbid();
-        }
-
         if (!_authService.IsProjectAdmin(projectId, Authorization))
         {
             return Forbid();
         }
 
-        return _projectsService.DeleteProject(projectId);
+        await _projectsService.DeleteProjectAsync(projectId); 
+        return Ok();
     }
 }

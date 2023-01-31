@@ -7,7 +7,7 @@ using rest_api_v2.Utilities;
 namespace rest_api_v2.Security.Services;
     public class JWTService
     {
-        public static string? GetJWT(string Authorization)
+        public string? GetJWT(string Authorization)
         {
             // Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjE4IiwiZW1haWwiOiJhZGlwdXRyYTk3OUBnbWFpbC5jb20iLCJuYmYiOjE2NzUwNjQzMTIsImV4cCI6MTY3NTY2OTExMiwiaWF0IjoxNjc1MDY0MzEyfQ.MwjEuHxEK_MZKjce1bQxPH1v0-SLIRkXF_0f8BUT2-4
             string prefix = "Bearer ";            
@@ -20,7 +20,7 @@ namespace rest_api_v2.Security.Services;
             return Token;     
         }
 
-        public static JWTClaimsDTO Parse(string token)
+        public JWTClaimsDTO Parse(string token)
         {
             var handler = new JwtSecurityTokenHandler();
             var jsonToken = handler.ReadToken(token);
@@ -49,7 +49,7 @@ namespace rest_api_v2.Security.Services;
             return _JWTClaimsDTO;
         }
     
-        public static JWTClaimsDTO ParseBearerString(string Authorization)
+        public JWTClaimsDTO ParseBearerString(string Authorization)
         {
             var _JWT = GetJWT(Authorization);
             JWTClaimsDTO _JWTClaimsDTO = Parse(_JWT);

@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -36,7 +37,10 @@ builder.Services.AddAuthentication(x => {
     };
 });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options => {
+    options.JsonSerializerOptions.MaxDepth = 32;
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});;
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => {
@@ -69,6 +73,7 @@ builder.Services.AddSwaggerGen(options => {
 builder.Services.AddTransient<UsersService>();
 builder.Services.AddTransient<ProjectsService>();
 builder.Services.AddTransient<IssuesService>();
+builder.Services.AddTransient<JWTService>();
 builder.Services.AddTransient<AuthService>();
 
 var app = builder.Build();

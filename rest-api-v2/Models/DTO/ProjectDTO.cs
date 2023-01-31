@@ -21,7 +21,6 @@ public class ProjectWithNamesDTO
     public IEnumerable<string>? UsersNames { get; set; }
     public IEnumerable<string>? IssuesNames { get; set; }
 }
-
 public class AddUsersToProjectDTO
 {
     public List<int> UserIdsToAdd { get; set; }
