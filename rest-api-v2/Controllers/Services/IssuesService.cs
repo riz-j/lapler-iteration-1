@@ -13,7 +13,7 @@ public class IssuesService : ControllerBase
     {
         _db = db; 
     }
-    public async Task<Issue> CreateIssueAsync(IssueDTO issueDTO)
+    public async Task<Issue> CreateIssueAsync(IssueDTO issueDTO, int reporterId)
     {
         var _issue = new Issue() 
         {
@@ -27,7 +27,7 @@ public class IssuesService : ControllerBase
             UpdatedAt = DateTime.UtcNow,
             ProjectId = issueDTO.ProjectId,
             AssigneeId = (issueDTO.AssigneeId != null) ? issueDTO.AssigneeId : null,
-            ReporterId = issueDTO.ReporterId
+            ReporterId = reporterId
         };
         await _db.Issues.AddAsync(_issue);
         await _db.SaveChangesAsync();
@@ -47,8 +47,6 @@ public class IssuesService : ControllerBase
         return result;
     }
 
-    // Need to make ALL endpoints like this: 
-    // Do not return ActionResult. Let ActionResult be handled by Controller.
     public async Task<Issue?> GetIssueByIdAsync(int issueId)
     {
         var result = await _db.Issues.FirstOrDefaultAsync(i => i.Id == issueId);

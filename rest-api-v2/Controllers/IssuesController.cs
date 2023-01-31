@@ -7,16 +7,25 @@ using rest_api_v2.Security.Services;
 
 namespace rest_api_v2.Controllers;
 
+/*********************************
+
+    Need to add Project ID as URL parameter
+
+*********************************/
+
+
 [ApiController]
 [Route("api/[controller]")]
 public class IssuesController : ControllerBase
 {
     private IssuesService _issuesService;
     private AuthService _authService;
-    public IssuesController(IssuesService issuesService, AuthService authService)
+    private JWTService _JWTService;
+    public IssuesController(IssuesService issuesService, AuthService authService, JWTService JWTService)
     {
         _issuesService = issuesService;
         _authService = authService;
+        _JWTService = JWTService;
     }
 
     [Authorize]
@@ -29,7 +38,9 @@ public class IssuesController : ControllerBase
             return Forbid();
         }
 
-        var _issue = await _issuesService.CreateIssueAsync(issueDTO);
+        int reporterId = _JWTService.ParseBearerString(Authorization).UniqueName;
+
+        var _issue = await _issuesService.CreateIssueAsync(issueDTO, reporterId);
         return Ok(_issue);
     }
 
@@ -67,8 +78,11 @@ public class IssuesController : ControllerBase
         return Ok(result);   
     }
 
+    /* 
+    Need to make all endpoints in this controller take a {projectId:int} parameter 
+    */
     [Authorize]
-    [HttpDelete("{projectId:int}/{issueId:int}")]
+    [HttpDelete("project/{projectId:int}/issue/{issueId:int}")]
     public async Task<ActionResult<Issue>> DeleteIssueAsync(int projectId, int issueId, [FromHeader]string Authorization)
     {
         if (!_authService.IsProjectMember(projectId, Authorization))
