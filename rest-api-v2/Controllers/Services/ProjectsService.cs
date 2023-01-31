@@ -28,7 +28,7 @@ public class ProjectsService : ControllerBase
         return _project;
     }
     
-    public async Task AddUsersToProjectAsync(int projectId, AddUsersToProjectDTO addUsersToProjectDTO)
+    public async Task AddUsersToProjectAsync(int projectId, List<int> UserIdsToAdd)
     {
         var _project = await _db.Projects.FirstOrDefaultAsync(p => p.Id == projectId);
         if (_project == null)
@@ -36,16 +36,22 @@ public class ProjectsService : ControllerBase
             throw new Exception("Project Not Found");
         }
 
-        foreach (var id in addUsersToProjectDTO.UserIdsToAdd)
+        foreach (var id in UserIdsToAdd)
         {
+                var _user = _db.Users.FirstOrDefault(u => u.Id == id);
+                if (_user == null)
+                {
+                    throw new Exception($"User with Id: {id} does not exist");
+                }
+                
                 var _user_project = new User_Project()
                 {
                     UserId = id,
                     ProjectId = _project.Id
                 };      
                 await _db.Users_Projects.AddAsync(_user_project);
-                await _db.SaveChangesAsync();
         }
+        await _db.SaveChangesAsync();
         return;    
     }
 
