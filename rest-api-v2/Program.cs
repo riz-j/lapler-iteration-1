@@ -81,9 +81,10 @@ var app = builder.Build();
 
 app.UseCors(options => 
 {
-    options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-    // options.WithOrigins("localhost:5173").AllowAnyMethod().AllowAnyHeader();
-    // Code in the line above somehow still does not work.
+    options.WithOrigins("http://localhost:5173")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .WithExposedHeaders("Authorization");
 });
 
 // Configure the HTTP request pipeline.
