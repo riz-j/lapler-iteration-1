@@ -9,6 +9,7 @@ using rest_api_v2.Data;
 using rest_api_v2.Security;
 using rest_api_v2.Security.Interfaces;
 using rest_api_v2.Security.Services;
+using Microsoft.AspNetCore.Cors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -78,6 +79,13 @@ builder.Services.AddTransient<AuthService>();
 
 var app = builder.Build();
 
+app.UseCors(options => 
+{
+    options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    // options.WithOrigins("localhost:5173").AllowAnyMethod().AllowAnyHeader();
+    // Code in the line above somehow still does not work.
+});
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -88,6 +96,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllers();
 
