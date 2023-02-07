@@ -33,9 +33,25 @@ public class UsersService : ControllerBase
         return Ok(_db.Users.ToList());
     } 
 
-    public ActionResult<User> GetUserById(int id)
+    public ActionResult<UserDTO> GetUserById(int id)
     {
-        return Ok(_db.Users.FirstOrDefault(n => n.Id == id));
+        var _user = _db.Users.FirstOrDefault(n => n.Id == id);
+        if (_user == null)
+        {
+            return NotFound();
+        }
+
+        var _userDTO = new UserDTO 
+        {
+            FirstName = _user.FirstName,
+            LastName = _user.LastName,
+            Email = _user.Email,
+            Password = _user.Password
+        };
+        _userDTO.ProjectId = _db.Users_Projects.Where(up => up.UserId == id)
+                            .Select(up => up.ProjectId).ToList();
+
+        return Ok(_userDTO);
     }
 
     public ActionResult<User> UpdateUser(int userId, UserDTO userDTO)

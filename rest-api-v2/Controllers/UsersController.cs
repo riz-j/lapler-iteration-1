@@ -28,7 +28,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public ActionResult<User> GetUserById(int id)
+    public ActionResult<UserDTO> GetUserById(int id)
     {
         return _usersService.GetUserById(id);
     }
