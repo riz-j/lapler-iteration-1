@@ -1,6 +1,20 @@
+import { useDispatch, useSelector } from "react-redux"
+import { getCurrentUser } from './redux/currentUserSlice'
+
 function App() {
+  const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.currentUser);
+
+  const handleClick = () => {
+    dispatch(getCurrentUser({email: 'tscarff1@github.io', password: 'kIQ9xZx'}));
+  }
   return (
     <div className='App'>
+      <h2>Welcome back, {currentUser.firstName}! Your email is {currentUser.email}</h2>
+      <p>Bro, your token is {currentUser.token}</p>
+      {/* <h2>{JSON.stringify(currentUser)}</h2> */}
+      <button onClick={handleClick}>Log In</button>
+
       <div className='flex h-screen sm:text-sm'>
         <div className='bg-green-300 w-80 hidden md:block pt-4'>
           <p className='bg-blue-200 rounded-lg px-5 py-2 border-b-2'>All states</p>
