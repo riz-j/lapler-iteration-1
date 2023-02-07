@@ -19,7 +19,7 @@ public class UsersAuthController : ControllerBase
     {
         var _loginResponse = await _userRepository.Login(loginRequestDTO);
 
-        if (_loginResponse.User == null || string.IsNullOrEmpty(_loginResponse.Token))
+        if (_loginResponse.UserDTO == null || string.IsNullOrEmpty(_loginResponse.Token))
         {
             return BadRequest(new { message = "Email or password is incorrect" });
         }

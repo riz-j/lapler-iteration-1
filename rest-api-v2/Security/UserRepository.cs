@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Security.Claims;
+using rest_api_v2.Models.DTO;
 
 namespace rest_api_v2.Security;
 
@@ -40,7 +41,7 @@ public class UserRepository : IUserRepository
         {
             return new LoginResponseDTO()
             {
-                User = null,
+                UserDTO = null,
                 Token = ""
             };
         }
@@ -62,10 +63,17 @@ public class UserRepository : IUserRepository
         };
         
         var _token = tokenHandler.CreateToken(tokenDescriptor);
-
+        var _userDTO = new UserDTO 
+        {
+            FirstName = _user.FirstName,
+            LastName = _user.LastName,
+            Email = _user.Email,
+            Password = _user.Password,
+        };
+         _userDTO.ProjectId = _db.Users_Projects.Where(up => up.UserId == _user.Id).Select(up => up.ProjectId).ToList();
         LoginResponseDTO loginResponseDTO = new LoginResponseDTO()
         {
-            User = _user,
+            UserDTO = _userDTO,
             Token = tokenHandler.WriteToken(_token)
         };
         return loginResponseDTO;

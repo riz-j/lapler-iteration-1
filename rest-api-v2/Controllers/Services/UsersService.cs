@@ -48,9 +48,7 @@ public class UsersService : ControllerBase
             Email = _user.Email,
             Password = _user.Password
         };
-        _userDTO.ProjectId = _db.Users_Projects.Where(up => up.UserId == id)
-                            .Select(up => up.ProjectId).ToList();
-
+        _userDTO.ProjectId = _db.Users_Projects.Where(up => up.UserId == id).Select(up => up.ProjectId).ToList();
         return Ok(_userDTO);
     }
 
