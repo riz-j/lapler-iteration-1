@@ -1,21 +1,27 @@
--Models
-  -User -- SEMI-DONE
-  -Project -- SEMI-DONE
+-Models --DONE
+  -User -- DONE
+  -Project -- DONE
   -User_Project -- DONE
-  -Issue
-  -DTO
-    -UserDTO
-    -ProjectDTO
-    -IssueDTO
--Data
-  -AppDbContext
+  -Issue --DONE
+  -DTO --DONE
+    -UserDTO --DONE
+    -ProjectDTO --DONE
+    -IssueDTO --DONE
+-Data --DONE
+  -AppDbContext --DONE
 -Services
-  -UserServices
-  -ProjectServices
-  -IssueServices
+  -UserServices --SEMI-DONE
+  -ProjectServices --SEMI-DONE
+  -IssueServices --SEMI-DONE
 -Controllers
-  -UserController
-  -ProjectController
-  -IssueController
+  -UserController --SEMI-DONE
+  -ProjectController --SEMI-DONE
+  -IssueController --SEMI-DONE
+  
+  
+_______________________________________
+
+-Security
+  -Models
   
   
