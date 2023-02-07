@@ -26,12 +26,13 @@ const currentUserSlice = createSlice({
         },
         [getCurrentUser.fulfilled]: (state, action) => {
             state.isLoading = false;
-            // state.currentUserInfo = action.payload;
-            state.id = action.payload.user.id;
-            state.firstName = action.payload.user.firstName;
-            state.lastName = action.payload.user.lastName;
-            state.email = action.payload.user.email;
-            state.token = action.payload.token;
+            state.currentUserInfo = action.payload;
+            // state.id = action.payload.userDTO.id;
+            // state.firstName = action.payload.userDTO.firstName;
+            // state.lastName = action.payload.userDTO.lastName;
+            // state.email = action.payload.userDTO.email;
+            // state.projects = action.payload.userDTO.projectId.$values;
+            // state.token = action.payload.token;
         },
         [getCurrentUser.rejected]: (state) => {
             state.isLoading = false;

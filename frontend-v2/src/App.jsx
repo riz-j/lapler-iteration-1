@@ -1,19 +1,57 @@
+import { current } from "@reduxjs/toolkit";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { getCurrentUser } from './redux/currentUserSlice'
 
 function App() {
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.currentUser);
+  const [emailInput, setEmailInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
+  
+  // const handleClick = () => {
+  //   // dispatch(getCurrentUser({email: 'tscarff1@github.io', password: 'kIQ9xZx'}));
+  //   dispatch(getCurrentUser({email: 'adiputra979@gmail.com', password: 'somerset306'}));
+  // }
 
-  const handleClick = () => {
-    dispatch(getCurrentUser({email: 'tscarff1@github.io', password: 'kIQ9xZx'}));
+  const handleLogin = (e) => {
+    e.preventDefault();
+    dispatch(getCurrentUser({
+      email: emailInput,
+      password: passwordInput
+    }))
   }
+  
   return (
     <div className='App'>
-      <h2>Welcome back, {currentUser.firstName}! Your email is {currentUser.email}</h2>
-      <p>Bro, your token is {currentUser.token}</p>
-      {/* <h2>{JSON.stringify(currentUser)}</h2> */}
-      <button onClick={handleClick}>Log In</button>
+      <div>
+        <h1>{JSON.stringify(currentUser)}</h1>
+        <form onSubmit={handleLogin}>
+          <input type="text" onChange={e => setEmailInput(e.target.value)}/>
+          <input type="text" onChange={e => setPasswordInput(e.target.value)}/>
+          <input type="submit"/>
+        </form>
+      </div>
+
+      {/* <div>
+        <p>Id: {currentUser.id}</p>
+        <p>First Name: {currentUser.firstName}</p>
+        <p>Last Name: {currentUser.lastName}</p>
+        <p>Email: {currentUser.email}</p>
+        <p>Token: {currentUser.token}</p>
+        <div>
+          <p>Projects:</p>
+          {(currentUser.projects == null) ? "" : currentUser.projects.map(n => 
+            <p>{n}</p>
+          )}
+        </div>
+        <button onClick={handleClick} className="text-blue-600">Log In</button>
+      </div> */}
+
+      {/* <div>
+        {JSON.stringify(currentUser)}
+        <button onClick={handleClick} className="text-blue-600">Log In</button>
+      </div> */}
 
       <div className='flex h-screen sm:text-sm'>
         <div className='bg-green-300 w-80 hidden md:block pt-4'>
