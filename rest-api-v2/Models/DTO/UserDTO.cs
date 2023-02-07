@@ -21,7 +21,7 @@ public class UserWithNamesDTO
     public string Password { get; set; }
 
     /* Relations */ 
-    public List<string> ProjectNames { get; set; }
+    public Dictionary<int, string> ProjectIdProjectNames { get; set; }
     public List<int> AssignedToMeIssueIds { get; set; }
     public List<int> ReportedByMeIssueIds { get; set; }
 }

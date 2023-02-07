@@ -41,7 +41,7 @@ public class UserRepository : IUserRepository
         {
             return new LoginResponseDTO()
             {
-                UserDTO = null,
+                UserWithNamesDTO = null,
                 Token = ""
             };
         }
@@ -63,17 +63,21 @@ public class UserRepository : IUserRepository
         };
         
         var _token = tokenHandler.CreateToken(tokenDescriptor);
-        var _userDTO = new UserDTO 
+        var _userWithNamesDTO = new UserWithNamesDTO 
         {
             FirstName = _user.FirstName,
             LastName = _user.LastName,
             Email = _user.Email,
             Password = _user.Password,
         };
-         _userDTO.ProjectId = _db.Users_Projects.Where(up => up.UserId == _user.Id).Select(up => up.ProjectId).ToList();
+        var projectIds = _db.Users_Projects.Where(up => up.UserId == _user.Id).Select(up => up.ProjectId).ToList();
+        _userWithNamesDTO.ProjectIdProjectNames = projectIds
+        .ToDictionary(id => id, 
+                      id => _db.Projects.Where(p => p.Id == id).Select(p => p.Name).First());
+        
         LoginResponseDTO loginResponseDTO = new LoginResponseDTO()
         {
-            UserDTO = _userDTO,
+            UserWithNamesDTO = _userWithNamesDTO,
             Token = tokenHandler.WriteToken(_token)
         };
         return loginResponseDTO;
