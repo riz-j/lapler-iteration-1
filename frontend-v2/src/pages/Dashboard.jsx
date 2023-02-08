@@ -1,10 +1,26 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom"
+import { getCurrentProject } from "../redux/currentProjectSlice";
 
 export default function Dashboard() {
+    const dispatch = useDispatch();
+    const currentUser = useSelector(state => state.currentUser);
     const { projectId } = useParams();
+
+    useEffect(() => {
+        dispatch(getCurrentProject({ 
+            projectId: projectId, 
+            token: currentUser.token 
+        }))
+    }, [])
 
     return (
         <div className='flex h-screen sm:text-sm'>
+
+            <p>{}</p>
+            {/* <button onClick={handleClick}>Load</button> */}
+
             <div className='bg-green-300 w-80 hidden md:block pt-4'>
                 <p className='bg-blue-200 rounded-lg px-5 py-2 border-b-2'>All states</p>
                 <p className='bg-blue-200 rounded-lg px-5 py-2 border-b-2'>Some states</p>

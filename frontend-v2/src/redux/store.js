@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import currentUserReducer from "./currentUserSlice";
+import currentProjectReducer from "./currentProjectSlice";
 
 const persistedState = localStorage.getItem("reduxState") 
     ? JSON.parse(localStorage.getItem("reduxState")) : {};
 
 export const store = configureStore({
     reducer: {
-        currentUser: currentUserReducer
+        currentUser: currentUserReducer,
+        currentProject: currentProjectReducer
     },
     preloadedState: persistedState
 })
