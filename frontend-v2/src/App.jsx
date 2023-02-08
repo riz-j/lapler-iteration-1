@@ -11,7 +11,6 @@ function App() {
   
   // const handleClick = () => {
   //   // dispatch(getCurrentUser({email: 'tscarff1@github.io', password: 'kIQ9xZx'}));
-  //   dispatch(getCurrentUser({email: 'adiputra979@gmail.com', password: 'somerset306'}));
   // }
 
   const handleLogin = (e) => {
