@@ -13,4 +13,5 @@ export const store = configureStore({
 
 store.subscribe(() => {
     localStorage.setItem("reduxState", JSON.stringify(store.getState()));
+                                        // Try something like store.currentUserReducer.getState();
 });
