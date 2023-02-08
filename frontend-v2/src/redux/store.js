@@ -1,16 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import currentUserReducer from "./currentUserSlice";
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-const persistedState = localStorage.getItem("reduxState") 
-    ? JSON.parse(localStorage.getItem("reduxState")) : {};
-
+const persistConfig = {
+    key: 'root',
+    storage,
+  };
+  
+const persistedReducer = persistReducer(persistConfig, currentUserReducer);
+  
 export const store = configureStore({
     reducer: {
-        currentUser: currentUserReducer
+      currentUser: persistedReducer
     },
-    preloadedState: persistedState
-})
-
-store.subscribe(() => {
-    localStorage.setItem("reduxState", JSON.stringify(store.getState()));
 });
+  
+export const persistor = persistStore(store);
