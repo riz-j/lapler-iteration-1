@@ -26,7 +26,7 @@ export default function Login() {
           <input type='submit'/>
         </form>
 
-        <div className='w-screen bg-red-100'>
+        <div className='w-screen bg-green-100'>
           <p className=''>First Name: {currentUser.firstName}</p>
           <p className=''>Last Name: {currentUser.lastName}</p>
           <p className=''>Email: {currentUser.email}</p>
