@@ -11,7 +11,6 @@ function App() {
         <Route path="/" element={ <Home /> } />
         <Route path="/login" element={ <Login /> } />
         <Route path="dashboard/project/:projectId" element={ <Dashboard /> } />
-        {/* <Route path="/dashboard" element={ <Dashboard /> } /> */}
       </Routes>
     </div>
   )
