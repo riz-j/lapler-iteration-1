@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { refetchCurrentUser } from "../redux/currentUserSlice";
 import { createProject } from "../redux/projectSlice";
 
 export default function CreateProject() {
@@ -7,12 +8,14 @@ export default function CreateProject() {
     const currentUser = useSelector(state => state.currentUser);
     const [projectName, setProjectName] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(createProject({ 
+        await dispatch(createProject({ 
             projectName: projectName,
             token: currentUser.token
          }))
+         .then(() => dispatch(refetchCurrentUser()))
+         .then(() => window.location.href = "/");
     }
 
     return (

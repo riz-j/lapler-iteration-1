@@ -18,7 +18,9 @@ export const createProject = createAsyncThunk('project/createProject', async (in
 
 const projectSlice = createSlice({
     name: 'project',
-    initialState: {},
+    initialState: {
+        isLoading: false
+    },
     reducers: {},
     extraReducers: {
         [createProject.pending]: (state) => {

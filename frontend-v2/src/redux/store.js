@@ -10,6 +10,7 @@ export const store = configureStore({
     reducer: {
         currentUser: currentUserReducer,
         currentProject: currentProjectReducer,
+        project: projectReducer
     },
     preloadedState: persistedState
 })

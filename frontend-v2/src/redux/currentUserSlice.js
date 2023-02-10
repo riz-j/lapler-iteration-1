@@ -16,6 +16,13 @@ export const getCurrentUser = createAsyncThunk('currentUser/getCurrentUser', asy
     .catch(err => console.log(err))
 })
 
+export const refetchCurrentUser = createAsyncThunk('currentUser/refetchCurrentUser', async () => {
+    // const { userId, token } = input;
+    return await fetch(`http://localhost:5080/api/Users/18`)
+    .then(res => res.json())
+    .catch(err => console.log(err))
+})
+
 const currentUserSlice = createSlice({
     name: 'currentUser',
     initialState: {},
@@ -35,6 +42,20 @@ const currentUserSlice = createSlice({
             state.token = action.payload.token;
         },
         [getCurrentUser.rejected]: (state) => {
+            state.isLoading = false;
+        },
+
+        [refetchCurrentUser.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [refetchCurrentUser.fulfilled]: (state, action) => {
+            state.isLoading = false;
+            state.firstName = action.payload.firstName;
+            state.lastName = action.payload.lastName;
+            state.email = action.payload.email;
+            state.projects = action.payload.projectIdProjectNames;
+        },
+        [refetchCurrentUser.rejected]: (state) => {
             state.isLoading = false;
         }
     }
