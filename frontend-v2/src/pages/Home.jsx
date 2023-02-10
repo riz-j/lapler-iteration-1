@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { refetchCurrentUser } from "../redux/currentUserSlice";
 import { deleteProject } from "../redux/projectSlice";
+import ProjectCard from "../components/ProjectCard";
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -18,19 +19,10 @@ export default function Home() {
         <div className="flex flex-col justify-center items-center h-screen">
           <h1 className="text-4xl mb-8">Welcome back, {currentUser.firstName}</h1>
       
-          <div className="grid grid-cols-2 gap-8 text-3xl">
+          <div className="grid grid-cols-2 gap-8">
             {currentUser.projects ? (
               Object.entries(currentUser.projects).map(([projectId, projectName]) => (
-                <div>
-                  <Link to={`/dashboard/project/${projectId}`}>
-                    <p className="bg-blue-200 px-4 py-2 rounded-lg">{projectName}</p>
-                  </Link>
-                  <button className="text-sm" onClick={async () => {
-                    await dispatch(deleteProject({
-                    projectIdToDelete: projectId,
-                    token: currentUser.token}))
-                    .then(() => dispatch(refetchCurrentUser()))}}>Delete</button>
-                </div>
+                <ProjectCard projectId={projectId} projectName={projectName} />
               ))
             ) : (
               <></>
