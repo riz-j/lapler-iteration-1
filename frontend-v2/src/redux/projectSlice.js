@@ -16,6 +16,8 @@ export const createProject = createAsyncThunk('project/createProject', async (in
     .catch(err => console.log(err))
 })
 
+export
+
 const projectSlice = createSlice({
     name: 'project',
     initialState: {
