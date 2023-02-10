@@ -16,7 +16,15 @@ export const createProject = createAsyncThunk('project/createProject', async (in
     .catch(err => console.log(err))
 })
 
-export
+export const deleteProject = createAsyncThunk('project/deleteProject', async (input) => {
+    const { projectIdToDelete, token } = input;
+    return await fetch(`http://localhost:5080/api/Projects/${projectIdToDelete}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+})
 
 const projectSlice = createSlice({
     name: 'project',
@@ -37,6 +45,16 @@ const projectSlice = createSlice({
         [createProject.rejected]: (state) => {
             state.isLoading = false;
             state.hasBeenCreated = false;
+        },
+
+        [deleteProject.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [deleteProject.fulfilled]: (state) => {
+            state.isLoading = false;
+        },
+        [deleteProject]: (state) => {
+            state.isLoading = false;
         }
     }
 })
