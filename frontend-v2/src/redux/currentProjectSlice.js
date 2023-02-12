@@ -32,6 +32,18 @@ export const createIssue = createAsyncThunk('currentProject/createIssue', async 
     .catch(err => console.log(err))
 })
 
+export const deleteIssue = createAsyncThunk('currentProject/deleteIssue', async (input) => {
+    const { projectId, issueId, token } = input;
+    return await fetch(`http://localhost:5080/api/Issues/project/${projectId}/issue/${issueId}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(res => res.json())
+    .catch(err => console.log(err))
+})
+
 const currentProjectSlice = createSlice({
     name: 'currentProject',
     initialState: {},
@@ -59,6 +71,17 @@ const currentProjectSlice = createSlice({
             state.isLoading = false;
         },
         [createIssue.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+
+        [deleteIssue.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [deleteIssue.fulfilled]: (state) => {
+            state.isLoading = false;
+        },
+        [deleteIssue.rejected]: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
         }

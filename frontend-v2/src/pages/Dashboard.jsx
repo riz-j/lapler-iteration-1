@@ -2,12 +2,19 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom"
 import { emptyCurrentProject, getCurrentProject } from "../redux/currentProjectSlice";
+import IssueCard from "../components/IssueCard";
 
 export default function Dashboard() {
     const { projectId } = useParams();
     const dispatch = useDispatch();
     const currentUser = useSelector(state => state.currentUser);
     const currentProject = useSelector(state => state.currentProject);
+    
+    const currentProjectId = () => {              //
+      const url = window.location.pathname;       //  Need to fix this by fixing the 
+      const id = url.split("/").slice(-1)[0];     //  getCurrentProject()  to have the 
+      return id;                                  //  Project ID in the redux state.
+    };                                            //
 
     useEffect(() => {
         dispatch(getCurrentProject({ 
@@ -43,12 +50,14 @@ export default function Dashboard() {
             <div>
               {currentProject.issues ? (
                 currentProject.issues.map(issue => (
-                  <div className="flex space-x-4 bg-blue-200 px-5 py-2 rounded-lg border-b-2">
-                    <p>{issue.id}</p>
-                    <p>{issue.typeOfIssue}</p>
-                    <p>{issue.priorityOfIssue}</p>
-                    <p>{issue.summary}</p>
-                  </div>
+                  <IssueCard 
+                    projectId={projectId}
+                    issueId={issue.id} 
+                    typeOfIssue={issue.typeOfIssue} 
+                    priorityOfIssue={issue.priorityOfIssue} 
+                    statusOfIssue={issue.statusOfIssue} 
+                    summary={issue.summary}
+                  /> 
                 ))
               ) : (
                 <h1>This project is empty</h1>
