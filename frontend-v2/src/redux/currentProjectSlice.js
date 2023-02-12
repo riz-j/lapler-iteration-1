@@ -35,7 +35,11 @@ export const createIssue = createAsyncThunk('currentProject/createIssue', async 
 const currentProjectSlice = createSlice({
     name: 'currentProject',
     initialState: {},
-    reducers: {},
+    reducers: {
+        emptyCurrentProject: (state) => {
+            return {};
+        }
+    },
     extraReducers: {
         [getCurrentProject.pending]: (state) => {
             state.isLoading = true;
@@ -60,4 +64,5 @@ const currentProjectSlice = createSlice({
         }
     }
 })
+export const { emptyCurrentProject } = currentProjectSlice.actions;
 export default currentProjectSlice.reducer;

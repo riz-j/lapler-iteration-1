@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom"
-import { getCurrentProject } from "../redux/currentProjectSlice";
+import { emptyCurrentProject, getCurrentProject } from "../redux/currentProjectSlice";
 
 export default function Dashboard() {
     const { projectId } = useParams();
@@ -13,7 +13,12 @@ export default function Dashboard() {
         dispatch(getCurrentProject({ 
             projectId: projectId, 
             token: currentUser.token 
-        }))
+        }));
+        return () => {
+          if (currentUser.isLoading == false) {
+            dispatch(emptyCurrentProject());
+          }
+        }
     }, [])
 
     return (
@@ -30,6 +35,9 @@ export default function Dashboard() {
           <div className="w-full bg-yellow-200">
             <div className="bg-green-200 flex justify-center items-center h-8">
               <input className="w-1/2 h-6" />
+              <Link to="issues/new">
+                <p>New Issue</p>
+              </Link>
             </div>
       
             <div>
