@@ -5,6 +5,6 @@ namespace rest_api_v2.Security.Models;
 
 public class LoginResponseDTO
 {
-    public UserWithNamesDTO UserWithNamesDTO { get; set; }
+    public UserWithIdAndNamesDTO UserWithIdAndNamesDTO { get; set; }
     public string Token { get; set; }
 }
