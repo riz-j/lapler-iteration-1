@@ -33,7 +33,7 @@ public class UsersService : ControllerBase
         return Ok(_db.Users.ToList());
     } 
 
-    public ActionResult<UserWithNamesDTO> GetUserById(int id)
+    public ActionResult<UserWithIdAndNamesDTO> GetUserById(int id)
     {
         var _user = _db.Users.FirstOrDefault(n => n.Id == id);
         if (_user == null)
@@ -41,18 +41,19 @@ public class UsersService : ControllerBase
             return NotFound();
         }
 
-        var _userWithNamesDTO = new UserWithNamesDTO 
+        var _userWithIdAndNamesDTO = new UserWithIdAndNamesDTO 
         {
+            Id = _user.Id,
             FirstName = _user.FirstName,
             LastName = _user.LastName,
             Email = _user.Email,
             Password = _user.Password
         };
         var projectIds = _db.Users_Projects.Where(up => up.UserId == _user.Id).Select(up => up.ProjectId).ToList();
-        _userWithNamesDTO.ProjectIdProjectNames = projectIds
+        _userWithIdAndNamesDTO.ProjectIdProjectNames = projectIds
         .ToDictionary(id => id, 
                       id => _db.Projects.Where(p => p.Id == id).Select(p => p.Name).First());
-        return Ok(_userWithNamesDTO);
+        return Ok(_userWithIdAndNamesDTO);
     }
 
     public ActionResult<User> UpdateUser(int userId, UserDTO userDTO)

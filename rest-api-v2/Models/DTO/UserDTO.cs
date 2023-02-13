@@ -25,3 +25,17 @@ public class UserWithNamesDTO
     public List<int> AssignedToMeIssueIds { get; set; }
     public List<int> ReportedByMeIssueIds { get; set; }
 }
+
+public class UserWithIdAndNamesDTO
+{
+    public int Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+
+    /* Relations */ 
+    public Dictionary<int, string> ProjectIdProjectNames { get; set; }
+    public List<int> AssignedToMeIssueIds { get; set; }
+    public List<int> ReportedByMeIssueIds { get; set; }
+}
