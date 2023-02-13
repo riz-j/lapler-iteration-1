@@ -12,7 +12,7 @@ export default function ProjectCard({projectId, projectName}) {
             projectIdToDelete: projectId,
             token: currentUser.token
         }))
-        .then(() => dispatch(refetchCurrentUser()))
+        .then(() => dispatch(refetchCurrentUser({userId: currentUser.id})))
     }
 
     return (

@@ -17,7 +17,7 @@ export default function CreateProject() {
             projectName: projectName,
             token: currentUser.token
          }))
-         .then(() => dispatch(refetchCurrentUser()))
+         .then(() => dispatch(refetchCurrentUser({userId: currentUser.id})))
     }
 
     return (

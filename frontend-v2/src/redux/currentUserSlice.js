@@ -16,9 +16,9 @@ export const getCurrentUser = createAsyncThunk('currentUser/getCurrentUser', asy
     .catch(err => console.log(err))
 })
 
-export const refetchCurrentUser = createAsyncThunk('currentUser/refetchCurrentUser', async () => {
-    // const { userId, token } = input;
-    return await fetch(`http://localhost:5080/api/Users/18`)
+export const refetchCurrentUser = createAsyncThunk('currentUser/refetchCurrentUser', async (input) => {
+    const { userId, token } = input;
+    return await fetch(`http://localhost:5080/api/Users/${userId}`)
     .then(res => res.json())
     .catch(err => console.log(err))
 })
@@ -33,12 +33,11 @@ const currentUserSlice = createSlice({
         },
         [getCurrentUser.fulfilled]: (state, action) => {
             state.isLoading = false;
-            // state.currentUserInfo = action.payload;
-            // state.id = action.payload.userWithNamesDTO.id; ???? THIS IS NEEDED!!!
-            state.firstName = action.payload.userWithNamesDTO.firstName;
-            state.lastName = action.payload.userWithNamesDTO.lastName;
-            state.email = action.payload.userWithNamesDTO.email;
-            state.projects = action.payload.userWithNamesDTO.projectIdProjectNames;
+            state.id = action.payload.userWithIdAndNamesDTO.id; 
+            state.firstName = action.payload.userWithIdAndNamesDTO.firstName;
+            state.lastName = action.payload.userWithIdAndNamesDTO.lastName;
+            state.email = action.payload.userWithIdAndNamesDTO.email;
+            state.projects = action.payload.userWithIdAndNamesDTO.projectIdProjectNames;
             state.token = action.payload.token;
         },
         [getCurrentUser.rejected]: (state) => {

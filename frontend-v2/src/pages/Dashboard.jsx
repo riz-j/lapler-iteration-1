@@ -48,7 +48,7 @@ export default function Dashboard() {
             </div>
       
             <div>
-              {currentProject.issues ? (
+              {(currentProject.issues && currentProject.issues.length > 0) ? (
                 currentProject.issues.map(issue => (
                   <IssueCard 
                     projectId={projectId}

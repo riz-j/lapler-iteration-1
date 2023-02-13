@@ -29,6 +29,7 @@ export default function Login() {
         </div>
 
         <div className='w-screen bg-green-100 px-16'>
+          <p className=''><b>Id:</b> {currentUser.id}</p>
           <p className=''><b>First Name:</b> {currentUser.firstName}</p>
           <p className=''><b>Last Name:</b> {currentUser.lastName}</p>
           <p className=''><b>Email:</b> {currentUser.email}</p>
