@@ -17,15 +17,16 @@ export default function Dashboard() {
     };                                            //
 
     useEffect(() => {
+        dispatch(emptyCurrentProject());
         dispatch(getCurrentProject({ 
             projectId: projectId, 
             token: currentUser.token 
         }));
-        return () => {
-          if (currentUser.isLoading == false) {
-            dispatch(emptyCurrentProject());
-          }
-        }
+        // return () => {
+        //   if (currentUser.isLoading == false) {
+        //     dispatch(emptyCurrentProject());
+        //   }
+        // }
     }, [])
 
     return (
