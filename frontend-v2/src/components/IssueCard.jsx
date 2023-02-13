@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { deleteIssue, getCurrentProject } from "../redux/currentProjectSlice";
+import { Link } from "react-router-dom";
 
 export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfIssue, statusOfIssue, summary }) {
     const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
 
     return (
         <div className="grid grid-cols-12">
-            <div className="col-span-11 flex space-x-4 bg-blue-200 px-5 py-2 rounded-lg border-b-2">
+            <div className="col-span-10 flex space-x-4 bg-blue-200 px-5 py-2 rounded-lg border-b-2">
                 <p>{issueId}</p>
                 <p>{typeOfIssue}</p>
                 <p>{priorityOfIssue}</p>
@@ -33,6 +34,11 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
             onClick={handleDelete}>
                 x
             </button> 
+            <Link to={`/dashboard/project/${projectId}/issues/${issueId}/update`}>
+                <button className="col-span-1 flex justify-center text-xl text-green-500">
+                    Edit
+                </button> 
+            </Link>
         </div>
     )
 }

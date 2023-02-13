@@ -32,6 +32,25 @@ export const createIssue = createAsyncThunk('currentProject/createIssue', async 
     .catch(err => console.log(err))
 })
 
+export const updateIssue = createAsyncThunk('currentProject/updateIssue', async (input) => {
+    const { issueId, typeOfIssue, priorityOfIssue, statusOfIssue, summary, projectId, reporterId, token } = input;
+    return await fetch(`http://localhost:5080/api/Issues/${issueId}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify({
+            'typeOfIssue': typeOfIssue,
+            'priorityOfIssue': priorityOfIssue,
+            'statusOfIssue': statusOfIssue,
+            'summary': summary,
+            'projectId': projectId,
+            'reporterId': reporterId
+        })
+    })
+})
+
 export const deleteIssue = createAsyncThunk('currentProject/deleteIssue', async (input) => {
     const { projectId, issueId, token } = input;
     return await fetch(`http://localhost:5080/api/Issues/project/${projectId}/issue/${issueId}`, {
@@ -71,6 +90,17 @@ const currentProjectSlice = createSlice({
             state.isLoading = false;
         },
         [createIssue.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+        
+        [updateIssue.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [updateIssue.fulfilled]: (state) => {
+            state.isLoading = false;
+        },
+        [updateIssue.rejected]: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
         },
