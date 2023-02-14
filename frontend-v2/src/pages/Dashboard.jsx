@@ -22,11 +22,6 @@ export default function Dashboard() {
             projectId: projectId, 
             token: currentUser.token 
         }));
-        // return () => {
-        //   if (currentUser.isLoading == false) {
-        //     dispatch(emptyCurrentProject());
-        //   }
-        // }
     }, [])
 
     return (
@@ -41,10 +36,13 @@ export default function Dashboard() {
           </div>
       
           <div className="w-full bg-yellow-200">
-            <div className="bg-green-200 flex justify-center items-center h-8">
+            <div className="bg-green-200 flex justify-evenly items-center h-8">
               <input className="w-1/2 h-6" />
               <Link to="issues/new">
                 <p>New Issue</p>
+              </Link>
+              <Link to="users/add">
+                <p>Add User</p>
               </Link>
             </div>
       
@@ -68,9 +66,11 @@ export default function Dashboard() {
           </div>
       
           <div className="bg-red-200 w-80 hidden md:block">
-            <p className="bg-blue-200 rounded-lg px-5 py-2 border-b-2">Project</p>
-            <p className="bg-blue-200 rounded-lg px-5 py-2 border-b-2">Hello</p>
-            <p className="bg-blue-200 rounded-lg px-5 py-2 border-b-2">Frick</p>
+            { (currentProject.users) ? 
+              (currentProject.users).map(user => 
+                <p className="bg-blue-200 rounded-lg px-5 py-2 border-b-2">{user.firstName} {user.lastName}</p>
+              ) : <></>
+            }
           </div>
         </div>
       );

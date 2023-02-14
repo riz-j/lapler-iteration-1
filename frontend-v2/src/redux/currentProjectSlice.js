@@ -63,6 +63,20 @@ export const deleteIssue = createAsyncThunk('currentProject/deleteIssue', async 
     .catch(err => console.log(err))
 })
 
+export const addUsersToProject = createAsyncThunk('currentProject/addUsersToProject', async (input) => {
+    const { projectId, emailList, token } = input;
+    return await fetch(`http://localhost:5080/api/Projects/${projectId}`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(
+            emailList
+        )
+    })
+})
+
 const currentProjectSlice = createSlice({
     name: 'currentProject',
     initialState: {},
@@ -115,6 +129,17 @@ const currentProjectSlice = createSlice({
             state.isLoading = false;
         },
         [deleteIssue.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+
+        [addUsersToProject.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [addUsersToProject.fulfilled]: (state) => {
+            state.isLoading = false;
+        },
+        [addUsersToProject.rejected]: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
         }
