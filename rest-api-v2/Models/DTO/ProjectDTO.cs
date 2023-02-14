@@ -1,3 +1,5 @@
+using rest_api_v2.Models.DTO;
+
 namespace rest_api_v2.Models;
 
 public class ProjectDTO
@@ -21,6 +23,18 @@ public class ProjectWithNamesDTO
     public IEnumerable<string>? UsersNames { get; set; }
     public IEnumerable<string>? IssuesNames { get; set; }
 }
+
+public class ProjectWithIdsNamesAndIssuesDTO
+{
+    public string Name { get; set; }
+    public DateTime? CreatedAt { get; set; }
+
+    /* Relations */
+    public string? AdminName { get; set; }
+    public IEnumerable<MinimalUserDTO>? Users { get; set; }
+    public IEnumerable<IssueDTO>? Issues { get; set; }
+}
+
 public class AddUsersToProjectDTO
 {
     public List<int> UserIdsToAdd { get; set; }

@@ -53,7 +53,7 @@ public class ProjectsController : ControllerBase
     /*     Remove Users From Project
     /*
     */
-
+    
     [Authorize]
     [HttpGet("{projectId:int}")]
     public async Task<ActionResult<ProjectWithNamesDTO>> GetProjectWithNamesAsync(int projectId, [FromHeader]string Authorization)

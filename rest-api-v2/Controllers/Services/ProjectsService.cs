@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using rest_api_v2.Data;
 using rest_api_v2.Models;
+using rest_api_v2.Models.DTO;
 using rest_api_v2.Security.Services;
 
 namespace rest_api_v2.Controllers.Services;
@@ -9,9 +10,11 @@ namespace rest_api_v2.Controllers.Services;
 public class ProjectsService : ControllerBase
 {
     private AppDbContext _db;
-    public ProjectsService(AppDbContext db)
+    private IssuesService _issuesService;
+    public ProjectsService(AppDbContext db, IssuesService issuesService)
     {
         _db = db;
+        _issuesService = issuesService;
     }
 
     public async Task<Project> CreateProjectAsync(ProjectDTO projectDTO, int creatorId)
@@ -82,7 +85,7 @@ public class ProjectsService : ControllerBase
         return;    
     }
 
-    public async Task<ProjectWithNamesDTO?> GetProjectWithNamesAsync(int projectId)
+    public async Task<ProjectWithIdsNamesAndIssuesDTO?> GetProjectWithNamesAsync(int projectId)
     {
         var _project = await _db.Projects.FirstOrDefaultAsync(p => p.Id == projectId);
         
@@ -91,12 +94,32 @@ public class ProjectsService : ControllerBase
             return null;
         }
 
-        var _projectWithNames = await _db.Projects.Where(p => p.Id == projectId).Select(project => new ProjectWithNamesDTO {
+        var _issues = await _db.Issues.Where(i => i.ProjectId == projectId).Select(issue => new IssueDTO {
+            TypeOfIssue = issue.TypeOfIssue,
+            PriorityOfIssue = issue.PriorityOfIssue,
+            StatusOfIssue = issue.StatusOfIssue,
+            Summary = issue.Summary,
+            ImageUrl = issue.ImageUrl,
+            DueDate = issue.DueDate,
+            CreatedAt = issue.CreatedAt,
+            UpdatedAt = issue.UpdatedAt,
+            ProjectId = issue.ProjectId,
+            AssigneeId = issue.AssigneeId,
+            ReporterId = issue.ReporterId
+        }).ToListAsync();
+
+        var _projectWithNames = await _db.Projects.Where(p => p.Id == projectId).Select(project => new ProjectWithIdsNamesAndIssuesDTO {
             Name = _project.Name,
             CreatedAt = project.CreatedAt,
             AdminName = project.Admin.FirstName,
-            UsersNames = project.User_Projects.Select(n => n.User.FirstName),
-            IssuesNames = project.Issues.Select(n => n.Summary)
+            //UserEmails = project.User_Projects.Select(n => n.User.Email), 
+            Users = project.User_Projects.Select(n => new MinimalUserDTO {
+                Id = n.User.Id,
+                FirstName = n.User.FirstName,
+                LastName = n.User.LastName,
+                Email = n.User.Email
+            }),
+            Issues = _issues
         }).FirstOrDefaultAsync();
 
         return _projectWithNames;
