@@ -30,21 +30,21 @@ public class ProjectsController : ControllerBase
         
         Project result = await _projectsService.CreateProjectAsync(projectDTO, creatorId);
 
-        await _projectsService.AddUsersToProjectAsync(result.Id,  new List<int>() { creatorId });
+        await _projectsService.AddUsersToProjectByIdAsync(result.Id,  new List<int>() { creatorId });
 
         return Ok(result);
     }
 
     [Authorize]
     [HttpPost("{projectId:int}")]
-    public async Task<IActionResult> AddUsersToProjectAsync(int projectId, [FromBody]List<int> UserIdsToAdd, [FromHeader]string Authorization)
+    public async Task<IActionResult> AddUsersToProjectAsync(int projectId, [FromBody]List<string> UserEmailsToAdd, [FromHeader]string Authorization)
     {
         if (!_authService.IsProjectMember(projectId, Authorization))
         {
             return Forbid();
         }
 
-        await _projectsService.AddUsersToProjectAsync(projectId, UserIdsToAdd);
+        await _projectsService.AddUsersToProjectByEmailAsync(projectId, UserEmailsToAdd);
         return Ok();
     }
 
