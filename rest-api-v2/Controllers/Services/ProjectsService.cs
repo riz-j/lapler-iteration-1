@@ -94,7 +94,8 @@ public class ProjectsService : ControllerBase
             return null;
         }
 
-        var _issues = await _db.Issues.Where(i => i.ProjectId == projectId).Select(issue => new IssueDTO {
+        var _issues = await _db.Issues.Where(i => i.ProjectId == projectId).Select(issue => new IssueWithIdDTO {
+            Id = issue.Id,
             TypeOfIssue = issue.TypeOfIssue,
             PriorityOfIssue = issue.PriorityOfIssue,
             StatusOfIssue = issue.StatusOfIssue,
@@ -112,7 +113,6 @@ public class ProjectsService : ControllerBase
             Name = _project.Name,
             CreatedAt = project.CreatedAt,
             AdminName = project.Admin.FirstName,
-            //UserEmails = project.User_Projects.Select(n => n.User.Email), 
             Users = project.User_Projects.Select(n => new MinimalUserDTO {
                 Id = n.User.Id,
                 FirstName = n.User.FirstName,

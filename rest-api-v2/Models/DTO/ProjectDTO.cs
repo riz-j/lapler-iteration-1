@@ -32,7 +32,7 @@ public class ProjectWithIdsNamesAndIssuesDTO
     /* Relations */
     public string? AdminName { get; set; }
     public IEnumerable<MinimalUserDTO>? Users { get; set; }
-    public IEnumerable<IssueDTO>? Issues { get; set; }
+    public IEnumerable<IssueWithIdDTO>? Issues { get; set; }
 }
 
 public class AddUsersToProjectDTO
