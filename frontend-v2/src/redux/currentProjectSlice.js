@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const getCurrentProject = createAsyncThunk('currentProject/getCurrentProject', async (input) => {
     const { projectId, token } = input;
-    return await fetch(`http://localhost:5080/api/Issues/${projectId}`, {
+    return await fetch(`http://localhost:5080/api/Projects/${projectId}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}` 
@@ -77,7 +77,10 @@ const currentProjectSlice = createSlice({
         },
         [getCurrentProject.fulfilled]: (state, action) => {
             state.isLoading = false;
-            state.issues = action.payload;
+            state.projectName = action.payload.name;
+            state.adminName = action.payload.adminName; // Should be Admin details instead (User ID, name, email)
+            state.users = action.payload.users;
+            state.issues = action.payload.issues;
         },
         [getCurrentProject.rejected]: (state) => {
             state.isLoading = false;
