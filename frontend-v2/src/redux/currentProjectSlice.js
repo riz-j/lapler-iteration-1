@@ -77,6 +77,16 @@ export const addUsersToProject = createAsyncThunk('currentProject/addUsersToProj
     })
 })
 
+export const removeUserFromProject = createAsyncThunk('currentProject/removeUserFromProject', async (input) => {
+    const { projectId, userIdToRemove, token } = input;
+    return await fetch(`http://localhost:5080/api/Projects/${projectId}/remove/${userIdToRemove}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+})
+
 const currentProjectSlice = createSlice({
     name: 'currentProject',
     initialState: {},
@@ -142,7 +152,18 @@ const currentProjectSlice = createSlice({
         [addUsersToProject.rejected]: (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
-        }
+        },
+
+        [removeUserFromProject.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [removeUserFromProject.fulfilled]: (state) => {
+            state.isLoading = false;
+        },
+        [removeUserFromProject.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+        }        
     }
 })
 export const { emptyCurrentProject } = currentProjectSlice.actions;

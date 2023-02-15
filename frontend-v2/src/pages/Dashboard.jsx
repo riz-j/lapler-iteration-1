@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom"
 import { emptyCurrentProject, getCurrentProject } from "../redux/currentProjectSlice";
 import IssueCard from "../components/IssueCard";
+import ProjectUserCard from "../components/ProjectUserCard";
 
 export default function Dashboard() {
     const { projectId } = useParams();
@@ -68,7 +69,8 @@ export default function Dashboard() {
           <div className="bg-red-200 w-80 hidden md:block">
             { (currentProject.users) ? 
               (currentProject.users).map(user => 
-                <p className="bg-blue-200 rounded-lg px-5 py-2 border-b-2">{user.firstName} {user.lastName}</p>
+                // <p className="bg-blue-200 rounded-lg px-5 py-2 border-b-2">{user.firstName} {user.lastName}</p>
+                <ProjectUserCard userId={user.id} userFirstName={user.firstName} userLastName={user.lastName} />
               ) : <></>
             }
           </div>
