@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom"
-import { addUsersToProject } from "../redux/currentProjectSlice";
+import { addUsersToProject, getCurrentProject } from "../redux/currentProjectSlice";
 
 export default function AddUserToProject() {
     const { projectId } = useParams();
@@ -16,14 +16,18 @@ export default function AddUserToProject() {
         setEmailList([...emailList, email])
     }
     
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         navigate(-1);
-        dispatch(addUsersToProject({
+        await dispatch(addUsersToProject({
             projectId: projectId,
             emailList: emailList,
             token: token
-        }));
+        }))
+        .then(() => dispatch(getCurrentProject({
+            projectId: projectId,
+            token: token
+        })))
     }
 
     return (
