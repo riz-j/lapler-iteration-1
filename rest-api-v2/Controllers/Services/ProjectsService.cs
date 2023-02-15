@@ -85,6 +85,19 @@ public class ProjectsService : ControllerBase
         return;    
     }
 
+    public async Task RemoveUserFromProjectAsync(int projectId, int userIdToRemove)
+    {
+        var _user_project = _db.Users_Projects.Where(up => (up.UserId == userIdToRemove) && (up.ProjectId == projectId)).FirstOrDefault();
+        if (_user_project == null)
+        {
+            throw new Exception($"User-Project Relationship Not Found");
+        }
+
+        _db.Users_Projects.Remove(_user_project);
+        await _db.SaveChangesAsync();
+        return;
+    }
+
     public async Task<ProjectWithIdsNamesAndIssuesDTO?> GetProjectWithNamesAsync(int projectId)
     {
         var _project = await _db.Projects.FirstOrDefaultAsync(p => p.Id == projectId);

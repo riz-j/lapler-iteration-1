@@ -48,11 +48,20 @@ public class ProjectsController : ControllerBase
         return Ok();
     }
 
-    /*
-    /*
-    /*     Remove Users From Project
-    /*
-    */
+
+    /*     Remove Users From Project    */
+    [HttpDelete("{projectId:int}/remove/{userIdToRemove:int}")]
+    public async Task<IActionResult> RemoveUserFromProjectAsync(int projectId, int userIdToRemove, [FromHeader]string Authorization)
+    {
+        if(!_authService.IsProjectMember(projectId, Authorization))
+        {
+            return Forbid();
+        }
+        
+        await _projectsService.RemoveUserFromProjectAsync(projectId, userIdToRemove);
+        return Ok();
+    }
+
     
     [Authorize]
     [HttpGet("{projectId:int}")]
