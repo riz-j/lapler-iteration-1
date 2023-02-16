@@ -1,21 +1,24 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { getCurrentUser } from '../redux/currentUserSlice'
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Login() {
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.currentUser);
+  const navigate = useNavigate();
 
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    dispatch(getCurrentUser({
+    await dispatch(getCurrentUser({
       email: emailInput,
       password: passwordInput
     }))
+    .then(() => navigate("/"));
   }
     
   return (

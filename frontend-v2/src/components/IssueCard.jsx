@@ -24,12 +24,12 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
     return (
         <div className="grid grid-cols-12">
             <div className="col-span-10 flex space-x-4 bg-blue-200 px-5 py-2 rounded-lg border-b-2">
-                <p>{issueId}</p>
-                <p>{typeOfIssue}</p>
-                <p>{priorityOfIssue}</p>
-                <p>{statusOfIssue}</p>
-                <p>{summary}</p>
-                <p>{reporterId}</p>
+                <p className="">{issueId}</p>
+                <p className="">{typeOfIssue}</p>
+                <p className="font-bold">{priorityOfIssue}</p>
+                <p className="italic">{statusOfIssue}</p>
+                <p className="">{summary}</p>
+                <p className="">{reporterId}</p>
             </div>
             <button className="col-span-1 flex justify-center text-2xl text-red-500"
             onClick={handleDelete}>

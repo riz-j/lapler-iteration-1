@@ -7,6 +7,7 @@ import CreateProject from './pages/CreateProject';
 import CreateIssue from './pages/CreateIssue';
 import UpdateIssue from './pages/UpdateIssue';
 import AddUserToProject from './pages/AddUserToProject';
+import Register from './pages/Register';
 
 function App() {  
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={ <Home /> } />
         <Route path="/login" element={ <Login /> } />
+        <Route path="/register" element={ <Register /> } />
         <Route path="project/new" element={ <CreateProject /> } />
         <Route path="dashboard/project/:projectId" element={ <Dashboard /> } />
         <Route path="dashboard/project/:projectId/issues/new" element={ <CreateIssue /> } />
