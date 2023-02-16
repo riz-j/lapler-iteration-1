@@ -13,12 +13,13 @@ export default function UpdateIssue() {
     const allIssues = useSelector(state => state.currentProject.issues);
     const issueToUpdate = allIssues.find(issue => issue.id === parseInt(issueId));
     useEffect(() => console.log(issueToUpdate), []);
+    const defaultAssigneeId = issueToUpdate.assigneeId ? issueToUpdate.assigneeId : 'None';
 
     const [typeOfIssue, setTypeOfIssue] = useState(issueToUpdate.typeOfIssue);
     const [priorityOfIssue, setPriorityOfIssue] = useState(issueToUpdate.priorityOfIssue);
     const [statusOfIssue, setStatusOfIssue] = useState(issueToUpdate.statusOfIssue);
     const [summary, setSummary] = useState(issueToUpdate.summary);
-    const [assigneeId, setAssigneeId] = useState(issueToUpdate.assigneeId);
+    const [assigneeId, setAssigneeId] = useState(defaultAssigneeId);
     const [reporterId, setReporterId] = useState(issueToUpdate.reporterId);
 
     const handleSubmit = async (e) => {
@@ -74,6 +75,7 @@ export default function UpdateIssue() {
 
                 <select type="text" value={assigneeId} placeholder="assigneeId" className="border-2 border-black px-2 py-1 rounded-md w-full"
                 onChange={e => setAssigneeId(e.target.value)} >
+                    <option value="">None</option>
                     { projectMembers ? 
                         projectMembers.map(user => {
                             return <option value={user.id}>{user.firstName} {user.lastName}</option>

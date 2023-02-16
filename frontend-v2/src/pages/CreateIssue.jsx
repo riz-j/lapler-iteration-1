@@ -58,6 +58,7 @@ export default function CreateIssue() {
 
                 <select type="text" value={assigneeId} placeholder="assigneeId" className="border-2 border-black px-2 py-1 rounded-md w-full"
                 onChange={e => setAssigneeId(e.target.value)} >
+                    <option value="">No-one</option>
                     { projectMembers ? 
                         projectMembers.map(user => {
                             return <option value={user.id}>{user.firstName} {user.lastName}</option>

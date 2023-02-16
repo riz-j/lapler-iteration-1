@@ -36,11 +36,11 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                 <p className="italic">{statusOfIssue}</p>
                 <p className={line_style}>{summary}</p>
                 <p className="">{reporterId}</p>
-                <p className="">{reporter.firstName} {reporter.lastName}</p>
                 {
                     assignee &&
                     <p className="">{assignee.firstName} {assignee.lastName}</p>
                 }     
+                <p className="">{reporter.firstName} {reporter.lastName}</p>
             </div>
             <button className="col-span-1 flex justify-center text-2xl text-red-500"
             onClick={handleDelete}>
