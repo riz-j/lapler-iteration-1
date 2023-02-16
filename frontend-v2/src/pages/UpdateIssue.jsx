@@ -12,8 +12,8 @@ export default function UpdateIssue() {
 
     const allIssues = useSelector(state => state.currentProject.issues);
     const issueToUpdate = allIssues.find(issue => issue.id === parseInt(issueId));
-    useEffect(() => console.log(issueToUpdate), []);
-    const defaultAssigneeId = issueToUpdate.assigneeId ? issueToUpdate.assigneeId : 'None';
+    // useEffect(() => console.log(issueToUpdate), []);
+    const defaultAssigneeId = issueToUpdate.assigneeId ? issueToUpdate.assigneeId : null;
 
     const [typeOfIssue, setTypeOfIssue] = useState(issueToUpdate.typeOfIssue);
     const [priorityOfIssue, setPriorityOfIssue] = useState(issueToUpdate.priorityOfIssue);
@@ -21,6 +21,14 @@ export default function UpdateIssue() {
     const [summary, setSummary] = useState(issueToUpdate.summary);
     const [assigneeId, setAssigneeId] = useState(defaultAssigneeId);
     const [reporterId, setReporterId] = useState(issueToUpdate.reporterId);
+
+    const [dueDateDay, setDueDateDay] = useState('01');
+    const [dueDateMonth, setDueDateMonth] = useState('2');
+    const [dueDateYear, setDueDateYear] = useState('2023');
+    const dueDate = new Date(dueDateYear, dueDateMonth, dueDateDay, 0, 0, 0).toISOString();
+    useEffect(() => {
+        console.log(dueDate)
+    }, [dueDate])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,7 +40,8 @@ export default function UpdateIssue() {
             statusOfIssue: statusOfIssue, 
             summary: summary, 
             projectId: projectId, 
-            assigneeId: assigneeId,
+            dueDate: dueDate,
+            ...(assigneeId && { assigneeId }),
             reporterId: reporterId, 
             token: token
         }))
@@ -73,9 +82,49 @@ export default function UpdateIssue() {
                 <input type="text" value={summary} placeholder="summary" className="border-2 border-black px-2 py-1 rounded-md w-full"
                 onChange={e => setSummary(e.target.value)} />
 
+                <div className="flex w-full">
+                    <select type="text" value={dueDateDay} placeholder="Due Date Day" className="border-2 border-black px-2 py-1 rounded-md w-full"
+                    onChange={e => setDueDateDay(e.target.value)}>
+                        <option value="01">1</option> <option value="02">2</option>
+                        <option value="03">3</option> <option value="04">4</option>
+                        <option value="05">5</option> <option value="06">6</option>
+                        <option value="07">7</option> <option value="08">8</option>
+                        <option value="09">9</option> <option value="10">10</option>
+                        <option value="11">11</option> <option value="12">12</option>
+                        <option value="13">13</option> <option value="14">14</option>
+                        <option value="15">15</option> <option value="16">16</option>
+                        <option value="17">17</option> <option value="18">18</option>
+                        <option value="19">19</option> <option value="20">20</option>
+                        <option value="21">21</option> <option value="22">22</option>
+                    </select>
+                    <select type="text" value={dueDateMonth} placeholder="Due Date Month" className="border-2 border-black px-2 py-1 rounded-md w-full"
+                    onChange={e => setDueDateMonth(e.target.value)}>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select>
+                    <select type="text" value={dueDateYear} placeholder="Due Date Year" className="border-2 border-black px-2 py-1 rounded-md w-full"
+                    onChange={e => setDueDateYear(e.target.value)}>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                    </select>
+                </div>
+
                 <select type="text" value={assigneeId} placeholder="assigneeId" className="border-2 border-black px-2 py-1 rounded-md w-full"
                 onChange={e => setAssigneeId(e.target.value)} >
-                    <option value="">None</option>
+                    <option value={null}>None</option>
                     { projectMembers ? 
                         projectMembers.map(user => {
                             return <option value={user.id}>{user.firstName} {user.lastName}</option>

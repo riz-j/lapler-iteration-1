@@ -57,6 +57,7 @@ export default function Dashboard() {
                     priorityOfIssue={issue.priorityOfIssue} 
                     statusOfIssue={issue.statusOfIssue} 
                     summary={issue.summary}
+                    dueDate={issue.dueDate}
                     assigneeId={issue.assigneeId}
                     reporterId={issue.reporterId}
                   /> 

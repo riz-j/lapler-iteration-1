@@ -1,15 +1,18 @@
 import { useDispatch, useSelector } from "react-redux"
 import { deleteIssue, getCurrentProject } from "../redux/currentProjectSlice";
+import { dateParser } from "../utils/dateHandler";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
-export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfIssue, statusOfIssue, summary, assigneeId, reporterId }) {
+export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfIssue, statusOfIssue, dueDate, summary, assigneeId, reporterId }) {
     const dispatch = useDispatch();
     const currentProject = useSelector(state => state.currentProject);
     const currentUser = useSelector(state => state.currentUser);
 
     const reporter = (currentProject.users).find(n => n.id === parseInt(reporterId));
     const assignee = (currentProject.users).find(n => n.id === parseInt(assigneeId));
+    const readableDate = dueDate ? dateParser(dueDate) : '';
+    
 
     const line_style = (statusOfIssue === 'Done') ? 'line-through' : '';
 
@@ -35,7 +38,10 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                 <p className="font-bold">{priorityOfIssue}</p>
                 <p className="italic">{statusOfIssue}</p>
                 <p className={line_style}>{summary}</p>
-                <p className="">{reporterId}</p>
+                {   readableDate &&
+                    <p className="">{readableDate}</p>
+                }
+                {/* <p className="">{reporterId}</p> */}
                 {
                     assignee &&
                     <p className="">{assignee.firstName} {assignee.lastName}</p>
