@@ -1,5 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+export const registerUser = createAsyncThunk('currentUser/registerUser', async (input) => {
+    const { firstName, lastName, email, password } = input;
+    return await fetch("http://localhost:5080/api/UsersAuth/register", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'firstName': firstName,
+            'lastName': lastName,
+            'email': email,
+            'password': password
+        })
+    })
+})
+
 export const getCurrentUser = createAsyncThunk('currentUser/getCurrentUser', async (input) => {
     const { email, password } = input;
     return await fetch("http://localhost:5080/api/UsersAuth/login", {
@@ -41,6 +57,17 @@ const currentUserSlice = createSlice({
             state.token = action.payload.token;
         },
         [getCurrentUser.rejected]: (state) => {
+            state.isLoading = false;
+        },
+
+        [registerUser.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [registerUser.fulfilled]: (state, action) => {
+            state.isLoading = false;
+            state.message = action.payload.message;
+        },
+        [registerUser.rejected]: (state) => {
             state.isLoading = false;
         },
 

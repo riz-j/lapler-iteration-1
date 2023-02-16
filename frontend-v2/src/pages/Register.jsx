@@ -1,14 +1,37 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getCurrentUser, registerUser } from "../redux/currentUserSlice";
 
 export default function Register() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState();
     const [verifyPassword, setVerifyPassword] = useState('');
 
-    const handleRegisterFormSubmit = (e) => {
+    const handleRegisterFormSubmit = async (e) => {
         e.preventDefault();
+
+        if (password != verifyPassword) {
+            alert('Password does not match');
+            return;
+        }
+
+        await dispatch(registerUser({
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
+        }))
+        .then(() => dispatch(getCurrentUser({
+            email: email,
+            password: password
+        })))
+        .then(() => navigate("/"));
     }
     
     return (
