@@ -7,11 +7,13 @@ export default function CreateIssue() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const currentUser = useSelector(state => state.currentUser);
+    const projectMembers = useSelector(state => state.currentProject.users);
     const { projectId } = useParams();
     const [typeOfIssue, setTypeOfIssue] = useState('Bug');
     const [priorityOfIssue, setPriorityOfIssue] = useState('Low');
     const [statusOfIssue, setStatusOfIssue] = useState('Waiting');
     const [summary, setSummary] = useState('');
+    const [assigneeId, setAssigneeId] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -22,7 +24,8 @@ export default function CreateIssue() {
             typeOfIssue: typeOfIssue,
             priorityOfIssue: priorityOfIssue,
             statusOfIssue: statusOfIssue,
-            summary: summary
+            summary: summary,
+            assigneeId: assigneeId
         }));
     }
 
@@ -38,18 +41,30 @@ export default function CreateIssue() {
                     <option value="Epic">Epic</option>
                     <option value="Idea">Idea</option>
                 </select>
+
                 <select type="text" placeholder="priorityOfIssue" className="border-2 border-black px-2 py-1 rounded-md w-full"
                 onChange={e => setPriorityOfIssue(e.target.value)} >
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
                     <option value="High">High</option>
                 </select>
+
                 <select type="text" placeholder="statusOfIssue" className="border-2 border-black px-2 py-1 rounded-md w-full"
                 onChange={e => setStatusOfIssue(e.target.value)} >
                     <option value="Waiting">Waiting</option>
                     <option value="Doing">Doing</option>
                     <option value="Done">Done</option>
                 </select>
+
+                <select type="text" value={assigneeId} placeholder="assigneeId" className="border-2 border-black px-2 py-1 rounded-md w-full"
+                onChange={e => setAssigneeId(e.target.value)} >
+                    { projectMembers ? 
+                        projectMembers.map(user => {
+                            return <option value={user.id}>{user.firstName} {user.lastName}</option>
+                        }) : <></>
+                    }
+                </select>
+
                 <input type="text" placeholder="summary" className="border-2 border-black px-2 py-1 rounded-md w-full"
                 onChange={e => setSummary(e.target.value)} />
                 <input type="submit" className="border-2 border-black px-2 py-1 rounded-md w-3/4" />

@@ -1,11 +1,17 @@
 import { useDispatch, useSelector } from "react-redux"
 import { deleteIssue, getCurrentProject } from "../redux/currentProjectSlice";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
-export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfIssue, statusOfIssue, summary, reporterId }) {
+export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfIssue, statusOfIssue, summary, assigneeId, reporterId }) {
     const dispatch = useDispatch();
     const currentProject = useSelector(state => state.currentProject);
     const currentUser = useSelector(state => state.currentUser);
+
+    const reporter = (currentProject.users).find(n => n.id === parseInt(reporterId));
+    const assignee = (currentProject.users).find(n => n.id === parseInt(assigneeId));
+
+    const line_style = (statusOfIssue === 'Done') ? 'line-through' : '';
 
     const handleDelete = async () => {
         await dispatch(deleteIssue({
@@ -28,8 +34,13 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                 <p className="">{typeOfIssue}</p>
                 <p className="font-bold">{priorityOfIssue}</p>
                 <p className="italic">{statusOfIssue}</p>
-                <p className="">{summary}</p>
+                <p className={line_style}>{summary}</p>
                 <p className="">{reporterId}</p>
+                <p className="">{reporter.firstName} {reporter.lastName}</p>
+                {
+                    assignee &&
+                    <p className="">{assignee.firstName} {assignee.lastName}</p>
+                }     
             </div>
             <button className="col-span-1 flex justify-center text-2xl text-red-500"
             onClick={handleDelete}>

@@ -18,6 +18,7 @@ export default function UpdateIssue() {
     const [priorityOfIssue, setPriorityOfIssue] = useState(issueToUpdate.priorityOfIssue);
     const [statusOfIssue, setStatusOfIssue] = useState(issueToUpdate.statusOfIssue);
     const [summary, setSummary] = useState(issueToUpdate.summary);
+    const [assigneeId, setAssigneeId] = useState(issueToUpdate.assigneeId);
     const [reporterId, setReporterId] = useState(issueToUpdate.reporterId);
 
     const handleSubmit = async (e) => {
@@ -30,6 +31,7 @@ export default function UpdateIssue() {
             statusOfIssue: statusOfIssue, 
             summary: summary, 
             projectId: projectId, 
+            assigneeId: assigneeId,
             reporterId: reporterId, 
             token: token
         }))
@@ -70,13 +72,21 @@ export default function UpdateIssue() {
                 <input type="text" value={summary} placeholder="summary" className="border-2 border-black px-2 py-1 rounded-md w-full"
                 onChange={e => setSummary(e.target.value)} />
 
+                <select type="text" value={assigneeId} placeholder="assigneeId" className="border-2 border-black px-2 py-1 rounded-md w-full"
+                onChange={e => setAssigneeId(e.target.value)} >
+                    { projectMembers ? 
+                        projectMembers.map(user => {
+                            return <option value={user.id}>{user.firstName} {user.lastName}</option>
+                        }) : <></>
+                    }
+                </select>
+
                 <select type="text" value={reporterId} placeholder="reporterId" className="border-2 border-black px-2 py-1 rounded-md w-full"
                 onChange={e => setReporterId(e.target.value)} >
                     { projectMembers ? 
                         projectMembers.map(user => {
                             return <option value={user.id}>{user.firstName} {user.lastName}</option>
                         }) : <></>
-
                     }
                 </select>
 

@@ -25,7 +25,8 @@ export const createIssue = createAsyncThunk('currentProject/createIssue', async 
             priorityOfIssue: priorityOfIssue,
             statusOfIssue: statusOfIssue,
             summary: summary,
-            projectId: projectId
+            projectId: projectId,
+            assigneeId: assigneeId
         })
     })
     .then(res => res.json())
@@ -33,7 +34,7 @@ export const createIssue = createAsyncThunk('currentProject/createIssue', async 
 })
 
 export const updateIssue = createAsyncThunk('currentProject/updateIssue', async (input) => {
-    const { issueId, typeOfIssue, priorityOfIssue, statusOfIssue, summary, projectId, reporterId, token } = input;
+    const { issueId, typeOfIssue, priorityOfIssue, statusOfIssue, summary, projectId, assigneeId, reporterId, token } = input;
     return await fetch(`http://localhost:5080/api/Issues/${issueId}`, {
         method: 'PUT',
         headers: {
@@ -45,6 +46,7 @@ export const updateIssue = createAsyncThunk('currentProject/updateIssue', async 
             'priorityOfIssue': priorityOfIssue,
             'statusOfIssue': statusOfIssue,
             'summary': summary,
+            'assigneeId': assigneeId,
             'projectId': projectId,
             'reporterId': reporterId
         })
