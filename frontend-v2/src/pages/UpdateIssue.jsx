@@ -4,9 +4,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getCurrentProject, updateIssue } from '../redux/currentProjectSlice';
 
 export default function UpdateIssue() {
-    const { issueId, projectId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const { issueId, projectId } = useParams();
     const projectMembers = useSelector(state => state.currentProject.users);
     const token = useSelector(state => state.currentUser.token);
     
