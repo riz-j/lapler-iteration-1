@@ -1,7 +1,7 @@
-import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom"
-import { refetchCurrentUser } from "../redux/currentUserSlice";
-import { deleteProject } from "../redux/projectSlice";
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { refetchCurrentUser } from '../redux/currentUserSlice';
+import { deleteProject } from '../redux/projectSlice';
 
 export default function ProjectCard({projectId, projectName}) {
     const dispatch = useDispatch();
@@ -16,13 +16,16 @@ export default function ProjectCard({projectId, projectName}) {
     }
 
     return (
-        <div className="flex ">
+        <div className='flex'>
+
             <Link to={`/dashboard/project/${projectId}`}>
-                <p className="bg-blue-100 text-3xl px-4 py-2 rounded-lg">{projectName}</p>
+                <p className='bg-blue-100 text-3xl px-4 py-2 rounded-lg'>{projectName}</p>
             </Link>
-            <button className="text-3xl text-red-500" onClick={handleClick}>
+
+            <button onClick={handleClick} className='text-3xl text-red-500'>
                 x
             </button>
+
         </div>
     )
 }
