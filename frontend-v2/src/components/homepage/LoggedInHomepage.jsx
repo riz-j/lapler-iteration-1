@@ -6,9 +6,9 @@ import ProjectCard from '../ProjectCard';
 export default function LoggedInHomepage() {
     const currentUser = useSelector(state => state.currentUser);
 
-    const handleLogout = async () => { 
-      await localStorage.removeItem('reduxState')
-      .then(() => location.reload()); 
+    const handleLogout = () => { 
+      localStorage.removeItem('reduxState');
+      location.reload(); 
     }
 
     return (
