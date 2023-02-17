@@ -4,15 +4,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getCurrentProject, updateIssue } from "../redux/currentProjectSlice";
 
 export default function UpdateIssue() {
+    const { issueId, projectId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { issueId, projectId } = useParams();
     const token = useSelector(state => state.currentUser.token);
     const projectMembers = useSelector(state => state.currentProject.users);
-
+    
     const allIssues = useSelector(state => state.currentProject.issues);
     const issueToUpdate = allIssues.find(issue => issue.id === parseInt(issueId));
-    // useEffect(() => console.log(issueToUpdate), []);
+    
     const defaultAssigneeId = issueToUpdate.assigneeId ? issueToUpdate.assigneeId : null;
 
     const [typeOfIssue, setTypeOfIssue] = useState(issueToUpdate.typeOfIssue);
@@ -22,10 +22,10 @@ export default function UpdateIssue() {
     const [assigneeId, setAssigneeId] = useState(defaultAssigneeId);
     const [reporterId, setReporterId] = useState(issueToUpdate.reporterId);
 
-    const [dueDateDay, setDueDateDay] = useState('01');
-    const [dueDateMonth, setDueDateMonth] = useState('2');
-    const [dueDateYear, setDueDateYear] = useState('2023');
-    const dueDate = new Date(dueDateYear, dueDateMonth, dueDateDay, 0, 0, 0).toISOString();
+    const [dueDateDay, setDueDateDay] = useState(1);
+    const [dueDateMonth, setDueDateMonth] = useState(2);
+    const [dueDateYear, setDueDateYear] = useState(2023);
+    const dueDate = new Date(parseInt(dueDateYear), parseInt(dueDateMonth), parseInt(dueDateDay), 0, 0, 0).toISOString();
     useEffect(() => {
         console.log(dueDate)
     }, [dueDate])
@@ -53,11 +53,19 @@ export default function UpdateIssue() {
 
     return (
         <div className="flex flex-col justify-center items-center h-screen">
+            
             <h1 className="text-2xl pb-4">Create New Issue</h1>
-            <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 w-1/3 justify-center justify-items-center">
-  
-                <select type="text" value={typeOfIssue} placeholder="typeOfIssue" className="border-2 border-black px-2 py-1 rounded-md w-full"
-                onChange={e => setTypeOfIssue(e.target.value)}>
+            
+            <form 
+                onSubmit={handleSubmit} 
+                className="grid grid-cols-1 gap-4 w-1/3 justify-center justify-items-center"
+            >
+                <select 
+                    value={typeOfIssue} 
+                    placeholder="typeOfIssue" 
+                    className="border-2 border-black px-2 py-1 rounded-md w-full"
+                    onChange={e => setTypeOfIssue(e.target.value)}
+                >
                     <option value="Bug">Bug</option>
                     <option value="Improvement">Improvement</option>
                     <option value="New Feature">New Feature</option>
@@ -65,26 +73,42 @@ export default function UpdateIssue() {
                     <option value="Idea">Idea</option>
                 </select>
 
-                <select type="text" value={priorityOfIssue} placeholder="priorityOfIssue" className="border-2 border-black px-2 py-1 rounded-md w-full"
-                onChange={e => setPriorityOfIssue(e.target.value)} >
+                <select 
+                    value={priorityOfIssue} 
+                    placeholder="priorityOfIssue" 
+                    className="border-2 border-black px-2 py-1 rounded-md w-full"
+                    onChange={e => setPriorityOfIssue(e.target.value)} 
+                >
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
                     <option value="High">High</option>
                 </select>
 
-                <select type="text" value={statusOfIssue} placeholder="statusOfIssue" className="border-2 border-black px-2 py-1 rounded-md w-full"
-                onChange={e => setStatusOfIssue(e.target.value)} >
+                <select 
+                    value={statusOfIssue} 
+                    placeholder="statusOfIssue" 
+                    className="border-2 border-black px-2 py-1 rounded-md w-full"
+                    onChange={e => setStatusOfIssue(e.target.value)} 
+                >
                     <option value="Waiting">Waiting</option>
                     <option value="Doing">Doing</option>
                     <option value="Done">Done</option>
                 </select>
 
-                <input type="text" value={summary} placeholder="summary" className="border-2 border-black px-2 py-1 rounded-md w-full"
-                onChange={e => setSummary(e.target.value)} />
+                <input 
+                    type="text" 
+                    value={summary} 
+                    placeholder="summary" 
+                    className="border-2 border-black px-2 py-1 rounded-md w-full"
+                    onChange={e => setSummary(e.target.value)} 
+                />
 
                 <div className="flex w-full">
-                    <select type="text" value={dueDateDay} placeholder="Due Date Day" className="border-2 border-black px-2 py-1 rounded-md w-full"
-                    onChange={e => setDueDateDay(e.target.value)}>
+                    <select 
+                        value={dueDateDay} 
+                        onChange={e => setDueDateDay(e.target.value)}
+                        className="border-2 border-black px-2 py-1 rounded-md w-full"
+                    >
                         <option value="01">1</option> <option value="02">2</option>
                         <option value="03">3</option> <option value="04">4</option>
                         <option value="05">5</option> <option value="06">6</option>
@@ -97,8 +121,11 @@ export default function UpdateIssue() {
                         <option value="19">19</option> <option value="20">20</option>
                         <option value="21">21</option> <option value="22">22</option>
                     </select>
-                    <select type="text" value={dueDateMonth} placeholder="Due Date Month" className="border-2 border-black px-2 py-1 rounded-md w-full"
-                    onChange={e => setDueDateMonth(e.target.value)}>
+                    <select 
+                        value={dueDateMonth} 
+                        onChange={e => setDueDateMonth(e.target.value)}
+                        className="border-2 border-black px-2 py-1 rounded-md w-full"
+                    >
                         <option value="01">January</option>
                         <option value="02">February</option>
                         <option value="03">March</option>
@@ -112,8 +139,11 @@ export default function UpdateIssue() {
                         <option value="11">November</option>
                         <option value="12">December</option>
                     </select>
-                    <select type="text" value={dueDateYear} placeholder="Due Date Year" className="border-2 border-black px-2 py-1 rounded-md w-full"
-                    onChange={e => setDueDateYear(e.target.value)}>
+                    <select 
+                        value={dueDateYear} 
+                        className="border-2 border-black px-2 py-1 rounded-md w-full"
+                        onChange={e => setDueDateYear(e.target.value)}
+                    >
                         <option value="2023">2023</option>
                         <option value="2024">2024</option>
                         <option value="2025">2025</option>
@@ -122,26 +152,33 @@ export default function UpdateIssue() {
                     </select>
                 </div>
 
-                <select type="text" value={assigneeId} placeholder="assigneeId" className="border-2 border-black px-2 py-1 rounded-md w-full"
-                onChange={e => setAssigneeId(e.target.value)} >
+                <select 
+                    value={assigneeId} 
+                    onChange={e => setAssigneeId(e.target.value)} 
+                    className="border-2 border-black px-2 py-1 rounded-md w-full"
+                >
                     <option value={null}>None</option>
-                    { projectMembers ? 
-                        projectMembers.map(user => {
-                            return <option value={user.id}>{user.firstName} {user.lastName}</option>
-                        }) : <></>
+                    { projectMembers &&
+                        projectMembers.map(user => 
+                            <option value={user.id}>{user.firstName} {user.lastName}</option>
+                        ) 
                     }
                 </select>
 
-                <select type="text" value={reporterId} placeholder="reporterId" className="border-2 border-black px-2 py-1 rounded-md w-full"
-                onChange={e => setReporterId(e.target.value)} >
-                    { projectMembers ? 
-                        projectMembers.map(user => {
-                            return <option value={user.id}>{user.firstName} {user.lastName}</option>
-                        }) : <></>
+                <select 
+                    value={reporterId} 
+                    onChange={e => setReporterId(e.target.value)} 
+                    className="border-2 border-black px-2 py-1 rounded-md w-full"
+                >
+                    { projectMembers && 
+                        projectMembers.map(user => 
+                            <option value={user.id}>{user.firstName} {user.lastName}</option>
+                        ) 
                     }
                 </select>
 
                 <input type="submit" className="border-2 border-black px-2 py-1 rounded-md w-3/4" />
+
             </form>
         </div>
     )
