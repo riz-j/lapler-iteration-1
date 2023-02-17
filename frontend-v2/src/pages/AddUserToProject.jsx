@@ -30,6 +30,7 @@ export default function AddUserToProject() {
             projectId: projectId,
             token: token
         })))
+        .catch(err => console.log(err));
     }
 
     return (
