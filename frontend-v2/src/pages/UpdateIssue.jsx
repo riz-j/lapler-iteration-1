@@ -17,13 +17,13 @@ export default function UpdateIssue() {
     const [priorityOfIssue, setPriorityOfIssue] = useState(issueToUpdate.priorityOfIssue || null);
     const [statusOfIssue, setStatusOfIssue] = useState(issueToUpdate.statusOfIssue || null);
     const [summary, setSummary] = useState(issueToUpdate.summary || null);
-    const [assigneeId, setAssigneeId] = useState(issueToUpdate.summary || null);
+    const [assigneeId, setAssigneeId] = useState(issueToUpdate.assigneeId || null);
     const [reporterId, setReporterId] = useState(issueToUpdate.reporterId || null);
 
     const [dueDateDay, setDueDateDay] = useState(1);
     const [dueDateMonth, setDueDateMonth] = useState(2);
     const [dueDateYear, setDueDateYear] = useState(2023);
-    const dueDate = new Date(parseInt(dueDateYear), parseInt(dueDateMonth), parseInt(dueDateDay), 0, 0, 0).toISOString();
+    const dueDate = new Date(dueDateYear, dueDateMonth - 1, dueDateDay, 0, 0, 0).toISOString();
     useEffect(() => { console.log(dueDate) }, [dueDate]);
 
     const handleSubmit = async (e) => {
@@ -44,13 +44,14 @@ export default function UpdateIssue() {
         .then(() => dispatch(getCurrentProject({
             projectId: projectId,
             token: token
-        })));
+        })))
+        .catch(err => console.log(err));
     }
 
     return (
         <div className='flex flex-col justify-center items-center h-screen'>
             
-            <h1 className='text-2xl pb-4'>Create New Issue</h1>
+            <h1 className='text-2xl pb-4'>Update Issue</h1>
             
             <form 
                 onSubmit={handleSubmit} 
@@ -58,7 +59,6 @@ export default function UpdateIssue() {
             >
                 <select 
                     value={typeOfIssue} 
-                    placeholder='typeOfIssue' 
                     className='border-2 border-black px-2 py-1 rounded-md w-full'
                     onChange={e => setTypeOfIssue(e.target.value)}
                 >
@@ -71,7 +71,6 @@ export default function UpdateIssue() {
 
                 <select 
                     value={priorityOfIssue} 
-                    placeholder='priorityOfIssue' 
                     className='border-2 border-black px-2 py-1 rounded-md w-full'
                     onChange={e => setPriorityOfIssue(e.target.value)} 
                 >
@@ -82,7 +81,6 @@ export default function UpdateIssue() {
 
                 <select 
                     value={statusOfIssue} 
-                    placeholder='statusOfIssue' 
                     className='border-2 border-black px-2 py-1 rounded-md w-full'
                     onChange={e => setStatusOfIssue(e.target.value)} 
                 >
