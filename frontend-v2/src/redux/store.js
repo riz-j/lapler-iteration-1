@@ -1,10 +1,10 @@
-import { configureStore } from "@reduxjs/toolkit";
-import currentUserReducer from "./currentUserSlice";
-import currentProjectReducer from "./currentProjectSlice";
-import projectReducer from "./projectSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import currentUserReducer from './currentUserSlice';
+import currentProjectReducer from './currentProjectSlice';
+import projectReducer from './projectSlice';
 
-const persistedState = localStorage.getItem("reduxState") 
-    ? JSON.parse(localStorage.getItem("reduxState")) : {};
+const persistedState = localStorage.getItem('reduxState') 
+    ? JSON.parse(localStorage.getItem('reduxState')) : {};
 
 export const store = configureStore({
     reducer: {
@@ -16,6 +16,5 @@ export const store = configureStore({
 })
 
 store.subscribe(() => {
-    localStorage.setItem("reduxState", JSON.stringify(store.getState()));
-                                        // Try something like store.currentUserReducer.getState();
+    localStorage.setItem('reduxState', JSON.stringify(store.getState()));
 });

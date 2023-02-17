@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const getCurrentProject = createAsyncThunk('currentProject/getCurrentProject', async (input) => {
     const { projectId, token } = input;
@@ -14,7 +14,7 @@ export const getCurrentProject = createAsyncThunk('currentProject/getCurrentProj
 
 export const createIssue = createAsyncThunk('currentProject/createIssue', async (input) => {
     const { token, projectId, typeOfIssue, priorityOfIssue, statusOfIssue, summary, assigneeId } = input;
-    return await fetch("http://localhost:5080/api/Issues", {
+    return await fetch('http://localhost:5080/api/Issues', {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -99,6 +99,7 @@ const currentProjectSlice = createSlice({
         }
     },
     extraReducers: {
+        /*  getCurrentProject   */
         [getCurrentProject.pending]: (state) => {
             state.isLoading = true;
         },
@@ -113,6 +114,7 @@ const currentProjectSlice = createSlice({
             state.isLoading = false;
         },
 
+        /*  createIssue   */
         [createIssue.pending]: (state) => {
             state.isLoading = true;
         },
@@ -124,6 +126,7 @@ const currentProjectSlice = createSlice({
             state.error = action.payload;
         },
         
+        /*  updateIssue   */
         [updateIssue.pending]: (state) => {
             state.isLoading = true;
         },
@@ -135,6 +138,7 @@ const currentProjectSlice = createSlice({
             state.error = action.payload;
         },
 
+        /*  deleteIssue   */
         [deleteIssue.pending]: (state) => {
             state.isLoading = true;
         },
@@ -146,6 +150,7 @@ const currentProjectSlice = createSlice({
             state.error = action.payload;
         },
 
+        /*  addUsersToProject   */
         [addUsersToProject.pending]: (state) => {
             state.isLoading = true;
         },
@@ -157,6 +162,7 @@ const currentProjectSlice = createSlice({
             state.error = action.payload;
         },
 
+        /*  removeUserFromProject   */
         [removeUserFromProject.pending]: (state) => {
             state.isLoading = true;
         },

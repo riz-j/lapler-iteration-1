@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const createProject = createAsyncThunk('project/createProject', async (input) => {
     const { projectName, token } = input;
-    return await fetch("http://localhost:5080/api/Projects", {
+    return await fetch('http://localhost:5080/api/Projects', {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -33,6 +33,7 @@ const projectSlice = createSlice({
     },
     reducers: {},
     extraReducers: {
+        /*  createProject   */
         [createProject.pending]: (state) => {
             state.isLoading = true;
         },
@@ -47,6 +48,7 @@ const projectSlice = createSlice({
             state.hasBeenCreated = false;
         },
 
+        /*  deleteProject   */
         [deleteProject.pending]: (state) => {
             state.isLoading = true;
         },

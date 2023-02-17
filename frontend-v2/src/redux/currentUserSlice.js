@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const registerUser = createAsyncThunk('currentUser/registerUser', async (input) => {
     const { firstName, lastName, email, password } = input;
-    return await fetch("http://localhost:5080/api/UsersAuth/register", {
+    return await fetch('http://localhost:5080/api/UsersAuth/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ export const registerUser = createAsyncThunk('currentUser/registerUser', async (
 
 export const getCurrentUser = createAsyncThunk('currentUser/getCurrentUser', async (input) => {
     const { email, password } = input;
-    return await fetch("http://localhost:5080/api/UsersAuth/login", {
+    return await fetch('http://localhost:5080/api/UsersAuth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -44,6 +44,7 @@ const currentUserSlice = createSlice({
     initialState: {},
     reducers: {},
     extraReducers: {
+        /*  getCurrentUser   */
         [getCurrentUser.pending]: (state) => {
             state.isLoading = true;
         },
@@ -60,6 +61,7 @@ const currentUserSlice = createSlice({
             state.isLoading = false;
         },
 
+        /*  registerUser   */
         [registerUser.pending]: (state) => {
             state.isLoading = true;
         },
@@ -71,6 +73,7 @@ const currentUserSlice = createSlice({
             state.isLoading = false;
         },
 
+        /*  refetchCurrentUser   */
         [refetchCurrentUser.pending]: (state) => {
             state.isLoading = true;
         },
