@@ -11,7 +11,7 @@ import Register from './pages/Register';
 
 function App() {  
   return (
-    <div className='App'>
+    <div className='App font-inter'>
       <Routes>
         <Route path='/' element={ <Home /> } />
         <Route path='/login' element={ <Login /> } />

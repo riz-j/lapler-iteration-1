@@ -5,6 +5,7 @@ import { emptyCurrentProject, getCurrentProject } from '../redux/currentProjectS
 
 import IssueCard from '../components/IssueCard';
 import ProjectUserCard from '../components/ProjectUserCard';
+import LeftSidebar from '../components/dashboard/left-sidebar';
 
 export default function Dashboard() {
     const { projectId } = useParams();
@@ -22,17 +23,11 @@ export default function Dashboard() {
     }, [dispatch, projectId, token])
 
     return (
-        <div className='flex h-screen sm:text-sm'>
-          <div className='bg-green-300 w-80 hidden md:flex flex-col pt-4'>
-            <p className='bg-blue-200 rounded-lg px-5 py-2 border-b-2'>All states</p>
-            <p className='bg-blue-200 rounded-lg px-5 py-2 border-b-2'>Some states</p>
-            <p className='bg-blue-200 rounded-lg px-5 py-2 border-b-2'>Few states</p>
-            <Link to='/'>
-              <p className='bg-blue-200 rounded-lg px-5 py-2 border-b-2 mt-96'>Home</p>
-            </Link>
-          </div>
+        <div className='flex h-screen sm:text-sm text-[#E4E5E9]'>
+
+          <LeftSidebar />
       
-          <div className='w-full bg-yellow-200'>
+          <div className='grow w-full bg-yellow-200'>
             <div className='bg-green-200 flex justify-evenly items-center h-8'>
               
               <input className='w-1/2 h-6' />
@@ -68,7 +63,9 @@ export default function Dashboard() {
             </div>
           </div>
       
-          <div className='bg-red-200 w-80 hidden md:block'>
+                {/*    Map Users :    */}
+
+          {/* <div className='bg-red-200 w-80 hidden md:block'>
             { (currentProject.users) && (currentProject.users).map(user => 
                 <ProjectUserCard 
                   userId={user.id} 
@@ -77,7 +74,7 @@ export default function Dashboard() {
                 />
               ) 
             }
-          </div>
+          </div> */}
         </div>
       );
 }
