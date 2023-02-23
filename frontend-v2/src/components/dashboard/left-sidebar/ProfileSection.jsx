@@ -10,7 +10,7 @@ export default function ProfileSection() {
                     </div>
                     <div>
                         <div className='text-base font-semibold'>Rizki Judojono</div>
-                        <div className='text-xs text-[#B8BABC]'>adiputra979@gmail.com</div>
+                        <div className='text-xs '>adiputra979@gmail.com</div>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import { emptyCurrentProject, getCurrentProject } from '../redux/currentProjectS
 import IssueCard from '../components/IssueCard';
 import ProjectUserCard from '../components/ProjectUserCard';
 import LeftSidebar from '../components/dashboard/left-sidebar';
+import ProjectNavigation from '../components/dashboard/project-navigation';
 
 export default function Dashboard() {
     const { projectId } = useParams();
@@ -24,7 +25,7 @@ export default function Dashboard() {
 
     return (
         <div className='flex h-screen sm:text-sm text-[#E4E5E9]'>
-
+          <ProjectNavigation/>
           <LeftSidebar />
       
           <div className='grow w-full bg-yellow-200'>
