@@ -1,34 +1,30 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom'
-import { emptyCurrentProject, getCurrentProject } from '../redux/currentProjectSlice';
-
-import IssueCard from '../components/IssueCard';
-import ProjectUserCard from '../components/ProjectUserCard';
 import LeftSidebar from '../components/dashboard/left-sidebar';
 import ProjectNavigation from '../components/dashboard/project-navigation';
+import MainSection from '../components/main-section/issues/index.jsx';
 
 export default function Dashboard() {
-    const { projectId } = useParams();
-    const dispatch = useDispatch();
-    const currentProject = useSelector(state => state.currentProject);
-    const currentUser = useSelector(state => state.currentUser);
-    const token = currentUser.token;
+    // const { projectId } = useParams();
+    // const dispatch = useDispatch();
+    // const currentProject = useSelector(state => state.currentProject);
+    // const currentUser = useSelector(state => state.currentUser);
+    // const token = currentUser.token;
     
-    useEffect(() => {
-        dispatch(emptyCurrentProject());
-        dispatch(getCurrentProject({ 
-            projectId: projectId, 
-            token: token 
-        }));
-    }, [dispatch, projectId, token])
+    // useEffect(() => {
+    //     dispatch(emptyCurrentProject());
+    //     dispatch(getCurrentProject({ 
+    //         projectId: projectId, 
+    //         token: token 
+    //     }));
+    // }, [dispatch, projectId, token])
 
     return (
         <div className='flex h-screen sm:text-sm text-[#E4E5E9]'>
           <ProjectNavigation/>
           <LeftSidebar />
+
+          <MainSection />
       
-          <div className='grow w-full bg-yellow-200'>
+          {/* <div className='grow w-full bg-yellow-200'>
             <div className='bg-green-200 flex justify-evenly items-center h-8'>
               
               <input className='w-1/2 h-6' />
@@ -62,7 +58,7 @@ export default function Dashboard() {
                 <h1>This project is empty</h1>
               )}
             </div>
-          </div>
+          </div> */}
       
                 {/*    Map Users :    */}
 
