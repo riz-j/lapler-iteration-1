@@ -25,24 +25,22 @@ export default function IssuesSection() {
                     <p>Doing</p>
                     <p>+</p>
                 </div> 
+            
             }
-            {(doingIssues) ? (
-                doingIssues.map(issue => (
-                    <IssueCard 
-                        projectId={projectId}
-                        issueId={issue.id} 
-                        typeOfIssue={issue.typeOfIssue} 
-                        priorityOfIssue={issue.priorityOfIssue} 
-                        statusOfIssue={issue.statusOfIssue} 
-                        summary={issue.summary}
-                        dueDate={issue.dueDate}
-                        assigneeId={issue.assigneeId}
-                        reporterId={issue.reporterId}
-                    /> 
-                ))
-                ) : (
-                    <h1>This project is empty</h1>
-                )}
+            { doingIssues.map(issue => (
+                <IssueCard 
+                    projectId={projectId}
+                    issueId={issue.id} 
+                    typeOfIssue={issue.typeOfIssue} 
+                    priorityOfIssue={issue.priorityOfIssue} 
+                    statusOfIssue={issue.statusOfIssue} 
+                    summary={issue.summary}
+                    dueDate={issue.dueDate}
+                    assigneeId={issue.assigneeId}
+                    reporterId={issue.reporterId}
+                /> 
+            ))
+            }
             </div>
             <div>
             { (waitingIssues.length > 0) &&
@@ -51,23 +49,20 @@ export default function IssuesSection() {
                     <p>+</p>
                 </div> 
             }
-            {(waitingIssues) ? (
-                waitingIssues.map(issue => (
-                    <IssueCard 
-                        projectId={projectId}
-                        issueId={issue.id} 
-                        typeOfIssue={issue.typeOfIssue} 
-                        priorityOfIssue={issue.priorityOfIssue} 
-                        statusOfIssue={issue.statusOfIssue} 
-                        summary={issue.summary}
-                        dueDate={issue.dueDate}
-                        assigneeId={issue.assigneeId}
-                        reporterId={issue.reporterId}
-                    /> 
-                ))
-                ) : (
-                    <h1>This project is empty</h1>
-                )}
+            { waitingIssues.map(issue => (
+                <IssueCard 
+                    projectId={projectId}
+                    issueId={issue.id} 
+                    typeOfIssue={issue.typeOfIssue} 
+                    priorityOfIssue={issue.priorityOfIssue} 
+                    statusOfIssue={issue.statusOfIssue} 
+                    summary={issue.summary}
+                    dueDate={issue.dueDate}
+                    assigneeId={issue.assigneeId}
+                    reporterId={issue.reporterId}
+                /> 
+            ))
+            }
             </div>
             <div>
             { (backlogIssues.length > 0) &&
@@ -76,23 +71,20 @@ export default function IssuesSection() {
                     <p>+</p>
                 </div> 
             }
-            {(backlogIssues) ? (
-                backlogIssues.map(issue => (
-                    <IssueCard 
-                        projectId={projectId}
-                        issueId={issue.id} 
-                        typeOfIssue={issue.typeOfIssue} 
-                        priorityOfIssue={issue.priorityOfIssue} 
-                        statusOfIssue={issue.statusOfIssue} 
-                        summary={issue.summary}
-                        dueDate={issue.dueDate}
-                        assigneeId={issue.assigneeId}
-                        reporterId={issue.reporterId}
-                        /> 
-                ))
-                ) : (
-                    <h1>This project is empty</h1>
-                )}
+            { backlogIssues.map(issue => (
+                <IssueCard 
+                    projectId={projectId}
+                    issueId={issue.id} 
+                    typeOfIssue={issue.typeOfIssue} 
+                    priorityOfIssue={issue.priorityOfIssue} 
+                    statusOfIssue={issue.statusOfIssue} 
+                    summary={issue.summary}
+                    dueDate={issue.dueDate}
+                    assigneeId={issue.assigneeId}
+                    reporterId={issue.reporterId}
+                /> 
+            ))
+            }
             </div>
             <div>
             { (doneIssues.length > 0) &&
@@ -101,8 +93,7 @@ export default function IssuesSection() {
                     <p>+</p>
                 </div> 
             }
-            {(doneIssues) ? (
-                doneIssues.map(issue => (
+            { doneIssues.map(issue => (
                     <IssueCard 
                     projectId={projectId}
                     issueId={issue.id} 
@@ -115,9 +106,7 @@ export default function IssuesSection() {
                     reporterId={issue.reporterId}
                     /> 
             ))
-            ) : (
-                <h1>This project is empty</h1>
-            )}
+            }
         </div>
       </div>
     )
