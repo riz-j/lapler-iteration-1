@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { emptyCurrentProject, getCurrentProject } from '../../../redux/currentProjectSlice';
 
 import IssueCard from './IssueCard';
+import IssuesSection from './IssuesSection';
 // import ProjectUserCard from '../ProjectUserCard';
 
 export default function MainSection() {
@@ -37,7 +38,8 @@ export default function MainSection() {
 
             </div>
       
-            <div>
+            <IssuesSection />
+            {/* <div>
               {(currentProject.issues && currentProject.issues.length > 0) ? (
                 currentProject.issues.map(issue => (
                   <IssueCard 
@@ -55,7 +57,7 @@ export default function MainSection() {
               ) : (
                 <h1>This project is empty</h1>
               )}
-            </div>
+            </div> */}
           </div>
     )
 }
