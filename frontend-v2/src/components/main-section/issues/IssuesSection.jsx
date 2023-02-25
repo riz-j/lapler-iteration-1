@@ -5,39 +5,39 @@ import IssueCard from './IssueCard';
 export default function IssuesSection() {
     const { projectId } = useParams();
     const currentProject = useSelector(state => state.currentProject);
-
     const issues = currentProject.issues;
-    if (issues) {
-        const waitingIssues = issues.filter(issue => issue.statusOfIssue === 'Waiting');
-        console.log(waitingIssues);
-    } else {
-        console.log('No issues found');
-    }
-      
-      
-      
+    
+    let waitingIssues = [];
+    let doingIssues = [];
+    let doneIssues = [];
+    let backlogIssues = [];
 
+    issues && (waitingIssues = issues.filter(issue => issue.statusOfIssue === 'Waiting'));
+    issues && (doingIssues = issues.filter(issue => issue.statusOfIssue === 'Doing'));
+    issues && (doneIssues = issues.filter(issue => issue.statusOfIssue === 'Done'));
+    issues && (backlogIssues = issues.filter(issue => issue.statusOfIssue === 'Backlog'));
+          
     return (
         <div>
             <div>
+            { (doingIssues.length > 0) &&
                 <div className='flex justify-between items-center h-7 px-3 w-full bg-[#242529] border-b border-[#515151]'>
-                    <p>In Progress</p>
+                    <p>Doing</p>
                     <p>+</p>
-                </div>
-            {(currentProject.issues && currentProject.issues.length > 0) ? (
-                currentProject.issues
-                .filter(issue => issue.statusOfIssue === 'Doing')
-                .map(issue => (
-                <IssueCard 
-                    projectId={projectId}
-                    issueId={issue.id} 
-                    typeOfIssue={issue.typeOfIssue} 
-                    priorityOfIssue={issue.priorityOfIssue} 
-                    statusOfIssue={issue.statusOfIssue} 
-                    summary={issue.summary}
-                    dueDate={issue.dueDate}
-                    assigneeId={issue.assigneeId}
-                    reporterId={issue.reporterId}
+                </div> 
+            }
+            {(doingIssues) ? (
+                doingIssues.map(issue => (
+                    <IssueCard 
+                        projectId={projectId}
+                        issueId={issue.id} 
+                        typeOfIssue={issue.typeOfIssue} 
+                        priorityOfIssue={issue.priorityOfIssue} 
+                        statusOfIssue={issue.statusOfIssue} 
+                        summary={issue.summary}
+                        dueDate={issue.dueDate}
+                        assigneeId={issue.assigneeId}
+                        reporterId={issue.reporterId}
                     /> 
                 ))
                 ) : (
@@ -45,40 +45,65 @@ export default function IssuesSection() {
                 )}
             </div>
             <div>
+            { (waitingIssues.length > 0) &&
                 <div className='flex justify-between items-center h-7 px-3 w-full bg-[#242529] border-b border-[#515151]'>
                     <p>Waiting</p>
                     <p>+</p>
-                </div>
-            {(currentProject.issues && currentProject.issues.length > 0) ? (
-                currentProject.issues
-                .filter(issue => issue.statusOfIssue === 'Waiting')
-                .map(issue => (
-                <IssueCard 
-                    projectId={projectId}
-                    issueId={issue.id} 
-                    typeOfIssue={issue.typeOfIssue} 
-                    priorityOfIssue={issue.priorityOfIssue} 
-                    statusOfIssue={issue.statusOfIssue} 
-                    summary={issue.summary}
-                    dueDate={issue.dueDate}
-                    assigneeId={issue.assigneeId}
-                    reporterId={issue.reporterId}
+                </div> 
+            }
+            {(waitingIssues) ? (
+                waitingIssues.map(issue => (
+                    <IssueCard 
+                        projectId={projectId}
+                        issueId={issue.id} 
+                        typeOfIssue={issue.typeOfIssue} 
+                        priorityOfIssue={issue.priorityOfIssue} 
+                        statusOfIssue={issue.statusOfIssue} 
+                        summary={issue.summary}
+                        dueDate={issue.dueDate}
+                        assigneeId={issue.assigneeId}
+                        reporterId={issue.reporterId}
                     /> 
                 ))
                 ) : (
                     <h1>This project is empty</h1>
                 )}
             </div>
-            {/* <div>
+            <div>
+            { (backlogIssues.length > 0) &&
                 <div className='flex justify-between items-center h-7 px-3 w-full bg-[#242529] border-b border-[#515151]'>
                     <p>Backlog</p>
                     <p>+</p>
-                </div>
-            {(currentProject.issues && currentProject.issues.length > 0) ? (
-                currentProject.issues
-                .filter(issue => issue.statusOfIssue === 'Backlog')
-                .map(issue => (
-                <IssueCard 
+                </div> 
+            }
+            {(backlogIssues) ? (
+                backlogIssues.map(issue => (
+                    <IssueCard 
+                        projectId={projectId}
+                        issueId={issue.id} 
+                        typeOfIssue={issue.typeOfIssue} 
+                        priorityOfIssue={issue.priorityOfIssue} 
+                        statusOfIssue={issue.statusOfIssue} 
+                        summary={issue.summary}
+                        dueDate={issue.dueDate}
+                        assigneeId={issue.assigneeId}
+                        reporterId={issue.reporterId}
+                        /> 
+                ))
+                ) : (
+                    <h1>This project is empty</h1>
+                )}
+            </div>
+            <div>
+            { (doneIssues.length > 0) &&
+                <div className='flex justify-between items-center h-7 px-3 w-full bg-[#242529] border-b border-[#515151]'>
+                    <p>Done</p>
+                    <p>+</p>
+                </div> 
+            }
+            {(doneIssues) ? (
+                doneIssues.map(issue => (
+                    <IssueCard 
                     projectId={projectId}
                     issueId={issue.id} 
                     typeOfIssue={issue.typeOfIssue} 
@@ -89,31 +114,6 @@ export default function IssuesSection() {
                     assigneeId={issue.assigneeId}
                     reporterId={issue.reporterId}
                     /> 
-                ))
-                ) : (
-                    <h1>This project is empty</h1>
-                )}
-            </div> */}
-            <div>
-                <div className='flex justify-between items-center h-7 px-3 w-full bg-[#242529] border-b border-[#515151]'>
-                    <p>Done</p>
-                    <p>+</p>
-                </div>
-            {(currentProject.issues && currentProject.issues.length > 0) ? (
-            currentProject.issues
-            .filter(issue => issue.statusOfIssue === 'Done')
-            .map(issue => (
-                <IssueCard 
-                projectId={projectId}
-                issueId={issue.id} 
-                typeOfIssue={issue.typeOfIssue} 
-                priorityOfIssue={issue.priorityOfIssue} 
-                statusOfIssue={issue.statusOfIssue} 
-                summary={issue.summary}
-                dueDate={issue.dueDate}
-                assigneeId={issue.assigneeId}
-                reporterId={issue.reporterId}
-                /> 
             ))
             ) : (
                 <h1>This project is empty</h1>
