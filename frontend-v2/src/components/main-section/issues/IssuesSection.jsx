@@ -94,7 +94,7 @@ export default function IssuesSection() {
                 </div> 
             }
             { doneIssues.map(issue => (
-                    <IssueCard 
+                <IssueCard 
                     projectId={projectId}
                     issueId={issue.id} 
                     typeOfIssue={issue.typeOfIssue} 
@@ -104,7 +104,7 @@ export default function IssuesSection() {
                     dueDate={issue.dueDate}
                     assigneeId={issue.assigneeId}
                     reporterId={issue.reporterId}
-                    /> 
+                /> 
             ))
             }
         </div>
