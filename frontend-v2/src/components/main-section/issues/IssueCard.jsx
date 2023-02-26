@@ -32,6 +32,8 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
     const [statusOfIssueImg, setStatusOfIssueImg] = useState('');
 
     const handleDelete = async () => {
+        hideMenu();
+        
         await dispatch(deleteIssue({
             projectId: projectId, 
             issueId: issueId, 
@@ -53,7 +55,7 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
 
     return (
         <>
-        <ContextMenuTrigger id={issueId}>
+        <ContextMenuTrigger id={`contextMenu${issueId}`}>
         <div onClick={() => hideMenu()} className='flex justify-between h-10 bg-[#1C1D21] px-5 py-2 border-b border-[#515151]'>
         
             <div className='col-span-10 flex justify-start items-center space-x-4 '>
@@ -102,40 +104,23 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                     <p>{reporter.firstName} {reporter.lastName}</p> 
                 }    
             </div>
-            
-
-            {/* <button 
-                onClick={handleDelete}
-                className='col-span-1 flex justify-center text-2xl text-red-500'
-            >
-                x
-            </button> 
-
-            <Link to={`/dashboard/project/${projectId}/issues/${issueId}/update`}>
-                <button className='col-span-1 flex justify-center text-xl text-green-500'>
-                    Edit
-                </button> 
-            </Link> */}
-
         </div>
         </ContextMenuTrigger>
 
-        <ContextMenu id={issueId}>
-            <button onClick={() => { window.location.href = `/dashboard/project/${projectId}/issues/${issueId}/update`}}>
+        <ContextMenu id={`contextMenu${issueId}`} className='flex flex-col border rounded-sm'>
+            <button 
+                onClick={() => { window.location.href = `/dashboard/project/${projectId}/issues/${issueId}/update`}}
+                className='px-2 py-1 border-b bg-slate-700 hover:bg-slate-600'
+            >
                 Edit
             </button>
-            <MenuItem onClick={handleDelete}>
+            <button 
+                onClick={handleDelete}
+                className='px-2 py-1 text-red-400 font-bold bg-slate-700 hover:bg-slate-600'
+            >
                 Delete
-            </MenuItem>
+            </button>
         </ContextMenu>
-
-        {/* <ContextMenu id="issueContextMenu" className='bg-[#515151]'>
-            <button onClick={() => {
-            window.location.href = "http://www.w3schools.com";
-          }}>Country</button>
-            <MenuItem onClick={handleClick}>City</MenuItem>
-            <MenuItem onClick={handleClick}><button>State</button></MenuItem>
-        </ContextMenu> */}
         </>
     )
 }

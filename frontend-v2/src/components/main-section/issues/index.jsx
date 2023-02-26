@@ -17,7 +17,7 @@ export default function MainSection() {
     const token = currentUser.token;
     
     useEffect(() => {
-        dispatch(emptyCurrentProject());
+        dispatch(emptyCurrentProject());   // IMPORTANT: Project ID needed in CurrentProjectSlice
         dispatch(getCurrentProject({ 
             projectId: projectId, 
             token: token 
