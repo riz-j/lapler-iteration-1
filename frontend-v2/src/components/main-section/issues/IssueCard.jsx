@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteIssue, getCurrentProject } from '../../../redux/currentProjectSlice';
 import { dateParser } from '../../../utils/dateHandler';
 import { Link } from 'react-router-dom';
+import { ContextMenu, ContextMenuTrigger, MenuItem, hideMenu } from "react-contextmenu";
 
 import InProgressIcon from '../../../static/img/InProgressIcon.png';
 import WaitingIcon from '../../../static/img/WaitingIcon.png';
@@ -29,15 +30,6 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
     const readableDate = dueDate ? dateParser(dueDate) : '';
 
     const [statusOfIssueImg, setStatusOfIssueImg] = useState('');
-    
-    // if(statusOfIssue.toLowerCase() == 'backlog') { 
-    //     setStatusOfIssueImg(BacklogIcon)
-    // } else if (statusOfIssue.toLowerCase() == 'doing') {
-    //     setStatusOfIssueImg(InProgressIcon)
-    // } else if (statusOfIssue.toLowerCase() == 'waiting') {
-    //     setStatusOfIssueImg(WaitingIcon)
-    // }
-
 
     const handleDelete = async () => {
         await dispatch(deleteIssue({
@@ -55,11 +47,16 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
         .catch(err => console.log(err));
     }
 
-    return (
-        <div className='flex justify-between h-10 bg-[#1C1D21] px-5 py-2 border-b border-[#515151]'>
+    const handleClick = (e, data) => {
+        console.log(`Clicked on ${data.item}`);
+    };
 
+    return (
+        <>
+        <ContextMenuTrigger id={issueId}>
+        <div onClick={() => hideMenu()} className='flex justify-between h-10 bg-[#1C1D21] px-5 py-2 border-b border-[#515151]'>
+        
             <div className='col-span-10 flex justify-start items-center space-x-4 '>
-                {/* <p className='font-bold'>{priorityOfIssue}</p> */}
                 <img src={
                     priorityOfIssue == 'Low' && LowPriorityIcon ||
                     priorityOfIssue == 'Medium' && MediumPriorityIcon ||
@@ -67,7 +64,6 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                 }
                 className='w-3 h-3' />
                 <p className='text-[#A8A9AD]'>{issueId}</p>
-                {/* <p className='italic'>{statusOfIssue}</p> */}
                 <img 
                     src={
                         statusOfIssue == 'Waiting' && WaitingIcon ||
@@ -76,11 +72,7 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                         statusOfIssue == 'Backlog' && BacklogIcon 
                     } 
                     className="w-3 h-3" />
-                <p>{summary}</p>
-                {/* { readableDate && <p>{readableDate}</p> }
-                <p>{typeOfIssue}</p>
-                { assignee && <p>{assignee.firstName} {assignee.lastName}</p> }     
-                <p>{reporter.firstName} {reporter.lastName}</p> */}
+                <p>{summary}</p> 
             </div>
 
             <div className='flex justify-end items-center gap-1 text-sm'>
@@ -110,6 +102,7 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                     <p>{reporter.firstName} {reporter.lastName}</p> 
                 }    
             </div>
+            
 
             {/* <button 
                 onClick={handleDelete}
@@ -125,6 +118,25 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
             </Link> */}
 
         </div>
+        </ContextMenuTrigger>
+
+        <ContextMenu id={issueId}>
+            <button onClick={() => { window.location.href = `/dashboard/project/${projectId}/issues/${issueId}/update`}}>
+                Edit
+            </button>
+            <MenuItem onClick={handleDelete}>
+                Delete
+            </MenuItem>
+        </ContextMenu>
+
+        {/* <ContextMenu id="issueContextMenu" className='bg-[#515151]'>
+            <button onClick={() => {
+            window.location.href = "http://www.w3schools.com";
+          }}>Country</button>
+            <MenuItem onClick={handleClick}>City</MenuItem>
+            <MenuItem onClick={handleClick}><button>State</button></MenuItem>
+        </ContextMenu> */}
+        </>
     )
 }
 
