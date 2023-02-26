@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom'
 import { emptyCurrentProject, getCurrentProject } from '../../../redux/currentProjectSlice';
+import TopBar from '../top-bar';
 
 import IssueCard from './IssueCard';
 import IssuesSection from './IssuesSection';
@@ -24,7 +25,7 @@ export default function MainSection() {
 
     return (
         <div className='grow w-full bg-[#1C1D21] text-base'>
-            <div className='bg-green-200 flex justify-evenly items-center h-8'>
+            {/* <div className='bg-green-200 flex justify-evenly items-center h-8'>
               
               <input className='w-1/2 h-6' />
               
@@ -36,7 +37,9 @@ export default function MainSection() {
                 <p>Add User</p>
               </Link>
 
-            </div>
+            </div> */}
+            
+            <TopBar />
       
             <IssuesSection />
             {/* <div>

@@ -1,6 +1,6 @@
 import PeopleIcon from '../../../static/img/PeopleIcon.png'
 import AddPersonIcon from '../../../static/img/AddPersonIcon.png'
-
+import { Link } from 'react-router-dom'
 
 export default function MembersSection() {
     return (
@@ -19,9 +19,9 @@ export default function MembersSection() {
                     <div>
                         <img src={AddPersonIcon} className='w-3' />
                     </div>
-                    <div>
+                    <Link to='users/add'>
                         <p className=''>Add Members</p>
-                    </div>
+                    </Link>
                 </div>
             </div>
         </div>
