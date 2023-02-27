@@ -13,8 +13,8 @@ export default function ProjectNavigation() {
 
     return (
         <div className="flex-none items-center h-screen w-12 bg-[#242529] border-r border-[#303135]">
-            <div className="flex h-full items-start">
-                <div className="h-1/3 mt-28 w-full">
+            <div className="flex h-full items-center justify-center">
+                <div className="w-full">
 
                     { currentUser.projects && (
                     Object.entries(currentUser.projects).map(([projectId, projectName]) => 
@@ -36,8 +36,10 @@ export default function ProjectNavigation() {
                         <img src={ProjectProfilePic2} className='w-2/3 h-2/3 rounded-full'/>
                     </div>  
                     
-                    <hr className='border-2 mx-2.5 rounded my-2 border-[#3e3f43]' />
-
+                    { currentUser.projects &&
+                        <hr className='border-2 mx-2.5 rounded my-2 border-[#3e3f43]' />
+                    }
+                    
                     <CreateNewProject />
 
                 </div>
