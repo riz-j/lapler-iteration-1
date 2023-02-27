@@ -56,7 +56,7 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
     return (
         <>
         <ContextMenuTrigger id={`contextMenu${issueId}`}>
-        <div onClick={() => hideMenu()} className='flex justify-between h-10 bg-[#1C1D21] px-5 py-2 border-b border-[#515151]'>
+        <div onClick={() => hideMenu()} className='flex justify-between h-10 bg-[#1C1d21] hover:bg-[#24262a] px-5 py-2 border-b border-[#515151]'>
         
             <div className='col-span-10 flex justify-start items-center space-x-4 '>
                 <img src={
