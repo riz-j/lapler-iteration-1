@@ -4,17 +4,16 @@ import IssueCard from './IssueCard';
 
 export default function IssuesSection() {
     const { projectId } = useParams();
+    const currentUser = useSelector(state => state.currentUser)
+    const currentProject = useSelector(state => state.currentProject);
+    const issues = currentProject.issues;
     
     // Queries: 
     const queryParams = new URLSearchParams(window.location.search);
     const active = queryParams.get('active');
     const assigned_to_me = queryParams.get('assigned_to_me')
     const reported_by_me = queryParams.get('reported_by_me')
-    const resolved = queryParams.get('resolved')
-    
-    const currentUser = useSelector(state => state.currentUser)
-    const currentProject = useSelector(state => state.currentProject);
-    const issues = currentProject.issues;
+    const resolved = queryParams.get('resolved') 
     
     let waitingIssues = [];
     let doingIssues = [];

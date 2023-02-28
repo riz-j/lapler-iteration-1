@@ -3,10 +3,13 @@ import PersonIcon from '../../../static/img/PersonIcon.png'
 import ReportIcon from '../../../static/img/ReportIcon.png'
 import DoneIcon from '../../../static/img/DoneIcon.png'
 import ArchiveIcon from '../../../static/img/ArchiveIcon.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 export default function QuickFilterSection() {
+    const params = new URLSearchParams(window.location.search);
+    const navigate = useNavigate();
+
     return (
         <div>
             <div className='flex flex-col justify-center items-start mb-2.5'>
@@ -14,36 +17,54 @@ export default function QuickFilterSection() {
                     <div>
                         <img src={LightningIcon} className='h-4 w-3' />
                     </div>
-                    <Link to='?active=true'>
-                        <p className=''>Active</p>
-                    </Link>
+                    <button onClick={() => {
+                        params.delete('resolved');
+                        params.get('active') === null &&
+                            params.append('active', true);
+                        navigate(`?${params.toString()}`);
+                    }}>
+                        <p>Active</p>
+                    </button>
                 </div>
 
                 <div className='flex items-center justify-center gap-2 mx-4 my-1'>
                     <div>
                         <img src={PersonIcon} className='h-3 w-3' />
                     </div>
-                    <Link to='?assigned_to_me=true'>
+                    <button onClick={() => {
+                        params.get('assigned_to_me') === null &&
+                            params.append('assigned_to_me', true);
+                        navigate(`?${params.toString()}`);
+                    }}>
                         <p className=''>Assigned to me</p>
-                    </Link>
+                    </button>
                 </div>
 
                 <div className='flex items-center justify-center gap-2 mx-4 my-1'>
                     <div>
                         <img src={ReportIcon} className='h-3 w-3' />
                     </div>
-                    <Link to='?reported_by_me=true'>
+                    <button onClick={() => {
+                        params.get('reported_by_me') === null &&
+                            params.append('reported_by_me', true);
+                        navigate(`?${params.toString()}`);
+                    }}>
                         <p className=''>Reported by me</p>
-                    </Link>
+                    </button>
                 </div>
 
                 <div className='flex items-center justify-center gap-2 mx-4 my-1'>
                     <div>
                         <img src={DoneIcon} className='h-3 w-3' />
                     </div>
-                    <Link to='?resolved=true'>
+                    <button onClick={() => {
+                        params.delete('active');
+                        params.get('resolved') === null &&
+                            params.append('resolved', true);
+                        navigate(`?${params.toString()}`);
+                    }}>
                         <p className=''>Resolved</p>
-                    </Link>
+                    </button>
                 </div>
 
                 <div className='flex items-center justify-center gap-2 mx-4 my-1'>

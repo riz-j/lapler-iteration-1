@@ -1,14 +1,33 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import SearchIcon from '../../../static/img/SearchIcon.png'
 import SortIcon from '../../../static/img/SortIcon.png'
 import ShareIcon from '../../../static/img/ShareIcon.png'
 
 export default function TopBar() {
+    const params = new URLSearchParams(window.location.search);
+    const navigate = useNavigate();
+
+    const paramsArray = [];
+    params.get('active') && paramsArray.push({name: 'active'});
+    params.get('assigned_to_me') && paramsArray.push({name: 'assigned_to_me'});
+    params.get('reported_by_me') && paramsArray.push({name: 'reported_by_me'});
+    params.get('resolved') && paramsArray.push({name: 'resolved'});
+    console.log(paramsArray);
+
     return (
         <div>
             <div className='flex justify-between px-6 items-center h-[3.06rem] border-b border-[#515151] bg-[#1C1D21] '>
-                <div className='border px-2 py-1 rounded border-dashed border-[#656565]'>
-                    <p>+ Filter</p>
+                { paramsArray.length === 0 &&
+                    <div className='border px-2 py-1 rounded border-dashed border-[#656565]'>
+                        <p>+ Filter</p>
+                    </div>
+                }
+                <div className='flex gap-2'>
+                    { paramsArray.map(param => (
+                        <div className='border px-2 py-1 rounded border-[#656565]'>
+                            <p>{param.name}</p>
+                        </div>
+                    ))}
                 </div>
 
                 <div className='flex gap-2'>              
