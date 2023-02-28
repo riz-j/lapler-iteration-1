@@ -23,27 +23,27 @@ export default function QuickFilterSection() {
                     <div>
                         <img src={PersonIcon} className='h-3 w-3' />
                     </div>
-                    <div>
+                    <Link to='?assigned_to_me=true'>
                         <p className=''>Assigned to me</p>
-                    </div>
+                    </Link>
                 </div>
 
                 <div className='flex items-center justify-center gap-2 mx-4 my-1'>
                     <div>
                         <img src={ReportIcon} className='h-3 w-3' />
                     </div>
-                    <div>
+                    <Link to='?reported_by_me=true'>
                         <p className=''>Reported by me</p>
-                    </div>
+                    </Link>
                 </div>
 
                 <div className='flex items-center justify-center gap-2 mx-4 my-1'>
                     <div>
                         <img src={DoneIcon} className='h-3 w-3' />
                     </div>
-                    <div>
+                    <Link to='?resolved=true'>
                         <p className=''>Resolved</p>
-                    </div>
+                    </Link>
                 </div>
 
                 <div className='flex items-center justify-center gap-2 mx-4 my-1'>

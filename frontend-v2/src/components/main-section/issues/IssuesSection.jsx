@@ -8,7 +8,11 @@ export default function IssuesSection() {
     // Queries: 
     const queryParams = new URLSearchParams(window.location.search);
     const active = queryParams.get('active');
-
+    const assigned_to_me = queryParams.get('assigned_to_me')
+    const reported_by_me = queryParams.get('reported_by_me')
+    const resolved = queryParams.get('resolved')
+    
+    const currentUser = useSelector(state => state.currentUser)
     const currentProject = useSelector(state => state.currentProject);
     const issues = currentProject.issues;
     
@@ -22,7 +26,27 @@ export default function IssuesSection() {
     issues && (doneIssues = issues.filter(issue => issue.statusOfIssue === 'Done'));
     issues && (backlogIssues = issues.filter(issue => issue.statusOfIssue === 'Backlog'));
     
-    (active === 'true') && (doneIssues = []);
+    (active === 'true') && (doneIssues = []); 
+
+    if (assigned_to_me === 'true') {
+        (waitingIssues = waitingIssues.filter(issue => issue.assigneeId === currentUser.id));
+        (doingIssues = doingIssues.filter(issue => issue.assigneeId === currentUser.id));
+        (doneIssues = doneIssues.filter(issue => issue.assigneeId === currentUser.id));
+        (backlogIssues = backlogIssues.filter(issue => issue.assigneeId === currentUser.id));
+    }
+    
+    if (reported_by_me === 'true') {
+        (waitingIssues = waitingIssues.filter(issue => issue.reporterId === currentUser.id));
+        (doingIssues = doingIssues.filter(issue => issue.reporterId === currentUser.id));
+        (doneIssues = doneIssues.filter(issue => issue.reporterId === currentUser.id));
+        (backlogIssues = backlogIssues.filter(issue => issue.reporterId === currentUser.id));
+    }
+
+    if (resolved == 'true') {
+        waitingIssues = [];
+        doingIssues = [];
+        backlogIssues = [];
+    }
 
     return (
         <div>
