@@ -17,17 +17,16 @@ export default function TopBar() {
     return (
         <div>
             <div className='flex justify-between px-6 items-center h-[3.06rem] border-b border-[#515151] bg-[#1C1D21] '>
-                { paramsArray.length === 0 &&
-                    <div className='border px-2 py-1 rounded border-dashed border-[#656565]'>
-                        <p>+ Filter</p>
-                    </div>
-                }
+        
                 <div className='flex gap-2'>
                     { paramsArray.map(param => (
                         <div className='border px-2 py-1 rounded border-[#656565]'>
                             <p>{param.name}</p>
                         </div>
                     ))}
+                    <div className='border px-2 py-1 rounded border-dashed border-[#656565]'>
+                        <p>+ Filter</p>
+                    </div>
                 </div>
 
                 <div className='flex gap-2'>              
