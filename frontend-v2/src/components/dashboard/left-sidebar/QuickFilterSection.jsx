@@ -3,6 +3,7 @@ import PersonIcon from '../../../static/img/PersonIcon.png'
 import ReportIcon from '../../../static/img/ReportIcon.png'
 import DoneIcon from '../../../static/img/DoneIcon.png'
 import ArchiveIcon from '../../../static/img/ArchiveIcon.png'
+import { Link } from 'react-router-dom'
 
 
 export default function QuickFilterSection() {
@@ -13,9 +14,9 @@ export default function QuickFilterSection() {
                     <div>
                         <img src={LightningIcon} className='h-4 w-3' />
                     </div>
-                    <div>
+                    <Link to='?active=true'>
                         <p className=''>Active</p>
-                    </div>
+                    </Link>
                 </div>
 
                 <div className='flex items-center justify-center gap-2 mx-4 my-1'>

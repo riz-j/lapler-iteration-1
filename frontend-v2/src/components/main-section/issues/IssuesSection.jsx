@@ -4,6 +4,11 @@ import IssueCard from './IssueCard';
 
 export default function IssuesSection() {
     const { projectId } = useParams();
+    
+    // Queries: 
+    const queryParams = new URLSearchParams(window.location.search);
+    const active = queryParams.get('active');
+
     const currentProject = useSelector(state => state.currentProject);
     const issues = currentProject.issues;
     
@@ -16,7 +21,9 @@ export default function IssuesSection() {
     issues && (doingIssues = issues.filter(issue => issue.statusOfIssue === 'Doing'));
     issues && (doneIssues = issues.filter(issue => issue.statusOfIssue === 'Done'));
     issues && (backlogIssues = issues.filter(issue => issue.statusOfIssue === 'Backlog'));
-          
+    
+    (active === 'true') && (doneIssues = []);
+
     return (
         <div>
             <div>
