@@ -66,7 +66,12 @@ export default function IssuesSection() {
         doneIssues = sortByPriorityAsc(doneIssues);
         backlogIssues = sortByPriorityAsc(backlogIssues);
     };
-    if (sortByDueDate === 'DESC') { sortByDueDateDesc(doneIssues) }
+    if (sortByDueDate === 'DESC') { 
+        sortByDueDateDesc(waitingIssues);
+        sortByDueDateDesc(doingIssues);
+        sortByDueDateDesc(doneIssues);
+        sortByDueDateDesc(backlogIssues); 
+    };
 
     return (
         <div>
