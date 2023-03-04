@@ -14,7 +14,7 @@ export default function CreateIssue() {
 
     const [typeOfIssue, setTypeOfIssue] = useState('Bug');
     const [priorityOfIssue, setPriorityOfIssue] = useState('Low');
-    const [statusOfIssue, setStatusOfIssue] = useState('Waiting');
+    const [statusOfIssue, setStatusOfIssue] = useState('Backlog');
     const [summary, setSummary] = useState('');
     const [assigneeId, setAssigneeId] = useState(null);
 
@@ -73,6 +73,7 @@ export default function CreateIssue() {
                     onChange={e => setStatusOfIssue(e.target.value)} 
                     className='border-2 border-black px-2 py-1 rounded-md w-full'
                 >
+                    <option value='Backlog'>Backlog</option>
                     <option value='Waiting'>Waiting</option>
                     <option value='Doing'>Doing</option>
                     <option value='Done'>Done</option>

@@ -85,6 +85,7 @@ export default function UpdateIssue() {
                     className='border-2 border-black px-2 py-1 rounded-md w-full'
                     onChange={e => setStatusOfIssue(e.target.value)} 
                 >
+                    <option value='Backlog'>Backlog</option>
                     <option value='Waiting'>Waiting</option>
                     <option value='Doing'>Doing</option>
                     <option value='Done'>Done</option>
