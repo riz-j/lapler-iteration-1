@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
-import { sortByPriorityDesc } from '../../../utils/issuesSortHandler';
+import { sortByPriorityDesc, sortByPriorityAsc, sortByDueDateDesc } from '../../../utils/issuesSortHandler';
 import IssueCard from './IssueCard';
 
 export default function IssuesSection() {
@@ -18,6 +18,7 @@ export default function IssuesSection() {
 
     /*   URI Sort Queries   */
     const sortByPriority = queryParams.get('sort_by_priority'); // Either ASC or DESC
+    const sortByDueDate = queryParams.get('sort_by_due_date');
     
     let waitingIssues = [];
     let doingIssues = [];
@@ -53,7 +54,19 @@ export default function IssuesSection() {
     }
 
     /*    Sort    */
-    (sortByPriority === 'DESC') && (waitingIssues = sortByPriorityDesc(waitingIssues));
+    if (sortByPriority === 'DESC') { 
+        waitingIssues = sortByPriorityDesc(waitingIssues);
+        doingIssues = sortByPriorityDesc(doingIssues);
+        doneIssues = sortByPriorityDesc(doneIssues);
+        backlogIssues = sortByPriorityDesc(backlogIssues);
+    };
+    if (sortByPriority === 'ASC') { 
+        waitingIssues = sortByPriorityAsc(waitingIssues);
+        doingIssues = sortByPriorityAsc(doingIssues);
+        doneIssues = sortByPriorityAsc(doneIssues);
+        backlogIssues = sortByPriorityAsc(backlogIssues);
+    };
+    if (sortByDueDate === 'DESC') { sortByDueDateDesc(doneIssues) }
 
     return (
         <div>

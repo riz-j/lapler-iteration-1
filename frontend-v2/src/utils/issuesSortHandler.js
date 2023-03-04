@@ -1,4 +1,4 @@
-/*    Sort by Issues' Priority Descending   */
+/*    Sort by Issues' Priority Descending    */
 export function sortByPriorityDesc(theArray) {
     const sortedArray = theArray.sort((a, b) => {
         if (a.priorityOfIssue === "High" && b.priorityOfIssue !== "High") {
@@ -16,7 +16,7 @@ export function sortByPriorityDesc(theArray) {
     return sortedArray;
 }
 
-/*    Sort by Issues' Priority Ascending    */
+/*    Sort by Issues' Priority Ascending     */
 export function sortByPriorityAsc(theArray) {
   const sortedArray = theArray.sort((a, b) => {
       if (a.priorityOfIssue === "High" && b.priorityOfIssue !== "High") {
@@ -32,4 +32,19 @@ export function sortByPriorityAsc(theArray) {
         }
   });
   return sortedArray;
+}
+
+/*    Sort by Issues' Due Date Descending     */
+export function sortByDueDateDesc(theArray) {
+    const today = new Date();
+    const sortedArray = theArray.sort((a, b) => {
+        const dateB = new Date(b.dueDate);
+        const dateA = new Date(a.dueDate);
+
+        const diffA = Math.abs(dateA - today);
+        const diffB = Math.abs(dateB - today);
+      
+        return diffA - diffB;
+    });
+    return sortedArray;
 }
