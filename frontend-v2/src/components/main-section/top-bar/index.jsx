@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import SearchIcon from '../../../static/img/SearchIcon.png'
 import SortIcon from '../../../static/img/SortIcon.png'
 import ShareIcon from '../../../static/img/ShareIcon.png'
+import FilterTag from './filterTag';
 
 export default function TopBar() {
     const params = new URLSearchParams(window.location.search);
@@ -20,9 +21,7 @@ export default function TopBar() {
         
                 <div className='flex gap-2'>
                     { paramsArray.map(param => (
-                        <div className='border px-2 py-1 rounded border-[#656565]'>
-                            <p>{param.name}</p>
-                        </div>
+                        <FilterTag paramName={param.name} />
                     ))}
                     <div className='border px-2 py-1 rounded border-dashed border-[#656565]'>
                         <p>+ Filter</p>
