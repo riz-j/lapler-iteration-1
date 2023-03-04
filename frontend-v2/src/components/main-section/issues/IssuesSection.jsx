@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
+import { sortByPriorityDesc } from '../../../utils/issuesSortHandler';
 import IssueCard from './IssueCard';
 
 export default function IssuesSection() {
@@ -8,12 +9,15 @@ export default function IssuesSection() {
     const currentProject = useSelector(state => state.currentProject);
     const issues = currentProject.issues;
     
-    // Queries: 
+    /*   URI Filter Queries   */
     const queryParams = new URLSearchParams(window.location.search);
     const active = queryParams.get('active');
-    const assigned_to_me = queryParams.get('assigned_to_me')
-    const reported_by_me = queryParams.get('reported_by_me')
-    const resolved = queryParams.get('resolved') 
+    const assigned_to_me = queryParams.get('assigned_to_me');
+    const reported_by_me = queryParams.get('reported_by_me');
+    const resolved = queryParams.get('resolved');
+
+    /*   URI Sort Queries   */
+    const sortByPriority = queryParams.get('sort_by_priority'); // Either ASC or DESC
     
     let waitingIssues = [];
     let doingIssues = [];
@@ -25,6 +29,7 @@ export default function IssuesSection() {
     issues && (doneIssues = issues.filter(issue => issue.statusOfIssue === 'Done'));
     issues && (backlogIssues = issues.filter(issue => issue.statusOfIssue === 'Backlog'));
     
+    /*    Filter    */
     (active === 'true') && (doneIssues = []); 
 
     if (assigned_to_me === 'true') {
@@ -46,6 +51,9 @@ export default function IssuesSection() {
         doingIssues = [];
         backlogIssues = [];
     }
+
+    /*    Sort    */
+    (sortByPriority === 'DESC') && (waitingIssues = sortByPriorityDesc(waitingIssues));
 
     return (
         <div>
