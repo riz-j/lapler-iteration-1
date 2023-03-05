@@ -3,11 +3,12 @@ import SearchIcon from '../../../static/img/SearchIcon.png'
 import SortIcon from '../../../static/img/SortIcon.png'
 import ShareIcon from '../../../static/img/ShareIcon.png'
 import FilterTag from './filterTag';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleSearchState } from '../../../redux/searchSlice';
 
 export default function TopBar() {
     const dispatch = useDispatch();
+    const searchState = useSelector(state => state.search.searchState);
     const params = new URLSearchParams(window.location.search);
     const navigate = useNavigate();
 
@@ -38,7 +39,8 @@ export default function TopBar() {
                 <div className='flex gap-2'>              
                     <button 
                         onClick ={handleSearchClick} 
-                        className='flex items-center gap-1 border px-2 py-1 rounded border-[#656565]'
+                        className={`flex items-center gap-1 border px-2 py-1 rounded border-[#656565]
+                                    ${searchState ? 'bg-gray-700' : 'bg-transparent'}`}
                     >
                         <img src={SearchIcon} className='w-2.5 h-2.5'/>
                         <p>Search</p>
