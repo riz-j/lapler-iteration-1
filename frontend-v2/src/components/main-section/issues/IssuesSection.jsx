@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
-import { sortByPriorityDesc, sortByPriorityAsc, sortByDueDateDesc } from '../../../utils/issuesSortHandler';
+import { sortByPriorityDesc, sortByPriorityAsc, sortByDueDateDesc, sortByDueDateAsc } from '../../../utils/issuesSortHandler';
 import IssueCard from './IssueCard';
 
 export default function IssuesSection() {
@@ -15,10 +15,12 @@ export default function IssuesSection() {
     const assigned_to_me = queryParams.get('assigned_to_me');
     const reported_by_me = queryParams.get('reported_by_me');
     const resolved = queryParams.get('resolved');
-
+    
     /*   URI Sort Queries   */
     const sortByPriority = queryParams.get('sort_by_priority'); // Either ASC or DESC
     const sortByDueDate = queryParams.get('sort_by_due_date');
+    const assigned_to_member = queryParams.get('assigned_to_member'); // Member User ID
+    const reported_by_member = queryParams.get('reported_by_member'); // Member User ID
     
     let waitingIssues = [];
     let doingIssues = [];
@@ -66,12 +68,32 @@ export default function IssuesSection() {
         doneIssues = sortByPriorityAsc(doneIssues);
         backlogIssues = sortByPriorityAsc(backlogIssues);
     };
-    if (sortByDueDate === 'DESC') { 
-        sortByDueDateDesc(waitingIssues);
-        sortByDueDateDesc(doingIssues);
+    if (sortByDueDate === 'DESC') {  
+        sortByDueDateDesc(waitingIssues);  
+        sortByDueDateDesc(doingIssues);  
         sortByDueDateDesc(doneIssues);
         sortByDueDateDesc(backlogIssues); 
     };
+    if (sortByDueDate === 'ASC') {  
+        sortByDueDateAsc(waitingIssues);  
+        sortByDueDateAsc(doingIssues);  
+        sortByDueDateAsc(doneIssues);
+        sortByDueDateAsc(backlogIssues); 
+    };
+
+    /*   Filter assignee and reporter   */
+    if (assigned_to_member) {
+        waitingIssues = waitingIssues.filter(issue => issue.assigneeId == assigned_to_member);
+        doingIssues = doingIssues.filter(issue => issue.assigneeId == assigned_to_member);
+        doneIssues = doneIssues.filter(issue => issue.assigneeId == assigned_to_member);
+        backlogIssues = backlogIssues.filter(issue => issue.assigneeId == assigned_to_member);
+    }
+    if (reported_by_member) {
+        waitingIssues = waitingIssues.filter(issue => issue.reporterId == reported_by_member);
+        doingIssues = doingIssues.filter(issue => issue.reporterId == reported_by_member);
+        doneIssues = doneIssues.filter(issue => issue.reporterId == reported_by_member);
+        backlogIssues = backlogIssues.filter(issue => issue.reporterId == reported_by_member);
+    }
 
     return (
         <div>

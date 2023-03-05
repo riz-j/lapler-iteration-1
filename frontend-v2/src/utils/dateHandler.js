@@ -1,6 +1,6 @@
 export function dateParser(dateString) {
     const date = new Date(dateString);
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const options = { year: 'numeric', month: 'short', day: '2-digit' };
     const readableDate = date.toLocaleDateString('en-UK', options);
     return readableDate;
 }

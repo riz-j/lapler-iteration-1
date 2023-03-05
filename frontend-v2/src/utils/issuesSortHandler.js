@@ -36,15 +36,45 @@ export function sortByPriorityAsc(theArray) {
 
 /*    Sort by Issues' Due Date Descending     */
 export function sortByDueDateDesc(theArray) {
-    const today = new Date();
     const sortedArray = theArray.sort((a, b) => {
-        const dateB = new Date(b.dueDate);
-        const dateA = new Date(a.dueDate);
-
-        const diffA = Math.abs(dateA - today);
-        const diffB = Math.abs(dateB - today);
-      
-        return diffA - diffB;
+        if (a?.dueDate === undefined || a?.dueDate === null || a?.dueDate === "") {
+          return 1; 
+        }
+        if (b?.dueDate === undefined || b?.dueDate === null || b?.dueDate === "") {
+          return -1; 
+        }    
+        // const today = new Date();
+        // const today_Ms = today.getTime();
+        const dateB = new Date(b?.dueDate);
+        const dateA = new Date(a?.dueDate);
+        const date_AMs = dateA.getTime();
+        const date_BMs = dateB.getTime();    
+        if (date_AMs < date_BMs) { return -1 }    // a comes first
+        if (date_AMs > date_BMs) { return 1 }    // b comes first
+        if (date_BMs === date_AMs) { return 0 }    // change nothing
     });
     return sortedArray;
 }
+
+/*    Sort by Issues' Due Date Ascending     */
+export function sortByDueDateAsc(theArray) {
+  const sortedArray = theArray.sort((a, b) => {
+      if (a?.dueDate === undefined || a?.dueDate === null || a?.dueDate === "") {
+        return 1; 
+      }
+      if (b?.dueDate === undefined || b?.dueDate === null || b?.dueDate === "") {
+        return -1; 
+      }    
+      // const today = new Date();
+      // const today_Ms = today.getTime();
+      const dateB = new Date(b?.dueDate);
+      const dateA = new Date(a?.dueDate);
+      const date_AMs = dateA.getTime();
+      const date_BMs = dateB.getTime();    
+      if (date_AMs > date_BMs) { return -1 }    // a comes first
+      if (date_AMs < date_BMs) { return 1 }    // b comes first
+      if (date_BMs === date_AMs) { return 0 }    // change nothing
+  });
+  return sortedArray;
+}
+
