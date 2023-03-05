@@ -1,13 +1,31 @@
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { sortByPriorityDesc, sortByPriorityAsc, sortByDueDateDesc, sortByDueDateAsc } from '../../../utils/issuesSortHandler';
 import IssueCard from './IssueCard';
 
 export default function IssuesSection() {
     const { projectId } = useParams();
+    const navigate = useNavigate();
     const currentUser = useSelector(state => state.currentUser)
     const currentProject = useSelector(state => state.currentProject);
-    const issues = currentProject.issues;
+    let issues = currentProject.issues;
+
+    /*   Search   */
+    const [search, setSearch] = useState('');
+
+    useEffect(() => {
+        if (window.location.search !== ''){
+            navigate(`/dashboard/project/${projectId}`);
+        }
+    }, [search])
+
+    if (issues) { 
+        issues = issues.filter(issue => 
+            issue.summary.toLowerCase()
+            .includes(search.toLowerCase())
+        );
+    };
     
     /*   URI Filter Queries   */
     const queryParams = new URLSearchParams(window.location.search);
@@ -95,8 +113,17 @@ export default function IssuesSection() {
         backlogIssues = backlogIssues.filter(issue => issue.reporterId == reported_by_member);
     }
 
+
+
     return (
         <div>
+            <div className='flex justify-center px-10 py-3'>
+                <input 
+                    onChange={e => setSearch(e.target.value)} 
+                    placeholder='Search'
+                    className='p-2 w-[100%] rounded-lg bg-transparent border border-gray-500 text-white text-lg'
+                />
+            </div>
             <div>
             { (doingIssues.length > 0) &&
                 <div className='flex justify-between items-center h-7 px-3 w-full bg-[#242529] border-b border-[#515151]'>
