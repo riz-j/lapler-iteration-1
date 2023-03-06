@@ -24,12 +24,10 @@ export default function TopBar() {
     }
 
     const handleSortChange = (e) => {
-        if (params.get('sort_by_priority') !== null) { params.delete('sort_by_priority'); }
-        if (params.get('sort_by_due_date') !== null) { params.delete('sort_by_due_date'); }
+        params.delete('sort_by_priority');
+        params.delete('sort_by_due_date');
 
         if (e.target.value === null || e.target.value === undefined || e.target.value === "") {
-            params.delete('sort_by_priority');
-            params.delete('sort_by_due_date');
             navigate(`?${params.toString()}`);
             return;
         } 
