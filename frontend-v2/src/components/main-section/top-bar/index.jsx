@@ -23,6 +23,21 @@ export default function TopBar() {
         dispatch(toggleSearchState());
     }
 
+    const handleSortChange = (e) => {
+        if (params.get('sort_by_priority') !== null) {
+            params.delete('sort_by_priority');
+        }
+
+        if (e.target.value === null || e.target.value === undefined || e.target.value === "") {
+            navigate(`?${params.toString()}`);
+            return;
+        } 
+
+        const parts = (e.target.value).split('=');
+        params.append(parts[0], parts[1]);
+        navigate(`?${params.toString()}`);
+    }
+
     return (
         <div>
             <div className='flex justify-between px-6 items-center h-[3.06rem] border-b border-[#515151] bg-[#1C1D21] '>
@@ -47,7 +62,12 @@ export default function TopBar() {
                     </button>
                     <div className='flex items-center gap-1 border px-2 py-1 rounded border-[#656565]'>
                         <img src={SortIcon} className='w-3 h-3'/>
-                        <p>Sort</p>
+                        <select onChange={handleSortChange} className='h-full bg-[#1C1D21]'>
+                            <option disabled selected className='hidden'>Sort</option>
+                            <option value="">None</option>
+                            <option value="sort_by_priority=DESC" >{`Priority (High to Low)`}</option>
+                            <option value="sort_by_priority=ASC" >{`Priority (Low to High)`}</option>
+                        </select>
                     </div>
                     <div className='flex items-center gap-1 border px-2 py-1 rounded border-[#656565]'>
                         <img src={ShareIcon} className='w-2.5 h-3'/>
