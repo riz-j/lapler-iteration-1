@@ -24,11 +24,12 @@ export default function TopBar() {
     }
 
     const handleSortChange = (e) => {
-        if (params.get('sort_by_priority') !== null) {
-            params.delete('sort_by_priority');
-        }
+        if (params.get('sort_by_priority') !== null) { params.delete('sort_by_priority'); }
+        if (params.get('sort_by_due_date') !== null) { params.delete('sort_by_due_date'); }
 
         if (e.target.value === null || e.target.value === undefined || e.target.value === "") {
+            params.delete('sort_by_priority');
+            params.delete('sort_by_due_date');
             navigate(`?${params.toString()}`);
             return;
         } 
@@ -67,6 +68,8 @@ export default function TopBar() {
                             <option value="">None</option>
                             <option value="sort_by_priority=DESC" >{`Priority (High to Low)`}</option>
                             <option value="sort_by_priority=ASC" >{`Priority (Low to High)`}</option>
+                            <option value="sort_by_due_date=DESC" >{`Due Date (Nearest)`}</option>
+                            <option value="sort_by_due_date=ASC" >{`Due Date (Furthest)`}</option>
                         </select>
                     </div>
                     <div className='flex items-center gap-1 border px-2 py-1 rounded border-[#656565]'>
