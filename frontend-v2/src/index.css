@@ -1,22 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #242529;
+  background-color: #242529;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #47494f;
-    border-radius: 6px;
+  background-color: #47494f;
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #8e8d8d;
+  background-color: #8e8d8d;
 }

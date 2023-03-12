@@ -10,6 +10,10 @@ module.exports = {
       inter: ['Inter', 'sans-serif']
     },
     fontSize: {
+      '3xl': '3.5rem',
+      '2xl': '3rem',
+      xl: '2rem',
+      'm-lg': '1.2rem',
       lg: '1rem',
       md: '0.9rem',
       base: '0.75rem',
