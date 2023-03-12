@@ -11,7 +11,7 @@ export default function VisitorHomepage() {
                 <div>
                     <img src={lapler_logo} className='h-8'/>
                 </div>
-                <div className='flex items-center gap-12 text-gray-400 '>
+                <div className='flex items-center gap-12 text-gray-300 '>
                     <p className='hover:text-white'>Docs</p>
                     <Link to='/login'>
                         <p className='hover:text-white'>
