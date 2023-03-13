@@ -45,7 +45,7 @@ export default function Register() {
                     <h1 className='text-mm-lg font-black'>
                         Get started. It's free.
                     </h1>
-                    <form className='flex flex-col text-white w-8/12 my-4'>
+                    <form onSubmit={handleRegisterFormSubmit} className='flex flex-col text-white w-8/12 my-4'>
                         <label className='text-md'>First Name</label>
                         <input 
                             type='text' 
