@@ -98,8 +98,10 @@ export default function Register() {
                             <h1 className='text-[2.3rem] font-bold text-white'>Get things done.</h1>
                         </div>
                     </div>
-                    <div className='flex justify-end items-end bg-red'>
-                        <img src={ui_display_cropped} className='w-11/12 overflow-hidden' />
+                    <div className='relative w-full h-full'>
+                        <div className='absolute top-0 bottom-0 left-0 right-0 flex justify-end items-end bg-gradient-to-b from-transparent to-blue-900'>
+                            <img src={ui_display_cropped} className='w-11/12' />
+                        </div>
                     </div>
                 </div>
             </div>
