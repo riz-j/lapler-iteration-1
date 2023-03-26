@@ -39,7 +39,7 @@ export default function UpdateIssue() {
             summary: summary, 
             projectId: projectId, 
             dueDate: toggleDueDate ? dueDate : null,
-            assigneeId: assigneeId ? assigneeId : null,
+            assigneeId: (assigneeId !== "") ? assigneeId : null,
             reporterId: reporterId, 
             token: token
         }))
@@ -161,7 +161,7 @@ export default function UpdateIssue() {
                     onChange={e => setAssigneeId(e.target.value)} 
                     className='border-2 border-black px-2 py-1 rounded-md w-full'
                 >
-                    <option value={null}>None</option>
+                    <option value={''}>None</option>
                     { projectMembers &&
                         projectMembers.map(user => 
                             <option value={user.id}>{user.firstName} {user.lastName}</option>
