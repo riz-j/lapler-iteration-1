@@ -22,46 +22,47 @@ export default function MainSection() {
             projectId: projectId, 
             token: token 
         }));
+        console.log(currentProject.issues.length)
     }, [dispatch, projectId, token])
+
+    function renderLoading() {
+      return (
+        <div className="flex justify-center items-center h-[90%]">
+          <h1 className="text-mm-lg italic text-font-color-secondary">Loading...</h1>
+        </div>
+      );
+    }
+
+    function renderEmptyProject() {
+      return (
+        <div className="flex justify-center items-center h-[90%]">
+          <h1 className="text-mm-lg italic text-font-color-secondary">This project is empty</h1>
+        </div>
+      );
+    }
+    
 
     return (
         <div className='grow w-full bg-platinum-main text-base overflow-y-auto'>
-            {/* <div className='bg-green-200 flex justify-evenly items-center h-8'>
-              
-              <input className='w-1/2 h-6' />
-              
-              <Link to='issues/new'>
-                <p>New Issue</p>
-              </Link>
-
-              <Link to='users/add'>
-                <p>Add User</p>
-              </Link>
-
-            </div> */}
             
             <TopBar />
-      
-            <IssuesSection />
-            {/* <div>
-              {(currentProject.issues && currentProject.issues.length > 0) ? (
-                currentProject.issues.map(issue => (
-                  <IssueCard 
-                    projectId={projectId}
-                    issueId={issue.id} 
-                    typeOfIssue={issue.typeOfIssue} 
-                    priorityOfIssue={issue.priorityOfIssue} 
-                    statusOfIssue={issue.statusOfIssue} 
-                    summary={issue.summary}
-                    dueDate={issue.dueDate}
-                    assigneeId={issue.assigneeId}
-                    reporterId={issue.reporterId}
-                  /> 
-                ))
-              ) : (
-                <h1>This project is empty</h1>
-              )}
-            </div> */}
-          </div>
+
+            {  currentProject && currentProject.issues && currentProject.issues.length !== 0 ?
+
+                <IssuesSection />
+
+              :
+
+                  currentProject.isLoading === true ?
+                    
+                    renderLoading()
+
+                    :
+
+                    renderEmptyProject()
+
+            }
+                        
+        </div>
     )
 }
