@@ -68,7 +68,7 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                     className='w-3 h-3' />
                 </div>
                 <div className='flex justify-center w-3'>
-                    <p className='text-[#A8A9AD]'>{issueId}</p>
+                    <p className='text-font-color-secondary'>{issueId}</p>
                 </div>
                 <div className='flex justify-center w-6'>
                     <img 

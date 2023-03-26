@@ -18,7 +18,7 @@ export default function MembersSection() {
                     </div>
                 </div>
 
-                <div className='flex flex-col items-start justify-center text-[#A8A9AD] gap-1 mx-8 my-0.5'>
+                <div className='flex flex-col items-start justify-center text-font-color-secondary gap-1 mx-8 my-0.5'>
                     { currentProjectMembers &&
                         currentProjectMembers.map(member => 
                             <p>{member.firstName} {member.lastName}</p>

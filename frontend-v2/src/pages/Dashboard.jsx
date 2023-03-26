@@ -18,7 +18,7 @@ export default function Dashboard() {
     // }, [dispatch, projectId, token])
 
     return (
-        <div className='flex h-screen sm:text-sm text-[#E4E5E9]'>
+        <div className='flex h-screen sm:text-sm text-font-color-primary'>
           <ProjectNavigation/>
           <LeftSidebar />
 
