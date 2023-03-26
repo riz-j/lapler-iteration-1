@@ -41,7 +41,7 @@ export default function Register() {
     return (
         <>
             <div className='grid grid-cols-10 w-screen h-screen'>
-                <div className='flex flex-col justify-center items-center col-span-4 bg-[#242529] text-white border-r border-[#4B4B4B]'>
+                <div className='flex flex-col justify-center items-center col-span-4 bg-platinum-secondary text-white border-r border-[#4B4B4B]'>
                     <h1 className='text-mm-lg font-black'>
                         Get started. It's free.
                     </h1>

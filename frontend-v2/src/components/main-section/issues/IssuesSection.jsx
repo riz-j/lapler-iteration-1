@@ -129,7 +129,7 @@ export default function IssuesSection() {
             }
             <div>
             { (doingIssues.length > 0) &&
-                <div className='flex justify-between items-center h-7 px-3 w-full bg-[#242529] border-b border-platinum-secondary'>
+                <div className='flex justify-between items-center h-7 px-3 w-full bg-platinum-secondary border-b border-platinum-tertiary'>
                     <p>Doing</p>
                     <p>+</p>
                 </div> 
@@ -152,7 +152,7 @@ export default function IssuesSection() {
             </div>
             <div>
             { (waitingIssues.length > 0) &&
-                <div className='flex justify-between items-center h-7 px-3 w-full bg-[#242529] border-b border-platinum-secondary'>
+                <div className='flex justify-between items-center h-7 px-3 w-full bg-platinum-secondary border-b border-platinum-tertiary'>
                     <p>Waiting</p>
                     <p>+</p>
                 </div> 
@@ -174,7 +174,7 @@ export default function IssuesSection() {
             </div>
             <div>
             { (backlogIssues.length > 0) &&
-                <div className='flex justify-between items-center h-7 px-3 w-full bg-[#242529] border-b border-platinum-secondary'>
+                <div className='flex justify-between items-center h-7 px-3 w-full bg-platinum-secondary border-b border-platinum-tertiary'>
                     <p>Backlog</p>
                     <p>+</p>
                 </div> 
@@ -196,7 +196,7 @@ export default function IssuesSection() {
             </div>
             <div>
             { (doneIssues.length > 0) &&
-                <div className='flex justify-between items-center h-7 px-3 w-full bg-[#242529] border-b border-platinum-secondary'>
+                <div className='flex justify-between items-center h-7 px-3 w-full bg-platinum-secondary border-b border-platinum-tertiary'>
                     <p>Done</p>
                     <p>+</p>
                 </div> 

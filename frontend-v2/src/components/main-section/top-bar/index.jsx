@@ -39,7 +39,7 @@ export default function TopBar() {
 
     return (
         <div>
-            <div className='flex justify-between px-6 items-center h-[3.06rem] border-b border-platinum-secondary bg-platinum-main '>
+            <div className='flex justify-between px-6 items-center h-[3.06rem] border-b border-platinum-tertiary bg-platinum-main '>
         
                 <div className='flex gap-2'>
                     { paramsArray.map(param => (

@@ -12,7 +12,7 @@ export default function ProjectNavigation() {
     const currentUser = useSelector(state => state.currentUser);
 
     return (
-        <div className="flex-none items-center h-screen w-12 bg-[#242529] border-r border-[#303135]">
+        <div className="flex-none items-center h-screen w-12 bg-platinum-secondary border-r border-[#303135]">
             <div className="flex h-full items-center justify-center">
                 <div className="w-full">
 

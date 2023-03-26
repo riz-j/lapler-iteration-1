@@ -8,7 +8,8 @@ module.exports = {
     extend: {
       colors: {
         'platinum-main': '#1C1d21',
-        'platinum-secondary': '#515151'
+        'platinum-secondary': '#242529',
+        'platinum-tertiary': '#515151'
       }
     },
     fontFamily: {
