@@ -18,7 +18,7 @@ export default function ProjectNameHeader() {
                     <img src={ProjectSettingsIcon} className='w-6 h-6 mr-4' />
                 </div>
             </div>
-            <hr className='border-[#303135]' />
+            <hr className='border-platinum-quarternary' />
         </div>
     )
 }

@@ -9,7 +9,7 @@ export default function ProfileSection() {
 
     return (
         <div>
-            <div className='fixed bottom-0 w-56 h-12 flex items-center border-t border-[#303135]'>
+            <div className='fixed bottom-0 w-56 h-12 flex items-center border-t border-platinum-quarternary'>
                 <div className='flex justify-start items-center mx-3 gap-2'>
                     <div>
                         <img src={ProfilePic} className='h-7 w-7' />

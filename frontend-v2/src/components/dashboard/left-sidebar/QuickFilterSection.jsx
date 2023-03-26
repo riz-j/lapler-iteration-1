@@ -76,7 +76,7 @@ export default function QuickFilterSection() {
                     </div>
                 </div>
             </div>
-            <hr className='border-[#303135]' />
+            <hr className='border-platinum-quarternary' />
         </div>
     )
 }
