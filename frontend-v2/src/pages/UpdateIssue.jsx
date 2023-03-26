@@ -18,6 +18,7 @@ export default function UpdateIssue() {
     const [priorityOfIssue, setPriorityOfIssue] = useState(issueToUpdate.priorityOfIssue || null);
     const [statusOfIssue, setStatusOfIssue] = useState(issueToUpdate.statusOfIssue || null);
     const [summary, setSummary] = useState(issueToUpdate.summary || null);
+    const [toggleDueDate, setToggleDueDate] = useState(!(issueToUpdate.dueDate === null || issueToUpdate.dueDate === "" || issueToUpdate.dueDate === undefined));
     const [assigneeId, setAssigneeId] = useState(issueToUpdate.assigneeId || null);
     const [reporterId, setReporterId] = useState(issueToUpdate.reporterId || null);
 
@@ -37,8 +38,8 @@ export default function UpdateIssue() {
             statusOfIssue: statusOfIssue, 
             summary: summary, 
             projectId: projectId, 
-            dueDate: dueDate,
-            ...(assigneeId && { assigneeId }),
+            dueDate: toggleDueDate ? dueDate : null,
+            assigneeId: assigneeId ? assigneeId : null,
             reporterId: reporterId, 
             token: token
         }))
@@ -100,10 +101,12 @@ export default function UpdateIssue() {
                 />
 
                 <div className='flex w-full'>
+                    <input type={'checkbox'} checked={toggleDueDate} onChange={() => setToggleDueDate(!toggleDueDate)}/>
                     <select 
                         value={dueDateDay} 
                         onChange={e => setDueDateDay(e.target.value)}
                         className='border-2 border-black px-2 py-1 rounded-md w-full'
+                        disabled={!toggleDueDate}
                     >
                         <option value='01'>1</option> <option value='02'>2</option>
                         <option value='03'>3</option> <option value='04'>4</option>
@@ -116,6 +119,11 @@ export default function UpdateIssue() {
                         <option value='17'>17</option> <option value='18'>18</option>
                         <option value='19'>19</option> <option value='20'>20</option>
                         <option value='21'>21</option> <option value='22'>22</option>
+                        <option value='23'>23</option> <option value='24'>24</option>
+                        <option value='25'>25</option> <option value='26'>26</option>
+                        <option value='27'>27</option> <option value='28'>28</option>
+                        <option value='29'>29</option> <option value='30'>30</option>
+                        <option value='31'>31</option>
                     </select>
                     <select 
                         value={dueDateMonth} 
