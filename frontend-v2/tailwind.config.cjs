@@ -9,7 +9,7 @@ module.exports = {
       colors: {
         'platinum-main': '#1C1d21',
         'platinum-secondary': '#242529',
-        'platinum-tertiary': '#515151',
+        'platinum-tertiary': '#303135',
         'platinum-quarternary': '#303135',
 
         'font-color-primary': '#E4E5E9',
