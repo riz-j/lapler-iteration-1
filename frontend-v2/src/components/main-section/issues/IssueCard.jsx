@@ -59,22 +59,31 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
         <div onClick={() => hideMenu()} className='flex justify-between h-10 bg-platinum-main hover:bg-[#24262a] px-5 py-2 border-b border-platinum-tertiary'>
         
             <div className='col-span-10 flex justify-start items-center space-x-4 '>
-                <img src={
-                    priorityOfIssue == 'Low' && LowPriorityIcon ||
-                    priorityOfIssue == 'Medium' && MediumPriorityIcon ||
-                    priorityOfIssue == 'High' && HighPriorityIcon
-                }
-                className='w-3 h-3' />
-                <p className='text-[#A8A9AD]'>{issueId}</p>
-                <img 
-                    src={
-                        statusOfIssue == 'Waiting' && WaitingIcon ||
-                        statusOfIssue == 'Doing' && InProgressIcon ||
-                        statusOfIssue == 'Done' && DoneIcon2 ||
-                        statusOfIssue == 'Backlog' && BacklogIcon 
-                    } 
-                    className="w-3 h-3" />
-                <p>{summary}</p> 
+                <div className='flex justify-center w-8'>
+                    <img src={
+                        priorityOfIssue == 'Low' && LowPriorityIcon ||
+                        priorityOfIssue == 'Medium' && MediumPriorityIcon ||
+                        priorityOfIssue == 'High' && HighPriorityIcon
+                    }
+                    className='w-3 h-3' />
+                </div>
+                <div className='flex justify-center w-3'>
+                    <p className='text-[#A8A9AD]'>{issueId}</p>
+                </div>
+                <div className='flex justify-center w-6'>
+                    <img 
+                        src={
+                            statusOfIssue == 'Waiting' && WaitingIcon ||
+                            statusOfIssue == 'Doing' && InProgressIcon ||
+                            statusOfIssue == 'Done' && DoneIcon2 ||
+                            statusOfIssue == 'Backlog' && BacklogIcon 
+                        } 
+                        className="w-3 h-3" 
+                    />
+                </div>
+                <div>
+                    <p>{summary}</p> 
+                </div>
             </div>
 
             <div className='flex justify-end items-center gap-1 text-sm'>

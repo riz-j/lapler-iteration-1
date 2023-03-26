@@ -19,7 +19,7 @@ export default function ProjectNavigation() {
                     { currentUser.projects && (
                     Object.entries(currentUser.projects).map(([projectId, projectName]) => 
                         <Link to={`/dashboard/project/${projectId}`} className="flex justify-center items-center h-12 w-12">
-                            <img key={projectId} src={ProjectProfilePic2} className='w-2/3 h-2/3 rounded-full'/>
+                            <img key={projectId} src={ProjectProfilePic1} className='w-2/3 h-2/3 rounded-full'/>
                         </Link>
                     ))
                     }
