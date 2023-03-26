@@ -25,7 +25,7 @@ export default function MainSection() {
     }, [dispatch, projectId, token])
 
     return (
-        <div className='grow w-full bg-[#1C1D21] text-base overflow-y-auto'>
+        <div className='grow w-full bg-platinum-main text-base overflow-y-auto'>
             {/* <div className='bg-green-200 flex justify-evenly items-center h-8'>
               
               <input className='w-1/2 h-6' />

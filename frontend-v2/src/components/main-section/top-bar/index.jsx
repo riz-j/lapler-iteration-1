@@ -39,7 +39,7 @@ export default function TopBar() {
 
     return (
         <div>
-            <div className='flex justify-between px-6 items-center h-[3.06rem] border-b border-[#515151] bg-[#1C1D21] '>
+            <div className='flex justify-between px-6 items-center h-[3.06rem] border-b border-platinum-secondary bg-platinum-main '>
         
                 <div className='flex gap-2'>
                     { paramsArray.map(param => (
@@ -61,7 +61,7 @@ export default function TopBar() {
                     </button>
                     <div className='flex items-center gap-1 border px-2 py-1 rounded border-[#656565]'>
                         <img src={SortIcon} className='w-3 h-3'/>
-                        <select onChange={handleSortChange} className='h-full bg-[#1C1D21]'>
+                        <select onChange={handleSortChange} className='h-full bg-platinum-main'>
                             <option disabled selected className='hidden'>Sort</option>
                             <option value="">None</option>
                             <option value="sort_by_priority=DESC" >{`Priority (High to Low)`}</option>

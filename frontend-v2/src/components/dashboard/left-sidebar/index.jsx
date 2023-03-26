@@ -7,7 +7,7 @@ import QuickFilterSection from "./QuickFilterSection"
 
 export default function LeftSidebar() {
     return (
-        <div className='flex-none bg-[#1C1D21] w-56 h-screen text-base border-r border-[#515151]'>
+        <div className='flex-none bg-platinum-main w-56 h-screen text-base border-r border-platinum-secondary'>
             <div>
                 <ProjectNameHeader />
                 <NewIssueButtonSection />

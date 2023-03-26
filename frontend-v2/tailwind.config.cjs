@@ -5,7 +5,12 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'platinum-main': '#1C1d21',
+        'platinum-secondary': '#515151'
+      }
+    },
     fontFamily: {
       inter: ['Inter', 'sans-serif']
     },

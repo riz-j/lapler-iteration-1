@@ -90,7 +90,7 @@ export default function Register() {
                     </div>
                 </div>
 
-                <div className='flex flex-col col-span-6 bg-[#1C1D21]'>
+                <div className='flex flex-col col-span-6 bg-platinum-main'>
                     <div className='container h-full w-full px-[10vh] py-[5vw]'>
                         <img src={lapler_logo} className='h-10'/>
                         <div className='flex flex-col mt-10'>

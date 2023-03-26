@@ -56,7 +56,7 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
     return (
         <>
         <ContextMenuTrigger id={`contextMenu${issueId}`}>
-        <div onClick={() => hideMenu()} className='flex justify-between h-10 bg-[#1C1d21] hover:bg-[#24262a] px-5 py-2 border-b border-[#515151]'>
+        <div onClick={() => hideMenu()} className='flex justify-between h-10 bg-platinum-main hover:bg-[#24262a] px-5 py-2 border-b border-platinum-secondary'>
         
             <div className='col-span-10 flex justify-start items-center space-x-4 '>
                 <img src={
@@ -79,14 +79,14 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
 
             <div className='flex justify-end items-center gap-1 text-sm'>
                 { readableDate && 
-                    <div className='flex justify-around items-center gap-1 border border-[#515151] px-1 py-0.5 rounded'>
+                    <div className='flex justify-around items-center gap-1 border border-platinum-secondary px-1 py-0.5 rounded'>
                         <img src={RedCalendarIcon} 
                         className='w-3 h-3'/>
                         <p>{readableDate}</p>
                     </div> 
                 }
                 { typeOfIssue && 
-                    <div className='flex justify-around items-center gap-1 border border-[#515151] px-1 py-0.5 rounded'>
+                    <div className='flex justify-around items-center gap-1 border border-platinum-secondary px-1 py-0.5 rounded'>
                         <img src={
                             typeOfIssue === 'Bug' && BugIcon ||
                             typeOfIssue === 'Improvement' && GreenDot ||
