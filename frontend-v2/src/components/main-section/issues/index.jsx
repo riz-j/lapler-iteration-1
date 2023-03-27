@@ -22,7 +22,6 @@ export default function MainSection() {
             projectId: projectId, 
             token: token 
         }));
-        console.log(currentProject.issues.length)
     }, [dispatch, projectId, token])
 
     function renderLoading() {
