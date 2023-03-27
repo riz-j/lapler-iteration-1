@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LeftSidebar from '../components/dashboard/left-sidebar';
 import ProjectNavigation from '../components/dashboard/project-navigation';
 import MainSection from '../components/main-section/issues/index.jsx';
 
 export default function Dashboard() {
-    const [show, setShow] = useState(true);
+    const initialShow = localStorage.getItem('left-sidebar-collapse') === 'true' ? true : false;
+    const [show, setShow] = useState(initialShow);
+
+    useEffect(() => {
+      localStorage.setItem('left-sidebar-collapse', show)
+    }, [show])
 
     function renderCloseButton() {
       return (
