@@ -58,7 +58,7 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
         <>
         <ContextMenuTrigger id={`contextMenu${issueId}`}>
             <Draggable id={issueId}>
-                <div onClick={() => hideMenu()} className='flex mx-3 my-2 justify-between h-10 bg-platinum-main hover:bg-[#24262a] px-5 py-2 border-2 rounded-lg border-platinum-tertiary'>
+                <div onClick={() => hideMenu()} className='flex mx-3 my-1 justify-between h-10 bg-platinum-main hover:bg-[#24262a] px-5 py-2 border-2 rounded-lg border-platinum-tertiary'>
                 
                     <div className='col-span-10 flex justify-start items-center space-x-4 '>
                         <div className='flex justify-center w-6'>

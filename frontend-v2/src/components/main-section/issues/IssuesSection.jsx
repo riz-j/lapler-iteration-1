@@ -133,7 +133,7 @@ export default function IssuesSection() {
                 </div>
             }
             <DndContext onDragEnd={handleDragEnd}>
-            <div>
+            <div> 
             { (doingIssues.length > 0) &&
                 <div className='flex justify-between items-center h-7 px-3 w-full bg-platinum-secondary border-b border-platinum-tertiary'>
                     <p>Doing</p>

@@ -15,7 +15,7 @@ return (
     <div 
         ref={setNodeRef} 
         style={_transform}
-        className={`${ buttonBg } `}
+        className={`${ buttonBg } py-2`}
     >
       {props.children}
     </div>
