@@ -189,30 +189,33 @@ export default function IssuesSection() {
             </Droppable>
             </div>
             <div>
-            { (backlogIssues.length > 0) &&
-                <div className='flex justify-between items-center h-7 px-3 w-full bg-platinum-secondary border-b border-t border-platinum-tertiary'>
-                    <p>Backlog</p>
-                    <p>+</p>
-                </div> 
-            }
-            <Droppable key={'Backlog'} id={'Backlog'}>
-                { backlogIssues.map(issue => (
-                    <Draggable id={issue.id}>
-                        <IssueCard 
-                            projectId={projectId}
-                            issueId={issue.id} 
-                            typeOfIssue={issue.typeOfIssue} 
-                            priorityOfIssue={issue.priorityOfIssue} 
-                            statusOfIssue={issue.statusOfIssue} 
-                            summary={issue.summary}
-                            dueDate={issue.dueDate}
-                            assigneeId={issue.assigneeId}
-                            reporterId={issue.reporterId}
-                        /> 
-                    </Draggable>
-                ))
+                { (backlogIssues.length > 0) &&
+                    <>
+                    <div className='flex justify-between items-center h-7 px-3 w-full bg-platinum-secondary border-b border-t border-platinum-tertiary'>
+                        <p>Backlog</p>
+                        <p>+</p>
+                    </div> 
+                
+                    <Droppable key={'Backlog'} id={'Backlog'}>
+                        { backlogIssues.map(issue => (
+                            <Draggable id={issue.id}>
+                                <IssueCard 
+                                    projectId={projectId}
+                                    issueId={issue.id} 
+                                    typeOfIssue={issue.typeOfIssue} 
+                                    priorityOfIssue={issue.priorityOfIssue} 
+                                    statusOfIssue={issue.statusOfIssue} 
+                                    summary={issue.summary}
+                                    dueDate={issue.dueDate}
+                                    assigneeId={issue.assigneeId}
+                                    reporterId={issue.reporterId}
+                                /> 
+                            </Draggable>
+                        ))
+                        }
+                    </Droppable>
+                    </>
                 }
-            </Droppable>
             </div>
             <div>
             { (doneIssues.length > 0) &&
