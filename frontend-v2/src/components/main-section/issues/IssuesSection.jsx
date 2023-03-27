@@ -130,7 +130,6 @@ export default function IssuesSection() {
             return issue;
         });
 
-        console.log(updatedIssues);
         setIssues(updatedIssues);
     }
 
