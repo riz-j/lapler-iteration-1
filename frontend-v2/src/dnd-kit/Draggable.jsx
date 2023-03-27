@@ -16,7 +16,7 @@ export function Draggable(props) {
         style={_transform} 
         {...listeners} 
         {...attributes}
-        className="bg-red-500 px-5 py-3 border-2 border-black rounded-lg"
+        //className="bg-red-500 px-5 py-3 border-2 border-black rounded-lg"
     >
       {props.children}
     </button>

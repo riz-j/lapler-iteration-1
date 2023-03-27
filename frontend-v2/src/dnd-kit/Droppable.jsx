@@ -15,7 +15,7 @@ return (
     <div 
         ref={setNodeRef} 
         style={_transform}
-        className={`w-56 px-5 py-3  border-2 border-black ${ buttonText } ${ buttonBg } `}
+        className={`flex flex-col w-full px-5 py-3  border-2 border-black ${ buttonText } ${ buttonBg } `}
     >
       {props.children}
     </div>

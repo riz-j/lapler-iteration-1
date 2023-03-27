@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
+import { Droppable } from '../../../dnd-kit/Droppable';
+import { Draggable } from '../../../dnd-kit/Draggable';
+import {DndContext} from '@dnd-kit/core';
 import { sortByPriorityDesc, sortByPriorityAsc, sortByDueDateDesc, sortByDueDateAsc } from '../../../utils/issuesSortHandler';
 import IssueCard from './IssueCard';
 
@@ -114,7 +117,10 @@ export default function IssuesSection() {
         backlogIssues = backlogIssues.filter(issue => issue.reporterId == reported_by_member);
     }
 
-
+    function handleDragEnd(event) {
+        const newParent = (event.over !== null) ? event.over.id : null
+        console.log(newParent);
+    }
 
     return (
         <div>
@@ -127,28 +133,34 @@ export default function IssuesSection() {
                     />
                 </div>
             }
+            <DndContext onDragEnd={handleDragEnd}>
             <div>
             { (doingIssues.length > 0) &&
                 <div className='flex justify-between items-center h-7 px-3 w-full bg-platinum-secondary border-b border-platinum-tertiary'>
                     <p>Doing</p>
                     <p>+</p>
-                </div> 
+                </div>        
+            }
             
-            }
-            { doingIssues.map(issue => (
-                <IssueCard 
-                    projectId={projectId}
-                    issueId={issue.id} 
-                    typeOfIssue={issue.typeOfIssue} 
-                    priorityOfIssue={issue.priorityOfIssue} 
-                    statusOfIssue={issue.statusOfIssue} 
-                    summary={issue.summary}
-                    dueDate={issue.dueDate}
-                    assigneeId={issue.assigneeId}
-                    reporterId={issue.reporterId}
-                /> 
-            ))
-            }
+            <Droppable key={'Dodiving'} id={'Doing'}>
+                { doingIssues.map(issue => (
+                    <Draggable id={issue.id}>
+                        <IssueCard 
+                            projectId={projectId}
+                            issueId={issue.id} 
+                            typeOfIssue={issue.typeOfIssue} 
+                            priorityOfIssue={issue.priorityOfIssue} 
+                            statusOfIssue={issue.statusOfIssue} 
+                            summary={issue.summary}
+                            dueDate={issue.dueDate}
+                            assigneeId={issue.assigneeId}
+                            reporterId={issue.reporterId}
+                        /> 
+                    </Draggable>
+                ))
+                }
+            </Droppable>
+            
             </div>
             <div>
             { (waitingIssues.length > 0) &&
@@ -157,20 +169,24 @@ export default function IssuesSection() {
                     <p>+</p>
                 </div> 
             }
-            { waitingIssues.map(issue => (
-                <IssueCard 
-                    projectId={projectId}
-                    issueId={issue.id} 
-                    typeOfIssue={issue.typeOfIssue} 
-                    priorityOfIssue={issue.priorityOfIssue} 
-                    statusOfIssue={issue.statusOfIssue} 
-                    summary={issue.summary}
-                    dueDate={issue.dueDate}
-                    assigneeId={issue.assigneeId}
-                    reporterId={issue.reporterId}
-                /> 
-            ))
-            }
+            <Droppable key={'Waiting'} id={'Waiting'}>
+                { waitingIssues.map(issue => (
+                    <Draggable id={issue.id}>
+                        <IssueCard 
+                            projectId={projectId}
+                            issueId={issue.id} 
+                            typeOfIssue={issue.typeOfIssue} 
+                            priorityOfIssue={issue.priorityOfIssue} 
+                            statusOfIssue={issue.statusOfIssue} 
+                            summary={issue.summary}
+                            dueDate={issue.dueDate}
+                            assigneeId={issue.assigneeId}
+                            reporterId={issue.reporterId}
+                        /> 
+                    </Draggable>
+                ))
+                }
+            </Droppable>
             </div>
             <div>
             { (backlogIssues.length > 0) &&
@@ -216,6 +232,7 @@ export default function IssuesSection() {
             ))
             }
         </div>
+        </DndContext>
       </div>
     )
 }
