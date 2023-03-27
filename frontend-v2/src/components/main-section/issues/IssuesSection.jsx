@@ -12,7 +12,8 @@ export default function IssuesSection() {
     const currentUser = useSelector(state => state.currentUser)
     const currentProject = useSelector(state => state.currentProject);
     const searchState = useSelector(state => state.search.searchState);
-    let issues = currentProject.issues;
+    const _issues = currentProject.issues;
+    let [issues, setIssues] = useState(_issues);
 
     /*   Search   */
     const [search, setSearch] = useState('');
@@ -118,7 +119,19 @@ export default function IssuesSection() {
 
     function handleDragEnd(event) {
         const newParent = (event.over !== null) ? event.over.id : null
+        const activeId = event.active.id;
+        console.log(`active: ${activeId}`);
         console.log(newParent);
+
+        const updatedIssues = issues.map(issue => {
+            if (issue.id === activeId) {
+              return { ...issue, statusOfIssue: newParent };
+            }
+            return issue;
+        });
+
+        console.log(updatedIssues);
+        setIssues(updatedIssues);
     }
 
     return (
