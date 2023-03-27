@@ -3,6 +3,7 @@ import { deleteIssue, getCurrentProject } from '../../../redux/currentProjectSli
 import { dateParser } from '../../../utils/dateHandler';
 import { Link } from 'react-router-dom';
 import { ContextMenu, ContextMenuTrigger, MenuItem, hideMenu } from "react-contextmenu";
+import { Draggable } from '../../../dnd-kit/Draggable';
 
 import InProgressIcon from '../../../static/img/InProgressIcon.png';
 import WaitingIcon from '../../../static/img/WaitingIcon.png';
@@ -56,64 +57,66 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
     return (
         <>
         <ContextMenuTrigger id={`contextMenu${issueId}`}>
-        <div onClick={() => hideMenu()} className='flex mx-3 my-2 justify-between h-10 bg-platinum-main hover:bg-[#24262a] px-5 py-2 border-2 rounded-lg border-platinum-tertiary'>
-        
-            <div className='col-span-10 flex justify-start items-center space-x-4 '>
-                <div className='flex justify-center w-6'>
-                    <img src={
-                        priorityOfIssue == 'Low' && LowPriorityIcon ||
-                        priorityOfIssue == 'Medium' && MediumPriorityIcon ||
-                        priorityOfIssue == 'High' && HighPriorityIcon
-                    }
-                    className='w-3 h-3' />
-                </div>
-                <div className='flex justify-center w-3'>
-                    <p className='text-font-color-secondary'>{issueId}</p>
-                </div>
-                <div className='flex justify-center w-6'>
-                    <img 
-                        src={
-                            statusOfIssue == 'Waiting' && WaitingIcon ||
-                            statusOfIssue == 'Doing' && InProgressIcon ||
-                            statusOfIssue == 'Done' && DoneIcon2 ||
-                            statusOfIssue == 'Backlog' && BacklogIcon 
-                        } 
-                        className="w-3 h-3" 
-                    />
-                </div>
-                <div>
-                    <p>{summary}</p> 
-                </div>
-            </div>
+            <Draggable id={issueId}>
+                <div onClick={() => hideMenu()} className='flex mx-3 my-2 justify-between h-10 bg-platinum-main hover:bg-[#24262a] px-5 py-2 border-2 rounded-lg border-platinum-tertiary'>
+                
+                    <div className='col-span-10 flex justify-start items-center space-x-4 '>
+                        <div className='flex justify-center w-6'>
+                            <img src={
+                                priorityOfIssue == 'Low' && LowPriorityIcon ||
+                                priorityOfIssue == 'Medium' && MediumPriorityIcon ||
+                                priorityOfIssue == 'High' && HighPriorityIcon
+                            }
+                            className='w-3 h-3' />
+                        </div>
+                        <div className='flex justify-center w-3'>
+                            <p className='text-font-color-secondary'>{issueId}</p>
+                        </div>
+                        <div className='flex justify-center w-6'>
+                            <img 
+                                src={
+                                    statusOfIssue == 'Waiting' && WaitingIcon ||
+                                    statusOfIssue == 'Doing' && InProgressIcon ||
+                                    statusOfIssue == 'Done' && DoneIcon2 ||
+                                    statusOfIssue == 'Backlog' && BacklogIcon 
+                                } 
+                                className="w-3 h-3" 
+                            />
+                        </div>
+                        <div>
+                            <p>{summary}</p> 
+                        </div>
+                    </div>
 
-            <div className='flex justify-end items-center gap-1 text-sm'>
-                { readableDate && 
-                    <div className='flex justify-around items-center gap-1 border border-platinum-tertiary px-1 py-0.5 rounded'>
-                        <img src={RedCalendarIcon} 
-                        className='w-3 h-3'/>
-                        <p>{readableDate}</p>
-                    </div> 
-                }
-                { typeOfIssue && 
-                    <div className='flex justify-around items-center gap-1 border border-platinum-tertiary px-1 py-0.5 rounded'>
-                        <img src={
-                            typeOfIssue === 'Bug' && BugIcon ||
-                            typeOfIssue === 'Improvement' && GreenDot ||
-                            typeOfIssue === 'Epic' && YellowDot ||
-                            typeOfIssue === 'New Feature' && BlueDot 
+                    <div className='flex justify-end items-center gap-1 text-sm'>
+                        { readableDate && 
+                            <div className='flex justify-around items-center gap-1 border border-platinum-tertiary px-1 py-0.5 rounded'>
+                                <img src={RedCalendarIcon} 
+                                className='w-3 h-3'/>
+                                <p>{readableDate}</p>
+                            </div> 
                         }
-                        className='w-2.5 h-2.5'/>
-                        <p>{typeOfIssue}</p>
-                    </div> 
-                }
-                { assignee && 
-                    <p>{assignee.firstName} {assignee.lastName}</p> 
-                }   
-                { reporter && 
-                    <p>{reporter.firstName} {reporter.lastName}</p> 
-                }    
-            </div>
-        </div>
+                        { typeOfIssue && 
+                            <div className='flex justify-around items-center gap-1 border border-platinum-tertiary px-1 py-0.5 rounded'>
+                                <img src={
+                                    typeOfIssue === 'Bug' && BugIcon ||
+                                    typeOfIssue === 'Improvement' && GreenDot ||
+                                    typeOfIssue === 'Epic' && YellowDot ||
+                                    typeOfIssue === 'New Feature' && BlueDot 
+                                }
+                                className='w-2.5 h-2.5'/>
+                                <p>{typeOfIssue}</p>
+                            </div> 
+                        }
+                        { assignee && 
+                            <p>{assignee.firstName} {assignee.lastName}</p> 
+                        }   
+                        { reporter && 
+                            <p>{reporter.firstName} {reporter.lastName}</p> 
+                        }    
+                    </div>
+                </div>
+            </Draggable>
         </ContextMenuTrigger>
 
         <ContextMenu id={`contextMenu${issueId}`} className='flex flex-col border rounded-sm'>
