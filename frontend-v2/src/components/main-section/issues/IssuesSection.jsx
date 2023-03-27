@@ -123,6 +123,10 @@ export default function IssuesSection() {
         console.log(`active: ${activeId}`);
         console.log(newParent);
 
+        if (newParent !== 'Doing' && newParent !== 'Waiting' && newParent !== 'Backlog' && newParent !== 'Done') {
+            return;
+        }
+
         const updatedIssues = issues.map(issue => {
             if (issue.id === activeId) {
               return { ...issue, statusOfIssue: newParent };
