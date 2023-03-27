@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Droppable } from '../../../dnd-kit/Droppable';
 import {DndContext} from '@dnd-kit/core';
 import { sortByPriorityDesc, sortByPriorityAsc, sortByDueDateDesc, sortByDueDateAsc } from '../../../utils/issuesSortHandler';
+import { filterAndSortIssues } from '../../../utils/filterAndSortIssues';
 import { getCurrentProject, updateIssue } from '../../../redux/currentProjectSlice';
 import IssueCard from './IssueCard';
 
