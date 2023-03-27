@@ -144,6 +144,7 @@ export default function IssuesSection() {
             <Droppable key={'Doing'} id={'Doing'}>
                 { doingIssues.map(issue => (
                     <IssueCard 
+                        key={issue.id}
                         projectId={projectId}
                         issueId={issue.id} 
                         typeOfIssue={issue.typeOfIssue} 
@@ -169,6 +170,7 @@ export default function IssuesSection() {
             <Droppable key={'Waiting'} id={'Waiting'}>
                 { waitingIssues.map(issue => (
                     <IssueCard 
+                        key={issue.id}
                         projectId={projectId}
                         issueId={issue.id} 
                         typeOfIssue={issue.typeOfIssue} 
@@ -194,6 +196,7 @@ export default function IssuesSection() {
                     <Droppable key={'Backlog'} id={'Backlog'}>
                         { backlogIssues.map(issue => (
                             <IssueCard 
+                                key={issue.id}
                                 projectId={projectId}
                                 issueId={issue.id} 
                                 typeOfIssue={issue.typeOfIssue} 
@@ -220,6 +223,7 @@ export default function IssuesSection() {
             <Droppable key={'Done'} id={'Done'}>
                 { doneIssues.map(issue => (
                     <IssueCard 
+                        key={issue.id}
                         projectId={projectId}
                         issueId={issue.id} 
                         typeOfIssue={issue.typeOfIssue} 
