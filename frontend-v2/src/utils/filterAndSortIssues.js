@@ -1,91 +1,267 @@
+import { sortByPriorityDesc, sortByPriorityAsc, sortByDueDateDesc, sortByDueDateAsc } from "./issuesSortHandler.js";
 
-function filterAndSortIssues() {
-    // window.location.search
-    // '?reported_by_me=true&resolved=true&assigned_to_me=true'
+/********************************************************************/
+/*    First Param:  Raw Query String (window.location.search)
+/*    Second Param:   Array of Issues
+/*    Third Param:   currentUser (from Redux)
+/*
+/*    Function returns an array of four arrays:
+/*        1. doingIssues  
+/*        1. waitingIssues
+/*        3. backlogIssues
+/*        4. doneIssues
+/********************************************************************/
 
-    /*   URI Filter Queries   */
-    const queryParams = new URLSearchParams(window.location.search);
-    const active = queryParams.get('active');
-    const assigned_to_me = queryParams.get('assigned_to_me');
-    const reported_by_me = queryParams.get('reported_by_me');
-    const resolved = queryParams.get('resolved');
+export function filterAndSortIssues(windowLocationSeach, issuesArray, currentUser) { // returns an array of issues
     
-    /*   URI Sort Queries   */
-    const sortByPriority = queryParams.get('sort_by_priority'); // Either ASC or DESC
-    const sortByDueDate = queryParams.get('sort_by_due_date');
-    const assigned_to_member = queryParams.get('assigned_to_member'); // Member User ID
-    const reported_by_member = queryParams.get('reported_by_member'); // Member User ID
+    const issues = issuesArray;
+
+/********************************************************************/
+/*    Separate Query String into an Key-Value Array    
+/********************************************************************/
+
+    const rawString = windowLocationSeach;
+    const cleanString = rawString.substring(rawString.indexOf('?') + 1);
+    const rawQuery = cleanString.split('&');
+
+    const queryArray = rawQuery.map(item => {
+        return item.split('=');
+    });
+
+    const query = queryArray.reduce((acc, [key, value]) => {
+        acc[key] = value;
+        return acc
+    }, {})
     
-    let waitingIssues = [];
+    
+/********************************************************************/
+/*    Define the four arrays that will be returned in this function
+/********************************************************************/
+
     let doingIssues = [];
-    let doneIssues = [];
+    let waitingIssues = [];
     let backlogIssues = [];
-
-    issues && (waitingIssues = issues.filter(issue => issue.statusOfIssue === 'Waiting'));
-    issues && (doingIssues = issues.filter(issue => issue.statusOfIssue === 'Doing'));
-    issues && (doneIssues = issues.filter(issue => issue.statusOfIssue === 'Done'));
-    issues && (backlogIssues = issues.filter(issue => issue.statusOfIssue === 'Backlog'));
+    let doneIssues = [];
     
-    /*    Filter    */
-    (active === 'true') && (doneIssues = []); 
-
-    if (assigned_to_me === 'true') {
-        (waitingIssues = waitingIssues.filter(issue => issue.assigneeId === currentUser.id));
-        (doingIssues = doingIssues.filter(issue => issue.assigneeId === currentUser.id));
-        (doneIssues = doneIssues.filter(issue => issue.assigneeId === currentUser.id));
-        (backlogIssues = backlogIssues.filter(issue => issue.assigneeId === currentUser.id));
-    }
-    
-    if (reported_by_me === 'true') {
-        (waitingIssues = waitingIssues.filter(issue => issue.reporterId === currentUser.id));
-        (doingIssues = doingIssues.filter(issue => issue.reporterId === currentUser.id));
-        (doneIssues = doneIssues.filter(issue => issue.reporterId === currentUser.id));
-        (backlogIssues = backlogIssues.filter(issue => issue.reporterId === currentUser.id));
+    if (issues === undefined) {
+        return;
     }
 
-    if (resolved == 'true') {
+    waitingIssues = issues.filter(issue => issue.statusOfIssue === 'Waiting');
+    doingIssues = issues.filter(issue => issue.statusOfIssue === 'Doing');
+    backlogIssues = issues.filter(issue => issue.statusOfIssue === 'Backlog');
+    doneIssues = issues.filter(issue => issue.statusOfIssue === 'Done');
+
+/********************************************************************/
+/*    Begin Filtering
+/********************************************************************/
+
+    /* Show only ACTIVE issues */
+    if (query.active === 'true') { 
+        doneIssues = []; 
+    }
+
+    if (currentUser) {
+        /* Show only issues ASSIGNED TO USER */
+        if (query.assigned_to_me === 'true') {
+            waitingIssues = waitingIssues.filter(issue => issue.assigneeId === currentUser.id);
+            doingIssues = doingIssues.filter(issue => issue.assigneeId === currentUser.id);
+            doneIssues = doneIssues.filter(issue => issue.assigneeId === currentUser.id);
+            backlogIssues = backlogIssues.filter(issue => issue.assigneeId === currentUser.id);
+        }
+
+        /* Show issues REPORTED BY USER */
+        if (query.reported_by_me === 'true') {
+            waitingIssues = waitingIssues.filter(issue => issue.reporterId === currentUser.id);
+            doingIssues = doingIssues.filter(issue => issue.reporterId === currentUser.id);
+            doneIssues = doneIssues.filter(issue => issue.reporterId === currentUser.id);
+            backlogIssues = backlogIssues.filter(issue => issue.reporterId === currentUser.id);
+        }
+    }
+
+    /* Show only DONE issues */
+    if (query.resolved == 'true') {
         waitingIssues = [];
         doingIssues = [];
         backlogIssues = [];
     }
 
-    /*    Sort    */
-    if (sortByPriority === 'DESC') { 
+/********************************************************************/
+/*    Sort by Priority
+/********************************************************************/
+
+    if (query.sort_by_priority === 'DESC') { 
+        console.log('joe mama')
         waitingIssues = sortByPriorityDesc(waitingIssues);
         doingIssues = sortByPriorityDesc(doingIssues);
         doneIssues = sortByPriorityDesc(doneIssues);
         backlogIssues = sortByPriorityDesc(backlogIssues);
     };
-    if (sortByPriority === 'ASC') { 
+    if (query.sort_by_priority === 'ASC') { 
         waitingIssues = sortByPriorityAsc(waitingIssues);
         doingIssues = sortByPriorityAsc(doingIssues);
         doneIssues = sortByPriorityAsc(doneIssues);
         backlogIssues = sortByPriorityAsc(backlogIssues);
     };
-    if (sortByDueDate === 'DESC') {  
+
+/********************************************************************/
+/*    Sort by Due Date
+/********************************************************************/
+
+    if (query.sort_by_due_date === 'DESC') {  
         sortByDueDateDesc(waitingIssues);  
         sortByDueDateDesc(doingIssues);  
         sortByDueDateDesc(doneIssues);
         sortByDueDateDesc(backlogIssues); 
     };
-    if (sortByDueDate === 'ASC') {  
+    if (query.sort_by_due_date === 'ASC') {  
         sortByDueDateAsc(waitingIssues);  
         sortByDueDateAsc(doingIssues);  
         sortByDueDateAsc(doneIssues);
         sortByDueDateAsc(backlogIssues); 
     };
 
-    /*   Filter assignee and reporter   */
-    if (assigned_to_member) {
-        waitingIssues = waitingIssues.filter(issue => issue.assigneeId == assigned_to_member);
-        doingIssues = doingIssues.filter(issue => issue.assigneeId == assigned_to_member);
-        doneIssues = doneIssues.filter(issue => issue.assigneeId == assigned_to_member);
-        backlogIssues = backlogIssues.filter(issue => issue.assigneeId == assigned_to_member);
+/********************************************************************/
+/*    Sort by Members
+/********************************************************************/    
+
+    if (query.assigned_to_member) {
+        waitingIssues = waitingIssues.filter(issue => issue.assigneeId == query.assigned_to_member);
+        doingIssues = doingIssues.filter(issue => issue.assigneeId == query.assigned_to_member);
+        doneIssues = doneIssues.filter(issue => issue.assigneeId == query.assigned_to_member);
+        backlogIssues = backlogIssues.filter(issue => issue.assigneeId == query.assigned_to_member);
+    };
+    if (query.reported_by_member) {
+        waitingIssues = waitingIssues.filter(issue => issue.reporterId == query.reported_by_member);
+        doingIssues = doingIssues.filter(issue => issue.reporterId == query.reported_by_member);
+        doneIssues = doneIssues.filter(issue => issue.reporterId == query.reported_by_member);
+        backlogIssues = backlogIssues.filter(issue => issue.reporterId == query.reported_by_member);
+    };
+
+/********************************************************************/
+/*    Logger and Debugger
+/********************************************************************/
+
+    //console.log(query);
+
+    function _logger() {
+        console.log(`\n ---- waitingIssues: ---- \n`);
+        waitingIssues.map(item => console.log(item))
+        console.log(`\n ---- doingIssues: ---- \n`);
+        doingIssues.map(item => console.log(item))
+        console.log(`\n ---- backlogIssues: ---- \n`);
+        backlogIssues.map(item => console.log(item))
+        console.log(`\n ---- doneIssues: ---- \n`);
+        doneIssues.map(item => console.log(item))
+
+        console.log(`waitingIssues: ${waitingIssues}`);
+        console.log(`doingIssues: ${doingIssues}`);
+        console.log(`backlogIssues: ${backlogIssues}`);
+        console.log(`doneIssues: ${doneIssues}`);
     }
-    if (reported_by_member) {
-        waitingIssues = waitingIssues.filter(issue => issue.reporterId == reported_by_member);
-        doingIssues = doingIssues.filter(issue => issue.reporterId == reported_by_member);
-        doneIssues = doneIssues.filter(issue => issue.reporterId == reported_by_member);
-        backlogIssues = backlogIssues.filter(issue => issue.reporterId == reported_by_member);
+    _logger()
+}
+
+const issues = [
+    {
+      id: 115,
+      typeOfIssue: 'Bug',
+      priorityOfIssue: 'Low',
+      statusOfIssue: 'Backlog',
+      summary: 'Catch me outside how bout dat',
+      imageUrl: null,
+      dueDate: null,
+      createdAt: '2023-02-26T09:09:36.633304Z',
+      updatedAt: '2023-03-27T03:14:05.606855Z',
+      projectId: 94,
+      assigneeId: 12,
+      reporterId: 18
+    },
+    {
+      id: 104,
+      typeOfIssue: 'New Feature',
+      priorityOfIssue: 'Low',
+      statusOfIssue: 'Doing',
+      summary: 'Try again',
+      imageUrl: null,
+      dueDate: null,
+      createdAt: '2023-02-17T07:10:56.156659Z',
+      updatedAt: '2023-03-27T03:14:04.384359Z',
+      projectId: 94,
+      assigneeId: null,
+      reporterId: 18
+    },
+    {
+      id: 116,
+      typeOfIssue: 'Improvement',
+      priorityOfIssue: 'Low',
+      statusOfIssue: 'Doing',
+      summary: 'I\'m without care',
+      imageUrl: null,
+      dueDate: null,
+      createdAt: '2023-02-26T09:45:57.835325Z',
+      updatedAt: '2023-03-27T03:14:00.538762Z',
+      projectId: 94,
+      assigneeId: 12,
+      reporterId: 18
+    },
+    {
+      id: 105,
+      typeOfIssue: 'Bug',
+      priorityOfIssue: 'Medium',
+      statusOfIssue: 'Done',
+      summary: 'Hello hello',
+      imageUrl: null,
+      dueDate: null,
+      createdAt: '2023-02-17T07:25:16.1727Z',
+      updatedAt: '2023-03-27T01:29:25.542818Z',
+      projectId: 94,
+      assigneeId: null,
+      reporterId: 18
+    },
+    {
+      id: 112,
+      typeOfIssue: 'Bug',
+      priorityOfIssue: 'High',
+      statusOfIssue: 'Waiting',
+      summary: 'Hello there',
+      imageUrl: null,
+      dueDate: null,
+      createdAt: '2023-02-26T05:26:56.479437Z',
+      updatedAt: '2023-03-27T03:13:47.257668Z',
+      projectId: 94,
+      assigneeId: null,
+      reporterId: 18
+    },
+    {
+      id: 102,
+      typeOfIssue: 'Bug',
+      priorityOfIssue: 'Low',
+      statusOfIssue: 'Waiting',
+      summary: 'Hello',
+      imageUrl: null,
+      dueDate: null,
+      createdAt: '2023-02-17T07:08:32.225183Z',
+      updatedAt: '2023-03-27T01:30:57.107695Z',
+      projectId: 94,
+      assigneeId: null,
+      reporterId: 18
     }
-};
+  ]    
+
+// window.location.search
+
+// filterAndSortIssues('?sort_by_priiority=ASC&sort_by_priority=ASC', 
+//                     issues, 
+//                     {id: 12});
+
+
+
+
+
+
+
+
+
+
+
