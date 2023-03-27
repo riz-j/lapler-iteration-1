@@ -12,7 +12,7 @@ import { sortByPriorityDesc, sortByPriorityAsc, sortByDueDateDesc, sortByDueDate
 /*        4. doneIssues
 /********************************************************************/
 
-export function filterAndSortIssues(windowLocationSeach, issuesArray, currentUser) { // returns an array of issues
+export function filterAndSortIssues(windowLocationSeach, issuesArray, currentUser) { 
     
     const issues = issuesArray;
 
@@ -139,27 +139,33 @@ export function filterAndSortIssues(windowLocationSeach, issuesArray, currentUse
     };
 
 /********************************************************************/
+/*    Return the four arrays (Doing, Waiting, Backlog, Done)
+/********************************************************************/
+
+    return [doingIssues, waitingIssues, backlogIssues, doneIssues]
+
+/********************************************************************/
 /*    Logger and Debugger
 /********************************************************************/
 
     //console.log(query);
 
-    function _logger() {
-        console.log(`\n ---- waitingIssues: ---- \n`);
-        waitingIssues.map(item => console.log(item))
-        console.log(`\n ---- doingIssues: ---- \n`);
-        doingIssues.map(item => console.log(item))
-        console.log(`\n ---- backlogIssues: ---- \n`);
-        backlogIssues.map(item => console.log(item))
-        console.log(`\n ---- doneIssues: ---- \n`);
-        doneIssues.map(item => console.log(item))
+    // function _logger() {
+    //     console.log(`\n ---- waitingIssues: ---- \n`);
+    //     waitingIssues.map(item => console.log(item))
+    //     console.log(`\n ---- doingIssues: ---- \n`);
+    //     doingIssues.map(item => console.log(item))
+    //     console.log(`\n ---- backlogIssues: ---- \n`);
+    //     backlogIssues.map(item => console.log(item))
+    //     console.log(`\n ---- doneIssues: ---- \n`);
+    //     doneIssues.map(item => console.log(item))
 
-        console.log(`waitingIssues: ${waitingIssues}`);
-        console.log(`doingIssues: ${doingIssues}`);
-        console.log(`backlogIssues: ${backlogIssues}`);
-        console.log(`doneIssues: ${doneIssues}`);
-    }
-    _logger()
+    //     console.log(`waitingIssues: ${waitingIssues}`);
+    //     console.log(`doingIssues: ${doingIssues}`);
+    //     console.log(`backlogIssues: ${backlogIssues}`);
+    //     console.log(`doneIssues: ${doneIssues}`);
+    // }
+    // _logger()
 }
 
 const issues = [
@@ -257,8 +263,8 @@ const issues = [
 
 
 
-
-
+const holaamigo = filterAndSortIssues('?sort_by_priiority=ASC&sort_by_priority=ASC', issues, {id: 18})
+console.log(holaamigo);
 
 
 
