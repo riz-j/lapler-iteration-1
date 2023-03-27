@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
 import { Droppable } from '../../../dnd-kit/Droppable';
 import {DndContext} from '@dnd-kit/core';
 import { sortByPriorityDesc, sortByPriorityAsc, sortByDueDateDesc, sortByDueDateAsc } from '../../../utils/issuesSortHandler';
+import { getCurrentProject, updateIssue } from '../../../redux/currentProjectSlice';
 import IssueCard from './IssueCard';
 
 export default function IssuesSection() {
+    const dispatch = useDispatch();
     const { projectId } = useParams();
     const navigate = useNavigate();
     const currentUser = useSelector(state => state.currentUser)
@@ -117,7 +119,7 @@ export default function IssuesSection() {
         backlogIssues = backlogIssues.filter(issue => issue.reporterId == reported_by_member);
     }
 
-    function handleDragEnd(event) {
+    async function handleDragEnd(event) {
         const newParent = (event.over !== null) ? event.over.id : null
         const activeId = event.active.id;
         console.log(`active: ${activeId}`);
@@ -135,6 +137,26 @@ export default function IssuesSection() {
         });
 
         setIssues(updatedIssues);
+        
+        const token = currentUser.token;
+        const _issue = updatedIssues.find(issue => issue.id === activeId)
+        await dispatch(updateIssue({
+            issueId: activeId, 
+            typeOfIssue: _issue.typeOfIssue, 
+            priorityOfIssue: _issue.priorityOfIssue, 
+            statusOfIssue: _issue.statusOfIssue, 
+            summary: _issue.summary, 
+            projectId: _issue.projectId, 
+            dueDate: _issue.toggleDueDate ? _issue.dueDate : null,
+            assigneeId: (_issue.assigneeId !== "") ? _issue.assigneeId : null,
+            reporterId: _issue.reporterId, 
+            token: token
+        }))
+        .then(() => dispatch(getCurrentProject({
+            projectId: projectId,
+            token: token
+        })))
+        .catch(err => console.log(err));
     }
 
     return (
