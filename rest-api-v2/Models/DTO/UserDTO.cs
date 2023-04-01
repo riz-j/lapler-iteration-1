@@ -7,7 +7,7 @@ public class UserDTO
     public string Email { get; set; }
     public string Password { get; set; }
 
-    /* Relations */ 
+    /* Relations */
     public List<int>? ProjectId { get; set; }
     public List<int>? AssignedToMeIssueIds { get; set; }
     public List<int>? ReportedByMeIssueIds { get; set; }
@@ -20,7 +20,7 @@ public class UserWithNamesDTO
     public string Email { get; set; }
     public string Password { get; set; }
 
-    /* Relations */ 
+    /* Relations */
     public Dictionary<int, string> ProjectIdProjectNames { get; set; }
     public List<int> AssignedToMeIssueIds { get; set; }
     public List<int> ReportedByMeIssueIds { get; set; }
@@ -34,13 +34,27 @@ public class UserWithIdAndNamesDTO
     public string Email { get; set; }
     public string Password { get; set; }
 
-    /* Relations */ 
+    /* Relations */
     public Dictionary<int, string> ProjectIdProjectNames { get; set; }
     public List<int> AssignedToMeIssueIds { get; set; }
     public List<int> ReportedByMeIssueIds { get; set; }
 }
 
-public class MinimalUserDTO 
+public class UserWithProjectDetailsDTO
+{
+    public int Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+
+    /* Relations */
+    public System.Collections.IDictionary ProjectIdProjectDetails { get; set; }
+    public List<int> AssignedToMeIssueIds { get; set; }
+    public List<int> ReportedByMeIssueIds { get; set; }
+}
+
+public class MinimalUserDTO
 {
     public int Id { get; set; }
     public string FirstName { get; set; }

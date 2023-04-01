@@ -14,9 +14,9 @@ public class UsersController : ControllerBase
     {
         _usersService = usersService;
     }
-    
+
     [HttpPost]
-    public ActionResult<User> CreateUser([FromBody]UserDTO userDTO)
+    public ActionResult<User> CreateUser([FromBody] UserDTO userDTO)
     {
         return _usersService.CreateUser(userDTO);
     }
@@ -28,7 +28,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public ActionResult<UserWithIdAndNamesDTO> GetUserById(int id)
+    public ActionResult<UserWithProjectDetailsDTO> GetUserById(int id)
     {
         return _usersService.GetUserById(id);
     }
@@ -44,5 +44,5 @@ public class UsersController : ControllerBase
     public IActionResult DeleteUser(int id)
     {
         return _usersService.DeleteUser(id);
-    } 
+    }
 }

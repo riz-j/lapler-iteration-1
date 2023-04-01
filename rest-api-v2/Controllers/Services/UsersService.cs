@@ -10,7 +10,7 @@ public class UsersService : ControllerBase
     private AppDbContext _db;
     public UsersService(AppDbContext db)
     {
-        _db = db; 
+        _db = db;
     }
 
     public ActionResult<User> CreateUser(UserDTO userDTO)
@@ -31,9 +31,9 @@ public class UsersService : ControllerBase
     public ActionResult<List<User>> GetAllUsers()
     {
         return Ok(_db.Users.ToList());
-    } 
+    }
 
-    public ActionResult<UserWithIdAndNamesDTO> GetUserById(int id)
+    public ActionResult<UserWithProjectDetailsDTO> GetUserById(int id)
     {
         var _user = _db.Users.FirstOrDefault(n => n.Id == id);
         if (_user == null)
@@ -41,7 +41,7 @@ public class UsersService : ControllerBase
             return NotFound();
         }
 
-        var _userWithIdAndNamesDTO = new UserWithIdAndNamesDTO 
+        var _userWithIdAndNamesDTO = new UserWithProjectDetailsDTO
         {
             Id = _user.Id,
             FirstName = _user.FirstName,
@@ -50,16 +50,22 @@ public class UsersService : ControllerBase
             Password = _user.Password
         };
         var projectIds = _db.Users_Projects.Where(up => up.UserId == _user.Id).Select(up => up.ProjectId).ToList();
-        _userWithIdAndNamesDTO.ProjectIdProjectNames = projectIds
-        .ToDictionary(id => id, 
-                      id => _db.Projects.Where(p => p.Id == id).Select(p => p.Name).First());
+        _userWithIdAndNamesDTO.ProjectIdProjectDetails = projectIds
+        .ToDictionary(id => id,
+                      id => new
+                      {
+                          Id = id,
+                          Name = _db.Projects.Where(p => p.Id == id).Select(p => p.Name).First(),
+                          DisplayPicture = _db.Projects.Where(p => p.Id == id).Select(p => p.DisplayPicture).First()
+                      }
+                    );
         return Ok(_userWithIdAndNamesDTO);
     }
 
     public ActionResult<User> UpdateUser(int userId, UserDTO userDTO)
     {
         var _user = _db.Users.FirstOrDefault(u => u.Id == userId);
-        
+
         if (_user == null)
         {
             return NotFound();
@@ -77,7 +83,7 @@ public class UsersService : ControllerBase
     public IActionResult DeleteUser(int userId)
     {
         var _user = _db.Users.FirstOrDefault(u => u.Id == userId);
-        
+
         if (_user == null)
         {
             return NotFound();
