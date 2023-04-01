@@ -70,6 +70,7 @@ public class UserRepository : IUserRepository
             LastName = _user.LastName,
             Email = _user.Email,
             Password = _user.Password,
+            ProfilePicture = _user.ProfilePicture
         };
         var projectIds = _db.Users_Projects.Where(up => up.UserId == _user.Id).Select(up => up.ProjectId).ToList();
         _userWithProjectDetailsDTO.ProjectIdProjectDetails = projectIds

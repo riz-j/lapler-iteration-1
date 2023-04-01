@@ -6,6 +6,7 @@ public class UserDTO
     public string LastName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public string? ProfilePicture { get; set; }
 
     /* Relations */
     public List<int>? ProjectId { get; set; }
@@ -19,6 +20,7 @@ public class UserWithNamesDTO
     public string LastName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public string? ProfilePicture { get; set; }
 
     /* Relations */
     public Dictionary<int, string> ProjectIdProjectNames { get; set; }
@@ -33,6 +35,7 @@ public class UserWithIdAndNamesDTO
     public string LastName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public string? ProfilePicture { get; set; }
 
     /* Relations */
     public Dictionary<int, string> ProjectIdProjectNames { get; set; }
@@ -47,6 +50,7 @@ public class UserWithProjectDetailsDTO
     public string LastName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public string? ProfilePicture { get; set; }
 
     /* Relations */
     public System.Collections.IDictionary ProjectIdProjectDetails { get; set; }
@@ -60,4 +64,5 @@ public class MinimalUserDTO
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
+    public string? ProfilePicture { get; set; }
 }

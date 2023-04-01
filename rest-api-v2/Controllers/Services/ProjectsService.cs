@@ -135,7 +135,8 @@ public class ProjectsService : ControllerBase
                 Id = n.User.Id,
                 FirstName = n.User.FirstName,
                 LastName = n.User.LastName,
-                Email = n.User.Email
+                Email = n.User.Email,
+                ProfilePicture = n.User.ProfilePicture
             }),
             Issues = _issues
         }).FirstOrDefaultAsync();

@@ -21,6 +21,7 @@ public class UsersService : ControllerBase
             LastName = userDTO.LastName,
             Email = userDTO.Email,
             Password = userDTO.Password,
+            ProfilePicture = userDTO.ProfilePicture,
             CreatedAt = DateTime.UtcNow
         };
         _db.Users.Add(_user);
@@ -47,7 +48,8 @@ public class UsersService : ControllerBase
             FirstName = _user.FirstName,
             LastName = _user.LastName,
             Email = _user.Email,
-            Password = _user.Password
+            Password = _user.Password,
+            ProfilePicture = _user.ProfilePicture
         };
         var projectIds = _db.Users_Projects.Where(up => up.UserId == _user.Id).Select(up => up.ProjectId).ToList();
         _userWithIdAndNamesDTO.ProjectIdProjectDetails = projectIds
@@ -75,6 +77,7 @@ public class UsersService : ControllerBase
         _user.LastName = userDTO.LastName;
         _user.Email = userDTO.Email;
         _user.Password = userDTO.Password;
+        _user.ProfilePicture = userDTO.ProfilePicture;
         _db.SaveChanges();
 
         return Ok(_user);

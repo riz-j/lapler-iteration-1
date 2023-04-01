@@ -7,9 +7,10 @@ public class User
     public string LastName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public string? ProfilePicture { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    /* Relations */ 
+    /* Relations */
     public List<User_Project> User_Projects { get; set; }
     public List<Issue> AssignedToMe { get; set; }
     public List<Issue> ReportedByMe { get; set; }
