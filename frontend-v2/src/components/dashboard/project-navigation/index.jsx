@@ -10,19 +10,31 @@ import ProjectCard from './ProjectCard'
 
 export default function ProjectNavigation() {
     const currentUser = useSelector(state => state.currentUser);
+    const projects = currentUser.projects;
 
     return (
         <div className="flex-none items-center h-screen w-12 bg-platinum-secondary border-r border-platinum-quarternary">
             <div className="flex h-full items-center justify-center">
                 <div className="w-full">
 
-                    { currentUser.projects && (
+                    { projects && (
+                    Object.entries(currentUser.projects).map(([projectId, project]) => 
+                        <Link to={`/dashboard/project/${projectId}`} className="flex justify-center items-center h-12 w-12">
+                            <img 
+                                key={projectId} 
+                                src={project.displayPicture || ProjectProfilePic1} 
+                                className='w-2/3 h-2/3 rounded-full'/>
+                        </Link>
+                    ))
+                    }
+
+                    {/* { currentUser.projects && (
                     Object.entries(currentUser.projects).map(([projectId, projectName]) => 
                         <Link to={`/dashboard/project/${projectId}`} className="flex justify-center items-center h-12 w-12">
                             <img key={projectId} src={ProjectProfilePic1} className='w-2/3 h-2/3 rounded-full'/>
                         </Link>
                     ))
-                    }
+                    } */}
 
                     <div className="flex justify-center items-center h-12 w-full">
                         <img src={ProjectProfilePic4} className='w-2/3 h-2/3 rounded-full'/>

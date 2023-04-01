@@ -36,12 +36,12 @@ public class UserRepository : IUserRepository
     {
         var _user = _db.Users.FirstOrDefault(u => u.Email.ToLower() == loginRequestDTO.Email.ToLower()
                                             && u.Password == loginRequestDTO.Password);
-        
+
         if (_user == null)
         {
             return new LoginResponseDTO()
             {
-                UserWithIdAndNamesDTO = null,
+                UserWithProjectDetailsDTO = null,
                 Token = ""
             };
         }
@@ -58,12 +58,12 @@ public class UserRepository : IUserRepository
                 new Claim(ClaimTypes.Email, _user.Email.ToString()),
             }),
             Expires = DateTime.UtcNow.AddDays(7),
-            SigningCredentials = new(new SymmetricSecurityKey(key), 
+            SigningCredentials = new(new SymmetricSecurityKey(key),
                                      SecurityAlgorithms.HmacSha256Signature)
         };
-        
+
         var _token = tokenHandler.CreateToken(tokenDescriptor);
-        var _userWithIdAndNamesDTO = new UserWithIdAndNamesDTO 
+        var _userWithProjectDetailsDTO = new UserWithProjectDetailsDTO
         {
             Id = _user.Id,
             FirstName = _user.FirstName,
@@ -72,13 +72,19 @@ public class UserRepository : IUserRepository
             Password = _user.Password,
         };
         var projectIds = _db.Users_Projects.Where(up => up.UserId == _user.Id).Select(up => up.ProjectId).ToList();
-        _userWithIdAndNamesDTO.ProjectIdProjectNames = projectIds
-        .ToDictionary(id => id, 
-                      id => _db.Projects.Where(p => p.Id == id).Select(p => p.Name).First());
-        
+        _userWithProjectDetailsDTO.ProjectIdProjectDetails = projectIds
+        .ToDictionary(id => id,
+                      id => new
+                      {
+                          Id = id,
+                          Name = _db.Projects.Where(p => p.Id == id).Select(p => p.Name).First(),
+                          DisplayPicture = _db.Projects.Where(p => p.Id == id).Select(p => p.DisplayPicture).First()
+                      }
+                    );
+
         LoginResponseDTO loginResponseDTO = new LoginResponseDTO()
         {
-            UserWithIdAndNamesDTO = _userWithIdAndNamesDTO,
+            UserWithProjectDetailsDTO = _userWithProjectDetailsDTO,
             Token = tokenHandler.WriteToken(_token)
         };
         return loginResponseDTO;

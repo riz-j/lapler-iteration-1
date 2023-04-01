@@ -50,11 +50,11 @@ const currentUserSlice = createSlice({
         },
         [getCurrentUser.fulfilled]: (state, action) => {
             state.isLoading = false;
-            state.id = action.payload.userWithIdAndNamesDTO.id; 
-            state.firstName = action.payload.userWithIdAndNamesDTO.firstName;
-            state.lastName = action.payload.userWithIdAndNamesDTO.lastName;
-            state.email = action.payload.userWithIdAndNamesDTO.email;
-            state.projects = action.payload.userWithIdAndNamesDTO.projectIdProjectNames;
+            state.id = action.payload.userWithProjectDetailsDTO.id; 
+            state.firstName = action.payload.userWithProjectDetailsDTO.firstName;
+            state.lastName = action.payload.userWithProjectDetailsDTO.lastName;
+            state.email = action.payload.userWithProjectDetailsDTO.email;
+            state.projects = action.payload.userWithProjectDetailsDTO.projectIdProjectDetails;
             state.token = action.payload.token;
         },
         [getCurrentUser.rejected]: (state) => {

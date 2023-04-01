@@ -11,15 +11,15 @@ public class UsersAuthController : ControllerBase
     private readonly IUserRepository _userRepository;
     public UsersAuthController(IUserRepository userRepository)
     {
-        _userRepository = userRepository;   
+        _userRepository = userRepository;
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody]LoginRequestDTO loginRequestDTO)
+    public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDTO)
     {
         var _loginResponse = await _userRepository.Login(loginRequestDTO);
 
-        if (_loginResponse.UserWithIdAndNamesDTO == null || string.IsNullOrEmpty(_loginResponse.Token))
+        if (_loginResponse.UserWithProjectDetailsDTO == null || string.IsNullOrEmpty(_loginResponse.Token))
         {
             return BadRequest(new { message = "Email or password is incorrect" });
         }
@@ -27,7 +27,7 @@ public class UsersAuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody]RegistrationRequestDTO registrationRequestDTO)
+    public async Task<IActionResult> Register([FromBody] RegistrationRequestDTO registrationRequestDTO)
     {
         bool _isUserUnique = _userRepository.IsUniqueUser(registrationRequestDTO.Email);
         if (_isUserUnique == false)
@@ -36,12 +36,12 @@ public class UsersAuthController : ControllerBase
         }
 
         var _user = await _userRepository.Register(registrationRequestDTO);
-        
+
         if (_user == null)
         {
             return BadRequest();
         }
 
-        return Ok(new { message = "User successfully registered" } );
+        return Ok(new { message = "User successfully registered" });
     }
 }
