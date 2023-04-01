@@ -21,8 +21,8 @@ export default function LoggedInHomepage() {
           <div className='grid grid-cols-2 gap-8'> 
 
             { currentUser.projects && (
-              Object.entries(currentUser.projects).map(([projectId, projectName]) => 
-                <ProjectCard projectId={projectId} projectName={projectName} />
+              Object.entries(currentUser.projects).map(([projectId, project]) => 
+                <ProjectCard projectId={projectId} projectName={project.name} />
               ))
             }
 
