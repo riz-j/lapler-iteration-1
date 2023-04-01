@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import ProjectProfilePicture from '../../../static/img/IMG_2352.png';
+import defaultDisplayPic from '../../../static/img/ProjectProfilePic1.png'
 import ProjectSettingsIcon from '../../../static/img/ProjectSettingsIcon.png'
 import { useState } from 'react';
 import ProjectSettingsSheet from '../../sheets/ProjectSettingsSheet';
@@ -12,7 +12,7 @@ export default function ProjectNameHeader() {
         <div>
             <div className='flex justify-between  items-center h-12 w-full top-0 left-0'>
                 <div className='flex justify-start items-center gap-2 ml-4'> 
-                    <img src={ProjectProfilePicture} className='w-6 h-6 rounded' />
+                    <img src={currentProject.displayPicture || defaultDisplayPic} className='w-6 h-6 rounded' />
                     <h1 className='truncate overflow-hidden text-md font-semibold text-font-color-primary w-32'>
                         {currentProject.projectName}
                     </h1>

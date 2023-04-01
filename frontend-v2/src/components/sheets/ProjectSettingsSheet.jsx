@@ -20,6 +20,7 @@ export default function ProjectSettingsSheet({ onClick }) {
             className='bg-red-500 w-[80%] h-[80%] z-30'
         >
           
+
             <h1>{projectName}</h1>
             <h1>{projectAdmin}</h1>
             <h1>{projectDisplayPic}</h1>
