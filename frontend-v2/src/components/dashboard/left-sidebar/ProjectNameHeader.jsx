@@ -1,9 +1,12 @@
 import { useSelector } from 'react-redux';
 import ProjectProfilePicture from '../../../static/img/IMG_2352.png';
 import ProjectSettingsIcon from '../../../static/img/ProjectSettingsIcon.png'
+import { useState } from 'react';
+import ProjectSettingsSheet from '../../sheets/ProjectSettingsSheet';
 
 export default function ProjectNameHeader() {
     const currentProject = useSelector(state => state.currentProject);
+    const [sheetPresented, setSheetPresented] = useState(false);
 
     return (
         <div>
@@ -15,10 +18,14 @@ export default function ProjectNameHeader() {
                     </h1>
                 </div>
                 <div>
-                    <img src={ProjectSettingsIcon} className='w-6 h-6 mr-4' />
+                    <img 
+                        onClick={() => setSheetPresented(!sheetPresented)}
+                        src={ProjectSettingsIcon} className='w-6 h-6 mr-4 cursor-pointer' 
+                    />
                 </div>
             </div>
             <hr className='border-platinum-quarternary' />
+            { sheetPresented && <ProjectSettingsSheet onClick={() => setSheetPresented(!sheetPresented)} /> }
         </div>
     )
 }
