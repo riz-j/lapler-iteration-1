@@ -106,6 +106,7 @@ const currentProjectSlice = createSlice({
         [getCurrentProject.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.projectName = action.payload.name;
+            state.displayPicture = action.payload.displayPicture;
             state.adminName = action.payload.adminName; // Should be Admin details instead (User ID, name, email)
             state.users = action.payload.users;
             state.issues = action.payload.issues;
