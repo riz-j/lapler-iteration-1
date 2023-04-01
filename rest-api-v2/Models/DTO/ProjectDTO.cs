@@ -6,6 +6,7 @@ public class ProjectDTO
 {
     public string Name { get; set; }
     public DateTime? CreatedAt { get; set; }
+    public string? DisplayPicture { get; set; }
 
     /* Relations */
     public int AdminId { get; set; }
@@ -17,6 +18,7 @@ public class ProjectWithNamesDTO
 {
     public string Name { get; set; }
     public DateTime? CreatedAt { get; set; }
+    public string? DisplayPicture { get; set; }
 
     /* Relations */
     public string? AdminName { get; set; }
@@ -28,6 +30,7 @@ public class ProjectWithIdsNamesAndIssuesDTO
 {
     public string Name { get; set; }
     public DateTime? CreatedAt { get; set; }
+    public string? DisplayPicture { get; set; }
 
     /* Relations */
     public string? AdminName { get; set; }

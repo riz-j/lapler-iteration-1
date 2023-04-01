@@ -23,14 +23,15 @@ public class ProjectsService : ControllerBase
         {
             Name = projectDTO.Name,
             CreatedAt = DateTime.UtcNow,
+            DisplayPicture = projectDTO.DisplayPicture,
             AdminId = creatorId
         };
         await _db.Projects.AddAsync(_project);
         await _db.SaveChangesAsync();
-        
+
         return _project;
     }
-    
+
     public async Task AddUsersToProjectByIdAsync(int projectId, List<int> UserIdsToAdd)
     {
         var _project = await _db.Projects.FirstOrDefaultAsync(p => p.Id == projectId);
@@ -41,21 +42,21 @@ public class ProjectsService : ControllerBase
 
         foreach (var id in UserIdsToAdd)
         {
-                var _user = _db.Users.FirstOrDefault(u => u.Id == id);
-                if (_user == null)
-                {
-                    throw new Exception($"User with Id: {id} does not exist");
-                }
-                
-                var _user_project = new User_Project()
-                {
-                    UserId = id,
-                    ProjectId = _project.Id
-                };      
-                await _db.Users_Projects.AddAsync(_user_project);
+            var _user = _db.Users.FirstOrDefault(u => u.Id == id);
+            if (_user == null)
+            {
+                throw new Exception($"User with Id: {id} does not exist");
+            }
+
+            var _user_project = new User_Project()
+            {
+                UserId = id,
+                ProjectId = _project.Id
+            };
+            await _db.Users_Projects.AddAsync(_user_project);
         }
         await _db.SaveChangesAsync();
-        return;    
+        return;
     }
 
     public async Task AddUsersToProjectByEmailAsync(int projectId, List<string> UserEmailsToAdd)
@@ -68,21 +69,21 @@ public class ProjectsService : ControllerBase
 
         foreach (var email in UserEmailsToAdd)
         {
-                var _user = _db.Users.FirstOrDefault(u => u.Email == email);
-                if (_user == null)
-                {
-                    throw new Exception($"User with Email: {email} does not exist");
-                }
-                
-                var _user_project = new User_Project()
-                {
-                    UserId = _user.Id,
-                    ProjectId = _project.Id
-                };      
-                await _db.Users_Projects.AddAsync(_user_project);
+            var _user = _db.Users.FirstOrDefault(u => u.Email == email);
+            if (_user == null)
+            {
+                throw new Exception($"User with Email: {email} does not exist");
+            }
+
+            var _user_project = new User_Project()
+            {
+                UserId = _user.Id,
+                ProjectId = _project.Id
+            };
+            await _db.Users_Projects.AddAsync(_user_project);
         }
         await _db.SaveChangesAsync();
-        return;    
+        return;
     }
 
     public async Task RemoveUserFromProjectAsync(int projectId, int userIdToRemove)
@@ -101,13 +102,14 @@ public class ProjectsService : ControllerBase
     public async Task<ProjectWithIdsNamesAndIssuesDTO?> GetProjectWithNamesAsync(int projectId)
     {
         var _project = await _db.Projects.FirstOrDefaultAsync(p => p.Id == projectId);
-        
+
         if (_project == null)
         {
             return null;
         }
 
-        var _issues = await _db.Issues.Where(i => i.ProjectId == projectId).Select(issue => new IssueWithIdDTO {
+        var _issues = await _db.Issues.Where(i => i.ProjectId == projectId).Select(issue => new IssueWithIdDTO
+        {
             Id = issue.Id,
             TypeOfIssue = issue.TypeOfIssue,
             PriorityOfIssue = issue.PriorityOfIssue,
@@ -122,11 +124,14 @@ public class ProjectsService : ControllerBase
             ReporterId = issue.ReporterId
         }).ToListAsync();
 
-        var _projectWithNames = await _db.Projects.Where(p => p.Id == projectId).Select(project => new ProjectWithIdsNamesAndIssuesDTO {
+        var _projectWithNames = await _db.Projects.Where(p => p.Id == projectId).Select(project => new ProjectWithIdsNamesAndIssuesDTO
+        {
             Name = _project.Name,
             CreatedAt = project.CreatedAt,
+            DisplayPicture = _project.DisplayPicture,
             AdminName = project.Admin.FirstName,
-            Users = project.User_Projects.Select(n => new MinimalUserDTO {
+            Users = project.User_Projects.Select(n => new MinimalUserDTO
+            {
                 Id = n.User.Id,
                 FirstName = n.User.FirstName,
                 LastName = n.User.LastName,
@@ -141,13 +146,14 @@ public class ProjectsService : ControllerBase
     public async Task<Project?> UpdateProjectAsync(int projectId, ProjectDTO projectDTO)
     {
         var _project = await _db.Projects.FirstOrDefaultAsync(p => p.Id == projectId);
-        
+
         if (_project == null)
         {
             return null;
         }
 
         _project.Name = projectDTO.Name;
+        _project.DisplayPicture = projectDTO.DisplayPicture;
         _project.AdminId = projectDTO.AdminId;
         await _db.SaveChangesAsync();
 
@@ -157,7 +163,7 @@ public class ProjectsService : ControllerBase
     public async Task DeleteProjectAsync(int projectId)
     {
         var _project = await _db.Projects.FirstOrDefaultAsync(p => p.Id == projectId);
-        
+
         if (_project == null)
         {
             throw new Exception("Project Not Found");
