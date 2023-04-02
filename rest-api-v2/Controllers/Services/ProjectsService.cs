@@ -126,10 +126,11 @@ public class ProjectsService : ControllerBase
 
         var _projectWithNames = await _db.Projects.Where(p => p.Id == projectId).Select(project => new ProjectWithIdsNamesAndIssuesDTO
         {
+            Id = _project.Id,
             Name = _project.Name,
             CreatedAt = project.CreatedAt,
             DisplayPicture = _project.DisplayPicture,
-            AdminName = project.Admin.FirstName,
+            AdminId = project.Admin.Id,
             Users = project.User_Projects.Select(n => new MinimalUserDTO
             {
                 Id = n.User.Id,

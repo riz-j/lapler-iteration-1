@@ -28,12 +28,13 @@ public class ProjectWithNamesDTO
 
 public class ProjectWithIdsNamesAndIssuesDTO
 {
+    public int Id { get; set; }
     public string Name { get; set; }
     public DateTime? CreatedAt { get; set; }
     public string? DisplayPicture { get; set; }
 
     /* Relations */
-    public string? AdminName { get; set; }
+    public int? AdminId { get; set; }
     public IEnumerable<MinimalUserDTO>? Users { get; set; }
     public IEnumerable<IssueWithIdDTO>? Issues { get; set; }
 }
