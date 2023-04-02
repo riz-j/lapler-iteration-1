@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentProject } from "../../redux/currentProjectSlice";
 import { updateProject } from "../../redux/currentProjectSlice";
+import { convertToBase64 } from "../../utils/convertToBase64";
 
 export default function ProjectSettingsSheet({ onClick, onClose }) {
     const dispatch = useDispatch();
@@ -13,6 +14,7 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
 
     const [projectName, setProjectName] = useState(currentProject.projectName);
     const [projectAdmin, setProjectAdmin] = useState(projectMembers.find(n => n.id === projectAdminId));
+    const [projectDisplayPicFile, setProjectDisplayPicFile] = useState(null);
     const [projectDisplayPic, setProjectDisplayPic] = useState(projectDisplayPicture);
     const [loadingSaveChanges, setLoadingSaveChanges] = useState(false);
 
@@ -37,9 +39,25 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
         })
     }
 
+    const handleFileUpload = (e) => {
+      setProjectDisplayPicFile(e.target.files[0])
+    }
+
     useEffect(() => {
-      console.log(currentProject.id);
-    }, []);
+      const processFile = async () => {
+        try {
+          const base64String = await convertToBase64(projectDisplayPicFile);
+          setProjectDisplayPic(base64String);
+        } catch(error) {
+          console.log(`Error uploading and/or processing file: ${error}`)
+        }
+      }
+      processFile()
+    }, [projectDisplayPicFile])
+
+    useEffect(() => {
+      console.log(`Display Pic : ${projectDisplayPic}`);
+    }, [projectDisplayPic]);
 
     return (
       <div className='absolute inset-0 z-20'>
@@ -54,11 +72,11 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
           <h1>ProjectID : {currentProject.id}</h1>
             <h1>{projectName}</h1>
             <h1>{projectAdmin.firstName}</h1>
-            <img src={projectDisplayPic} />
+            <img src={projectDisplayPic} className="w-10 h-10" />
 
           <form onSubmit={handleSubmit} className='flex flex-col gap-5 m-10 text-gray-500'>
 
-            <label>Project Name</label>
+            {/* <label>Project Name</label> */}
             <input 
               value={projectName} 
               type='text' 
@@ -66,15 +84,13 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
               className='bg-transparent'
             />
 
-            {/* FOR CHANGING PROJECT ADMIN */}
+            <input 
+              type='file' 
+              accept='image/*'
+              onChange={handleFileUpload} 
+            />
 
-            {/* <select onChange={ e => setProjectAdmin(e.target.value) }>
-              { Object.entries(projectMembers).map(([memberId, member]) => 
-                <option key={memberId} value={member.id}>{member.firstName} {member.lastName}</option>
-              )}
-            </select> */}
-
-            <input type='text' onChange={e => setProjectDisplayPic(e.target.value)} />
+            {/* <input type='text' onChange={handleFileUpload}/> */}
 
             {
               loadingSaveChanges ? 
@@ -92,3 +108,12 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
     </div>
     )
   }
+
+
+     {/* FOR CHANGING PROJECT ADMIN */}
+
+     {/* <select onChange={ e => setProjectAdmin(e.target.value) }>
+       { Object.entries(projectMembers).map(([memberId, member]) => 
+         <option key={memberId} value={member.id}>{member.firstName} {member.lastName}</option>
+       )}
+     </select> */}
