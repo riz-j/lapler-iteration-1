@@ -54,6 +54,7 @@ const currentUserSlice = createSlice({
             state.firstName = action.payload.userWithProjectDetailsDTO.firstName;
             state.lastName = action.payload.userWithProjectDetailsDTO.lastName;
             state.email = action.payload.userWithProjectDetailsDTO.email;
+            state.profilePicture = action.payload.userWithProjectDetailsDTO.profilePicture;
             state.projects = action.payload.userWithProjectDetailsDTO.projectIdProjectDetails;
             state.token = action.payload.token;
         },
