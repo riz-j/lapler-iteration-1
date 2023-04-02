@@ -25,7 +25,11 @@ export default function ProjectNameHeader() {
                 </div>
             </div>
             <hr className='border-platinum-quarternary' />
-            { sheetPresented && <ProjectSettingsSheet onClick={() => setSheetPresented(!sheetPresented)} /> }
+            { sheetPresented && 
+                <ProjectSettingsSheet 
+                    onClick={() => setSheetPresented(!sheetPresented)} 
+                    onClose={() => setSheetPresented(false)}
+                /> }
         </div>
     )
 }

@@ -90,6 +90,22 @@ export const removeUserFromProject = createAsyncThunk('currentProject/removeUser
     })
 })
 
+export const updateProject = createAsyncThunk('currentProject/updateProject', async (input) => {
+    const { projectId, name, displayPicture, adminId, token } = input;
+    return await fetch(`http://localhost:5080/api/Projects/${projectId}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }, 
+        body: JSON.stringify({
+            'name': name,
+            'displayPicture': displayPicture,
+            'adminId': adminId
+        })
+    })
+})
+
 const currentProjectSlice = createSlice({
     name: 'currentProject',
     initialState: {},
@@ -105,9 +121,10 @@ const currentProjectSlice = createSlice({
         },
         [getCurrentProject.fulfilled]: (state, action) => {
             state.isLoading = false;
+            state.id = action.payload.id;
             state.projectName = action.payload.name;
             state.displayPicture = action.payload.displayPicture;
-            state.adminName = action.payload.adminName; // Should be Admin details instead (User ID, name, email)
+            state.adminId = action.payload.adminId; // Should be Admin details instead (User ID, name, email)
             state.users = action.payload.users;
             state.issues = action.payload.issues;
         },
@@ -176,5 +193,6 @@ const currentProjectSlice = createSlice({
         }        
     }
 })
+
 export const { emptyCurrentProject } = currentProjectSlice.actions;
 export default currentProjectSlice.reducer;
