@@ -122,7 +122,8 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
                 : 
                 <div className="flex gap-3">
                   <button
-                    className="bg-gray-500 px-5 py-3 rounded-lg text-md text-black font-bold"
+                    className="bg-gray-400 px-5 py-3 rounded-lg text-md text-black font-bold"
+                    onClick={onClose}
                   >
                     Cancel
                   </button>
