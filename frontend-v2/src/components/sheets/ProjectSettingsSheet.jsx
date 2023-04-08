@@ -52,8 +52,8 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
           console.log(`Error uploading and/or processing file: ${error}`)
         }
       }
-      processFile()
-    }, [projectDisplayPicFile])
+      processFile();
+    }, [projectDisplayPicFile]);
 
     useEffect(() => {
       console.log(`Display Pic : ${projectDisplayPic}`);
@@ -66,7 +66,7 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
         className='flex justify-center items-center bg-black w-full h-full bg-opacity-50'
       >
         <div 
-            onClick={event => event.stopPropagation()}
+            onClick={e => e.stopPropagation()}
             className='bg-platinum-secondary w-[80%] h-[80%] z-30 text-font-color-primary'
         >
           <h1>ProjectID : {currentProject.id}</h1>
@@ -95,7 +95,7 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
             {
               loadingSaveChanges ? 
                 <img 
-                  src={'https://media.tenor.com/tEBoZu1ISJ8AAAAC/spinning-loading.gif'} 
+                  src={'https://mir-s3-cdn-cf.behance.net/project_modules/disp/04de2e31234507.564a1d23645bf.gif'} 
                   className='absolute inset-0'
                 />
                 : 
