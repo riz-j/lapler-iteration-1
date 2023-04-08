@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentProject } from "../../redux/currentProjectSlice";
 import { updateProject } from "../../redux/currentProjectSlice";
 import { convertToBase64 } from "../../utils/convertToBase64";
+import pencil_icon from "../../static/img/pencil-icon.png"
 
 export default function ProjectSettingsSheet({ onClick, onClose }) {
     const dispatch = useDispatch();
@@ -39,6 +40,13 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
         })
     }
 
+    const projectNameInputRef = useRef(null);
+    const handleProjectNameEditButton = () => {
+      if (projectNameInputRef.current) {
+        projectNameInputRef.current.focus();
+      }
+    }
+
     const handleFileUpload = (e) => {
       setProjectDisplayPicFile(e.target.files[0])
     }
@@ -67,31 +75,44 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
       >
         <div 
             onClick={e => e.stopPropagation()}
-            className='bg-platinum-secondary w-[80%] h-[80%] z-30 text-font-color-primary'
+            className='flex flex-col justify-between bg-platinum-secondary rounded-xl p-5 w-[70%] h-[40%] z-30 text-font-color-primary'
         >
-          <h1>ProjectID : {currentProject.id}</h1>
+            {/* <h1>ProjectID : {currentProject.id}</h1>
             <h1>{projectName}</h1>
-            <h1>{projectAdmin.firstName}</h1>
-            <img src={projectDisplayPic} className="w-10 h-10" />
+            <h1>{projectAdmin.firstName}</h1> */}
 
-          <form onSubmit={handleSubmit} className='flex flex-col gap-5 m-10 text-gray-500'>
+            <div className="flex justify-between px-7 py-2 bg-platinum-tertiary h-32 gap-4 items-end rounded-xl">
+              <div className="flex gap-4 items-end">
+              <div className="relative w-20 h-20 hover:opacity-50">
+                <img src={projectDisplayPic} className="w-full h-full rounded-xl" />
+                <input 
+                  type='file' 
+                  accept='image/*'
+                  onChange={handleFileUpload}
+                  className="absolute opacity-0 w-full h-full cursor-pointer" 
+                  style={{ top: 0, left: 0 }} 
+                />
+              </div>
+                
+                <h1 className="flex text-xl font-bold">
+                  <input 
+                    value={projectName} 
+                    type='text' 
+                    onChange={e => setProjectName(e.target.value)} 
+                    ref={projectNameInputRef}
+                    className='bg-transparent text-font-color-primary'
+                  />
+                  
+                </h1>
+              </div>
+              <img 
+                src={pencil_icon} 
+                onClick={handleProjectNameEditButton} 
+                className="h-4 w-4 mb-4 cursor-pointer" 
+              />
+            </div>
 
-            {/* <label>Project Name</label> */}
-            <input 
-              value={projectName} 
-              type='text' 
-              onChange={e => setProjectName(e.target.value)} 
-              className='bg-transparent'
-            />
-
-            <input 
-              type='file' 
-              accept='image/*'
-              onChange={handleFileUpload} 
-            />
-
-            {/* <input type='text' onChange={handleFileUpload}/> */}
-
+          <form onSubmit={handleSubmit} className='flex items-end flex-col gap-5 m-5 leading-tight text-gray-500'>
             {
               loadingSaveChanges ? 
                 <img 
@@ -99,9 +120,20 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
                   className='absolute inset-0'
                 />
                 : 
-                <input type='submit' onClick={() => console.log("Joe Mama")}/>
+                <div className="flex gap-3">
+                  <button
+                    className="bg-gray-500 px-5 py-3 rounded-lg text-md text-black font-bold"
+                  >
+                    Cancel
+                  </button>
+                  <input 
+                    type='submit' 
+                    value='Save Changes'
+                    onClick={() => console.log("Joe Mama")}
+                    className="bg-green-500 px-5 py-3 rounded-lg text-md text-black font-bold"
+                  />
+                </div>
             }
-            
           </form>
         </div>
       </div>
