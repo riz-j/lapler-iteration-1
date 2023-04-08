@@ -122,7 +122,7 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
                 : 
                 <div className="flex gap-3">
                   <button
-                    className="bg-gray-400 px-5 py-3 rounded-lg text-md text-black font-bold"
+                    className="bg-gray-400 hover:bg-gray-300 px-5 py-3 rounded-lg text-md text-black font-bold"
                     onClick={onClose}
                   >
                     Cancel
@@ -131,7 +131,7 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
                     type='submit' 
                     value='Save Changes'
                     onClick={() => console.log("Joe Mama")}
-                    className="bg-green-500 px-5 py-3 rounded-lg text-md text-black font-bold"
+                    className="bg-green-500 hover:bg-green-400 px-5 py-3 rounded-lg text-md text-black font-bold cursor-pointer"
                   />
                 </div>
             }
