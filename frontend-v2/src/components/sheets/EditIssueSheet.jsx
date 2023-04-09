@@ -65,8 +65,8 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
         className='flex justify-center items-center bg-black w-full h-full bg-opacity-50'
       >
         <div 
-            onClick={e => e.stopPropagation()}
-            className='flex flex-col justify-between bg-platinum-secondary rounded-xl p-5 w-[70%] h-[70%] z-30 text-font-color-primary'
+          onClick={e => e.stopPropagation()}
+          className='flex flex-col justify-between bg-platinum-secondary rounded-xl p-10 h-[80%] z-30 text-font-color-primary'
         >
             {/* <h1>ProjectID : {currentProject.id}</h1>
             <h1>{projectName}</h1>
@@ -74,37 +74,17 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
 
             <div className="flex justify-between px-7 py-2 bg-platinum-tertiary h-32 gap-4 items-end rounded-xl">
               <div className="flex gap-4 items-end">
-              <div className="relative w-52 h-20 hover:opacity-50">
-                <img src={projectDisplayPic} className="w-full h-full rounded-xl" />
-                
-                <h1 className="flex">Project: {projectId}</h1>
-                <h1 className="flex">Issue: {issueId}</h1>
-                <h1 className="flex">Type of Issue: {typeOfIssue}</h1>
-                <h1 className="flex">Priority of Issue: {priorityOfIssue}</h1>
-                <h1 className="flex">Summary: {summary}</h1>
-                <h1 className="flex">Due Date: {dueDate}</h1>
-                <h1 className="flex">Assignee ID: {assigneeId}</h1>
-                <h1 className="flex">Reporter ID: {reporterId}</h1>
-
-                <input 
-                  type='file' 
-                  accept='image/*'
-                  //onChange={handleFileUpload}
-                  className="absolute opacity-0 w-full h-full cursor-pointer" 
-                  style={{ top: 0, left: 0 }} 
-                />
-              </div>
-                
-                <h1 className="flex text-xl font-bold">
-                  <input 
-                    value={projectName} 
-                    type='text' 
-                    onChange={e => setProjectName(e.target.value)} 
-                    //ref={projectNameInputRef}
-                    className='bg-transparent text-font-color-primary'
-                  />
-                  
-                </h1>
+                <div className="flex flex-col w-52 h-20">                  
+                  {/* <h1 className="flex">Project: {projectId}</h1>
+                  <h1 className="flex">Issue: {issueId}</h1>
+                  <h1 className="flex">Status: {statusOfIssue}</h1>
+                  <h1 className="flex">Type of Issue: {typeOfIssue}</h1>
+                  <h1 className="flex">Priority of Issue: {priorityOfIssue}</h1>
+                  <h1 className="flex">Summary: {summary}</h1>
+                  <h1 className="flex">Due Date: {dueDate}</h1>
+                  <h1 className="flex">Assignee ID: {assigneeId}</h1>
+                  <h1 className="flex">Reporter ID: {reporterId}</h1> */}
+                </div>
               </div>
               <img 
                 src={pencil_icon} 
@@ -112,6 +92,93 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
                 className="h-4 w-4 mb-4 cursor-pointer" 
               />
             </div>
+
+            <form className="flex flex-col gap-3 font-semibold">
+              <div className="flex gap-5">
+                <div className="flex flex-col gap-1">
+                  <label>Type</label>
+                  <select 
+                      value={typeOfIssue} 
+                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 rounded-md'
+                      onChange={e => setTypeOfIssue(e.target.value)}
+                  >
+                      <option value='Bug'>Bug</option>
+                      <option value='Improvement'>Improvement</option>
+                      <option value='New Feature'>New Feature</option>
+                      <option value='Epic'>Epic</option>
+                      <option value='Idea'>Idea</option>
+                  </select>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label>Priority</label>
+                  <select 
+                      value={priorityOfIssue} 
+                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 rounded-md w-full'
+                      onChange={e => setPriorityOfIssue(e.target.value)} 
+                  >
+                      <option value='Low'>Low</option>
+                      <option value='Medium'>Medium</option>
+                      <option value='High'>High</option>
+                  </select>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label>Status</label>
+                  <select 
+                      value={statusOfIssue} 
+                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 rounded-md w-full'
+                      onChange={e => setStatusOfIssue(e.target.value)} 
+                  >
+                      <option value='Backlog'>Backlog</option>
+                      <option value='Waiting'>Waiting</option>
+                      <option value='Doing'>Doing</option>
+                      <option value='Done'>Done</option>
+                  </select>
+                </div>
+              </div>
+              <div className="flex flex-col gap-1">
+                <label>Summary</label>
+                <input 
+                    type='text' 
+                    value={summary} 
+                    placeholder='summary' 
+                    className='border-2 text-black bg-gray-300 border-black px-3 py-2 rounded-md w-full'
+                    onChange={e => setSummary(e.target.value)} 
+                />
+              </div>
+              <div className="flex gap-5">
+                <div className="flex flex-col gap-1">
+                  <label>Assignee</label>
+                  <select 
+                      value={assigneeId} 
+                      onChange={e => setAssigneeId(e.target.value)} 
+                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 rounded-md w-full'
+                  >
+                      <option value={''}>None</option>
+                      { projectMembers &&
+                          projectMembers.map(user => 
+                              <option value={user.id}>{user.firstName} {user.lastName}</option>
+                          ) 
+                      }
+                  </select>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label>Reporter</label>
+                  <select 
+                      value={reporterId} 
+                      onChange={e => setReporterId(e.target.value)} 
+                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 rounded-md w-full'
+                  >
+                      { projectMembers && 
+                          projectMembers.map(user => 
+                              <option value={user.id}>{user.firstName} {user.lastName}</option>
+                          ) 
+                      }
+                  </select>
+                </div>
+              </div>
+            </form>
+              
+            
 
           <form onSubmit={handleSubmit} className='flex items-end flex-col gap-5 m-5 leading-tight text-gray-500'>
             {

@@ -4,7 +4,7 @@ import { dateParser } from '../../../utils/dateHandler';
 import { Link } from 'react-router-dom';
 import { ContextMenu, ContextMenuTrigger, MenuItem, hideMenu } from "react-contextmenu";
 import { Draggable } from '../../../dnd-kit/Draggable';
-import EditIssueSheet from '../../sheets/EditIssueSheet copy';
+import EditIssueSheet from '../../sheets/EditIssueSheet';
 
 import InProgressIcon from '../../../static/img/InProgressIcon.png';
 import WaitingIcon from '../../../static/img/WaitingIcon.png';
