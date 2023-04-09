@@ -4,6 +4,7 @@ import { dateParser } from '../../../utils/dateHandler';
 import { Link } from 'react-router-dom';
 import { ContextMenu, ContextMenuTrigger, MenuItem, hideMenu } from "react-contextmenu";
 import { Draggable } from '../../../dnd-kit/Draggable';
+import EditIssueSheet from '../../sheets/EditIssueSheet copy';
 
 import InProgressIcon from '../../../static/img/InProgressIcon.png';
 import WaitingIcon from '../../../static/img/WaitingIcon.png';
@@ -31,6 +32,8 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
     const readableDate = dueDate ? dateParser(dueDate) : '';
 
     const [statusOfIssueImg, setStatusOfIssueImg] = useState('');
+
+    const [sheetPresented, setSheetPresented] = useState(false);
 
     const handleDelete = async () => {
         hideMenu();
@@ -121,7 +124,8 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
 
         <ContextMenu id={`contextMenu${issueId}`} className='flex flex-col border rounded-sm'>
             <button 
-                onClick={() => { window.location.href = `/dashboard/project/${projectId}/issues/${issueId}/update`}}
+                //onClick={() => { window.location.href = `/dashboard/project/${projectId}/issues/${issueId}/update`}}
+                onClick={() => setSheetPresented(!sheetPresented)}
                 className='px-2 py-1 border-b bg-slate-700 hover:bg-slate-600'
             >
                 Edit
@@ -133,6 +137,16 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                 Delete
             </button>
         </ContextMenu>
+
+        {   sheetPresented &&
+                <EditIssueSheet 
+                    onClick={() => setSheetPresented(!sheetPresented)}
+                    onClose={() => setSheetPresented(false)}
+                    projectId={ projectId }
+                    issueId={ issueId }
+                />
+        }
+
         </>
     )
 }
