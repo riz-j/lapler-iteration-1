@@ -14,8 +14,12 @@ export default function IssuesSection() {
     const currentUser = useSelector(state => state.currentUser)
     const currentProject = useSelector(state => state.currentProject);
     const searchState = useSelector(state => state.search.searchState);
-    const _issues = currentProject.issues;
+    const _issues = useSelector(state => state.currentProject.issues);
     let [issues, setIssues] = useState(_issues);
+
+    useEffect(() => {
+        setIssues(currentProject.issues);
+    }, [currentProject.issues]);
 
 /**********   Search   **********/
     const [search, setSearch] = useState('');
