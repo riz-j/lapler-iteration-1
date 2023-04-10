@@ -5,12 +5,15 @@ import ProjectProfilePic2 from '../../../static/img/ProjectProfilePic2.png'
 import ProjectProfilePic3 from '../../../static/img/ProjectProfilePic3.png'
 import ProjectProfilePic4 from '../../../static/img/ProjectProfilePic4.png'
 import CreateNewProject from './CreateNewProject'
+import { useState } from 'react'
 
 import ProjectCard from './ProjectCard'
 
 export default function ProjectNavigation() {
     const currentUser = useSelector(state => state.currentUser);
     const projects = currentUser.projects;
+    
+    const [showTooltip, setShowTooltip] = useState(null);
 
     return (
         <div className="flex-none items-center h-screen w-12 bg-platinum-secondary border-r border-platinum-quarternary">
@@ -23,7 +26,11 @@ export default function ProjectNavigation() {
                             <img 
                                 key={projectId} 
                                 src={project.displayPicture || ProjectProfilePic1} 
-                                className='w-2/3 h-2/3 rounded-full'/>
+                                className='w-2/3 h-2/3 rounded-full'
+                                onMouseEnter={() => setShowTooltip(projectId)}
+                                onMouseLeave={() => setShowTooltip(null)}
+                            />
+                            { projectId === showTooltip && <h1 className='left-16 absolute'>{project.name}</h1> }  
                         </Link>
                     ))
                     }
