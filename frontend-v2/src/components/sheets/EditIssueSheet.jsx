@@ -32,11 +32,19 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
     const [assigneeId, setAssigneeId] = useState(currentIssue.assigneeId || null);
     const [reporterId, setReporterId] = useState(currentIssue.reporterId || null);
 
-    const [dueDateDay, setDueDateDay] = useState(1);
-    const [dueDateMonth, setDueDateMonth] = useState(2);
-    const [dueDateYear, setDueDateYear] = useState(2023);
-    const dueDate = new Date(dueDateYear, dueDateMonth - 1, dueDateDay, 0, 0, 0).toISOString();
-    useEffect(() => { console.log(dueDate) }, [dueDate]);
+    // const [dueDateDay, setDueDateDay] = useState(1);
+    // const [dueDateMonth, setDueDateMonth] = useState(2);
+    // const [dueDateYear, setDueDateYear] = useState(2023);
+    // const dueDate = new Date(dueDateYear, dueDateMonth - 1, dueDateDay, 0, 0, 0).toISOString();
+    // useEffect(() => { console.log(dueDate) }, [dueDate]);
+
+    const dueDateString = currentIssue.dueDate;
+    const year = parseInt(dueDateString.slice(0,4));
+    const month = parseInt(dueDateString.slice(5, 7)) - 1;
+    const day = parseInt(dueDateString.slice(8, 10));
+    const parsedDueDate = new Date(Date.UTC(year, month, day));
+    const [dueDate, setDueDate] = useState(parsedDueDate);
+    useEffect(() => console.log(dueDate), [dueDate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -99,7 +107,7 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
                   <label>Type</label>
                   <select 
                       value={typeOfIssue} 
-                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 rounded-md'
+                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 h-10 rounded-md'
                       onChange={e => setTypeOfIssue(e.target.value)}
                   >
                       <option value='Bug'>Bug</option>
@@ -113,7 +121,7 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
                   <label>Priority</label>
                   <select 
                       value={priorityOfIssue} 
-                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 rounded-md w-full'
+                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 h-10 rounded-md w-full'
                       onChange={e => setPriorityOfIssue(e.target.value)} 
                   >
                       <option value='Low'>Low</option>
@@ -125,7 +133,7 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
                   <label>Status</label>
                   <select 
                       value={statusOfIssue} 
-                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 rounded-md w-full'
+                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 h-10 rounded-md w-full'
                       onChange={e => setStatusOfIssue(e.target.value)} 
                   >
                       <option value='Backlog'>Backlog</option>
@@ -141,17 +149,28 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
                     type='text' 
                     value={summary} 
                     placeholder='summary' 
-                    className='border-2 text-black bg-gray-300 border-black px-3 py-2 rounded-md w-full'
+                    className='border-2 text-black bg-gray-300 border-black px-3 py-2 h-10 rounded-md w-full'
                     onChange={e => setSummary(e.target.value)} 
                 />
               </div>
               <div className="flex gap-5">
+                
+                <div className="flex flex-col gap-1">
+                  <label>Due Date</label>
+                  <input 
+                    value={dueDate.toISOString().substr(0, 10)}
+                    onChange={e => setDueDate(new Date(e.target.value))}
+                    type="date"
+                    className='border-2 text-black bg-gray-300 border-black px-3 h-10 rounded-md w-full'
+                  />
+                </div>
+
                 <div className="flex flex-col gap-1">
                   <label>Assignee</label>
                   <select 
                       value={assigneeId} 
                       onChange={e => setAssigneeId(e.target.value)} 
-                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 rounded-md w-full'
+                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 h-10 rounded-md w-full'
                   >
                       <option value={''}>None</option>
                       { projectMembers &&
@@ -166,7 +185,7 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
                   <select 
                       value={reporterId} 
                       onChange={e => setReporterId(e.target.value)} 
-                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 rounded-md w-full'
+                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 h-10 rounded-md w-full'
                   >
                       { projectMembers && 
                           projectMembers.map(user => 
