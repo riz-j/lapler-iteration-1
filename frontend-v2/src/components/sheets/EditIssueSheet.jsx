@@ -171,7 +171,13 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
                   <label>Due Date</label>
                   <input 
                     value={dueDate ? dueDate.toISOString().substr(0, 10) : null}
-                    onChange={e => setDueDate(new Date(e.target.value))}
+                    onChange={e => {
+                      const year = parseInt(e.target.value.slice(0,4));
+                      const month = parseInt(e.target.value.slice(5, 7)) - 1; 
+                      const day = parseInt(e.target.value.slice(8, 10));
+                      const utcDueDate = new Date(Date.UTC(year, month, day));
+                      setDueDate(utcDueDate);
+                    }}
                     type="date"
                     className='border-2 text-black bg-gray-300 border-black px-3 h-10 rounded-md w-full'
                   />
