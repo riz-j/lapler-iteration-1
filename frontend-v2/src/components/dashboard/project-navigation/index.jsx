@@ -30,7 +30,11 @@ export default function ProjectNavigation() {
                                 onMouseEnter={() => setShowTooltip(projectId)}
                                 onMouseLeave={() => setShowTooltip(null)}
                             />
-                            { projectId === showTooltip && <h1 className='left-16 absolute'>{project.name}</h1> }  
+                            { projectId === showTooltip && 
+                                <div className='left-14 absolute bg-platinum-tertiary px-3 py-2 rounded-md'>
+                                    <h1 className='text-md font-semibold'>{project.name}</h1> 
+                                </div>
+                            }  
                         </Link>
                     ))
                     }
