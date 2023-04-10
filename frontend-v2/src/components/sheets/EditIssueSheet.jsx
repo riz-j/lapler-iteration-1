@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentProject } from "../../redux/currentProjectSlice";
+import { getCurrentProject, updateIssue } from "../../redux/currentProjectSlice";
 import { updateProject } from "../../redux/currentProjectSlice";
 import { convertToBase64 } from "../../utils/convertToBase64";
 import pencil_icon from "../../static/img/pencil-icon.png"
@@ -38,33 +38,45 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
     // const dueDate = new Date(dueDateYear, dueDateMonth - 1, dueDateDay, 0, 0, 0).toISOString();
     // useEffect(() => { console.log(dueDate) }, [dueDate]);
 
-    const dueDateString = currentIssue.dueDate;
-    const year = parseInt(dueDateString.slice(0,4));
-    const month = parseInt(dueDateString.slice(5, 7)) - 1;
-    const day = parseInt(dueDateString.slice(8, 10));
-    const parsedDueDate = new Date(Date.UTC(year, month, day));
-    const [dueDate, setDueDate] = useState(parsedDueDate);
+    let _dueDate;
+    if (currentIssue.dueDate) {
+      const dueDateString = currentIssue.dueDate;
+      const year = parseInt(dueDateString.slice(0,4));
+      const month = parseInt(dueDateString.slice(5, 7)) - 1;
+      const day = parseInt(dueDateString.slice(8, 10));
+      const parsedDueDate = new Date(Date.UTC(year, month, day));
+      _dueDate = parsedDueDate;
+    } else {
+      _dueDate = null;
+    }
+    const [dueDate, setDueDate] = useState(_dueDate);
     useEffect(() => console.log(dueDate), [dueDate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoadingSaveChanges(true);
 
-        await dispatch(updateProject({
-          projectId: currentProject.id,
-          name: projectName,
-          displayPicture: projectDisplayPic,
-          adminId: projectAdmin.id,
-          token: token
+        await dispatch(updateIssue({
+            issueId: issueId, 
+            typeOfIssue: typeOfIssue, 
+            priorityOfIssue: priorityOfIssue, 
+            statusOfIssue: statusOfIssue, 
+            summary: summary, 
+            projectId: projectId, 
+            dueDate: dueDate,
+            assigneeId: (assigneeId !== "") ? assigneeId : null,
+            reporterId: reporterId, 
+            token: token
         }))
         .then(() => dispatch(getCurrentProject({
-          projectId: currentProject.id,
-          token: token
+            projectId: projectId,
+            token: token
         })))
         .then(() => { 
           setLoadingSaveChanges(false);
           onClose(); 
         })
+        .catch(err => console.log(err));
     }
     return (
       <div className='absolute inset-0 z-20'>
@@ -101,7 +113,7 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
               />
             </div>
 
-            <form className="flex flex-col gap-3 font-semibold">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3 font-semibold">
               <div className="flex gap-5">
                 <div className="flex flex-col gap-1">
                   <label>Type</label>
@@ -158,7 +170,7 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
                 <div className="flex flex-col gap-1">
                   <label>Due Date</label>
                   <input 
-                    value={dueDate.toISOString().substr(0, 10)}
+                    value={dueDate ? dueDate.toISOString().substr(0, 10) : null}
                     onChange={e => setDueDate(new Date(e.target.value))}
                     type="date"
                     className='border-2 text-black bg-gray-300 border-black px-3 h-10 rounded-md w-full'
