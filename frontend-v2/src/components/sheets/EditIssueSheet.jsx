@@ -86,33 +86,8 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
       >
         <div 
           onClick={e => e.stopPropagation()}
-          className='flex flex-col justify-between bg-platinum-secondary rounded-xl p-10 h-[80%] z-30 text-font-color-primary'
+          className='flex flex-col justify-between bg-platinum-secondary rounded-xl p-10 h-[60%] z-30 text-font-color-primary'
         >
-            {/* <h1>ProjectID : {currentProject.id}</h1>
-            <h1>{projectName}</h1>
-            <h1>{projectAdmin.firstName}</h1> */}
-
-            <div className="flex justify-between px-7 py-2 bg-platinum-tertiary h-32 gap-4 items-end rounded-xl">
-              <div className="flex gap-4 items-end">
-                <div className="flex flex-col w-52 h-20">                  
-                  {/* <h1 className="flex">Project: {projectId}</h1>
-                  <h1 className="flex">Issue: {issueId}</h1>
-                  <h1 className="flex">Status: {statusOfIssue}</h1>
-                  <h1 className="flex">Type of Issue: {typeOfIssue}</h1>
-                  <h1 className="flex">Priority of Issue: {priorityOfIssue}</h1>
-                  <h1 className="flex">Summary: {summary}</h1>
-                  <h1 className="flex">Due Date: {dueDate}</h1>
-                  <h1 className="flex">Assignee ID: {assigneeId}</h1>
-                  <h1 className="flex">Reporter ID: {reporterId}</h1> */}
-                </div>
-              </div>
-              <img 
-                src={pencil_icon} 
-                //onClick={handleProjectNameEditButton} 
-                className="h-4 w-4 mb-4 cursor-pointer" 
-              />
-            </div>
-
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 font-semibold">
               <div className="flex gap-5">
                 <div className="flex flex-col gap-1">
