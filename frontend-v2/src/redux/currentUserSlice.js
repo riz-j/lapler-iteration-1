@@ -83,7 +83,7 @@ const currentUserSlice = createSlice({
             state.firstName = action.payload.firstName;
             state.lastName = action.payload.lastName;
             state.email = action.payload.email;
-            state.projects = action.payload.projectIdProjectNames;
+            state.projects = action.payload.projectIdProjectDetails;
         },
         [refetchCurrentUser.rejected]: (state) => {
             state.isLoading = false;

@@ -4,6 +4,7 @@ import { getCurrentProject } from "../../redux/currentProjectSlice";
 import { updateProject } from "../../redux/currentProjectSlice";
 import { convertToBase64 } from "../../utils/convertToBase64";
 import pencil_icon from "../../static/img/pencil-icon.png"
+import { refetchCurrentUser } from "../../redux/currentUserSlice";
 
 export default function ProjectSettingsSheet({ onClick, onClose }) {
     const dispatch = useDispatch();
@@ -32,6 +33,10 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
         }))
         .then(() => dispatch(getCurrentProject({
           projectId: currentProject.id,
+          token: token
+        })))
+        .then(() => dispatch(refetchCurrentUser({
+          userId: 18,
           token: token
         })))
         .then(() => { 
