@@ -89,6 +89,7 @@ export default function CreateIssueSheet({ onClick, onClose }) {
               typeOfIssue: typeOfIssue,
               priorityOfIssue: priorityOfIssue,
               statusOfIssue: statusOfIssue,
+              dueDate: dueDate,
               ...(assigneeId && { assigneeId }),
               summary: summary
           }))
@@ -109,6 +110,7 @@ export default function CreateIssueSheet({ onClick, onClose }) {
     const [summary, setSummary] = useState('');
     const [assigneeId, setAssigneeId] = useState(null);
     const [dueDate, setDueDate] = useState(null)
+    useEffect(() => console.log(dueDate), [dueDate]);
 
     return (
       <div className='absolute inset-0 z-20'>

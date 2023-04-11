@@ -13,7 +13,7 @@ export const getCurrentProject = createAsyncThunk('currentProject/getCurrentProj
 })
 
 export const createIssue = createAsyncThunk('currentProject/createIssue', async (input) => {
-    const { token, projectId, typeOfIssue, priorityOfIssue, statusOfIssue, summary, assigneeId } = input;
+    const { token, projectId, typeOfIssue, priorityOfIssue, statusOfIssue, summary, dueDate, assigneeId } = input;
     return await fetch('http://localhost:5080/api/Issues', {
         method: 'POST',
         headers: {
@@ -25,6 +25,7 @@ export const createIssue = createAsyncThunk('currentProject/createIssue', async 
             priorityOfIssue: priorityOfIssue,
             statusOfIssue: statusOfIssue,
             summary: summary,
+            dueDate: dueDate,
             projectId: projectId,
             assigneeId: assigneeId
         })
