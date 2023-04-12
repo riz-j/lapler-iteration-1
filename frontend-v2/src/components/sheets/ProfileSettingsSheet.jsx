@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentProject } from "../../redux/currentProjectSlice";
+import { getCurrentProject, updateIssue } from "../../redux/currentProjectSlice";
 import { updateProject } from "../../redux/currentProjectSlice";
 import { convertToBase64 } from "../../utils/convertToBase64";
 import pencil_icon from "../../static/img/pencil-icon.png"
-import { refetchCurrentUser } from "../../redux/currentUserSlice";
+import { refetchCurrentUser, updateUser } from "../../redux/currentUserSlice";
 import emptyProfilePic from "../../static/img/emptyProfilePic.png"
 
 export default function ProfileSettingsSheet({ onClick, onClose }) {
@@ -18,29 +18,43 @@ export default function ProfileSettingsSheet({ onClick, onClose }) {
     const _firstName = currentUser.firstName;
     const _lastName = currentUser.lastName;
 
-    const [projectName, setProjectName] = useState(currentProject.projectName);
-    const [projectAdmin, setProjectAdmin] = useState(projectMembers.find(n => n.id === projectAdminId));
+    //const [projectName, setProjectName] = useState(currentProject.projectName);
+    //const [projectAdmin, setProjectAdmin] = useState(projectMembers.find(n => n.id === projectAdminId));
     const [profilePictureFile, setProfilePictureFile] = useState(null);
     const [profilePicture, setProfilePicture] = useState(_profilePicture);
+    
     const [loadingSaveChanges, setLoadingSaveChanges] = useState(false);
+    const [firstName, setFirstName] = useState(_firstName);
+    const [lastName, setLastName] = useState(_lastName);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoadingSaveChanges(true);
 
-        await dispatch(updateProject({
-          projectId: currentProject.id,
-          name: projectName,
-          displayPicture: profilePicture,
-          adminId: projectAdmin.id,
-          token: token
+        // await dispatch(updateProject({
+        //   projectId: currentProject.id,
+        //   name: projectName,
+        //   displayPicture: profilePicture,
+        //   adminId: projectAdmin.id,
+        //   token: token
+        // }))
+        // .then(() => dispatch(getCurrentProject({
+        //   projectId: currentProject.id,
+        //   token: token
+        // })))
+        // .then(() => dispatch(refetchCurrentUser({
+        //   userId: 18,
+        //   token: token
+        // })))
+        await dispatch(updateUser({
+          userId: currentUser.id,
+          firstName: firstName,
+          lastName: lastName,
+          profilePicture: profilePicture,
+          email: currentUser.email
         }))
-        .then(() => dispatch(getCurrentProject({
-          projectId: currentProject.id,
-          token: token
-        })))
         .then(() => dispatch(refetchCurrentUser({
-          userId: 18,
+          userId: currentUser.id,
           token: token
         })))
         .then(() => { 
@@ -105,9 +119,9 @@ export default function ProfileSettingsSheet({ onClick, onClose }) {
                 
                 <h1 className="flex text-xl font-bold">
                   <input 
-                    value={`${_firstName} ${_lastName}`} 
+                    value={`${firstName}`} 
                     type='text' 
-                    onChange={e => setProjectName(e.target.value)} 
+                    onChange={e => setFirstName(e.target.value)} 
                     ref={projectNameInputRef}
                     className='bg-transparent text-font-color-primary'
                   />

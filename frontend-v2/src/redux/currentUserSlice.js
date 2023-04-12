@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { updateIssue } from './currentProjectSlice';
 
 export const registerUser = createAsyncThunk('currentUser/registerUser', async (input) => {
     const { firstName, lastName, email, password } = input;
@@ -37,6 +38,22 @@ export const refetchCurrentUser = createAsyncThunk('currentUser/refetchCurrentUs
     return await fetch(`http://localhost:5080/api/Users/${userId}`)
     .then(res => res.json())
     .catch(err => console.log(err))
+})
+
+export const updateUser = createAsyncThunk('currentUser/updateUser', async (input) => {
+    const { userId, firstName, lastName, profilePicture, email } = input;
+    return await fetch(`http://localhost:5080/api/Users/${userId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'firstName': firstName,
+            'lastName': lastName,
+            'profilePicture': profilePicture,
+            'email': email
+        })
+    })
 })
 
 const currentUserSlice = createSlice({
@@ -87,6 +104,18 @@ const currentUserSlice = createSlice({
         },
         [refetchCurrentUser.rejected]: (state) => {
             state.isLoading = false;
+        },
+
+        /* updateIssue */
+        [updateIssue.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [updateIssue.fulfilled]: (state) => {
+            state.isLoading = false;
+        },
+        [updateIssue.rejected]: (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
         }
     }
 })

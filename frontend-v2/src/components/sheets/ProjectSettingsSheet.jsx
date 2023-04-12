@@ -10,6 +10,7 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
     const dispatch = useDispatch();
     const token = useSelector(state => state.currentUser.token);
     const currentProject = useSelector(state => state.currentProject);
+    const currentUser = useSelector(state => state.currentUser);
     const projectMembers = currentProject.users;
     const projectAdminId = currentProject.adminId;
     const projectDisplayPicture = currentProject.displayPicture;
@@ -36,7 +37,7 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
           token: token
         })))
         .then(() => dispatch(refetchCurrentUser({
-          userId: 18,
+          userId: currentUser.id,
           token: token
         })))
         .then(() => { 
