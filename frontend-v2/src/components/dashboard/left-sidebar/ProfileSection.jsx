@@ -4,9 +4,10 @@ import { useState } from 'react';
 import ProfileSettingsSheet from '../../sheets/ProfileSettingsSheet';
 import EditIssueSheet from '../../sheets/EditIssueSheet';
 import emptyProfilePic from '../../../static/img/emptyProfilePic.png'
-
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfileSection() {
+    const navigate = useNavigate();
     const currentUser = useSelector(state => state.currentUser);
     const firstName = currentUser.firstName;
     const lastName = currentUser.lastName;
@@ -15,6 +16,14 @@ export default function ProfileSection() {
 
     const [showMenuSheet, setShowMenuSheet] = useState(false);
     const [showEditProfileSheet, setShowEditProfileSheet] = useState(false);
+
+    const handleLogout = async () => { 
+        await localStorage.removeItem('reduxState');
+        await Promise.all([
+            navigate("/"),
+            location.reload()
+        ])
+    }
 
     return (
         <div 
@@ -44,6 +53,12 @@ export default function ProfileSection() {
                     <hr className='border-platinum-tertiary' />
                     <div className='flex justify-start items-center px-3 py-2 bg-platinum-secondary hover:bg-platinum-tertiary cursor-pointer'>
                         Invitations
+                    </div>
+                    <div 
+                        onClick={handleLogout}
+                        className='flex justify-start items-center px-3 py-2 bg-red-800 hover:bg-red-700 cursor-pointer'
+                    >
+                        Log Out
                     </div>
                 </div>
             }
