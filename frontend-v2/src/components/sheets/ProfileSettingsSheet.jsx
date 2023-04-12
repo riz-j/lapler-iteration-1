@@ -31,21 +31,6 @@ export default function ProfileSettingsSheet({ onClick, onClose }) {
         e.preventDefault();
         setLoadingSaveChanges(true);
 
-        // await dispatch(updateProject({
-        //   projectId: currentProject.id,
-        //   name: projectName,
-        //   displayPicture: profilePicture,
-        //   adminId: projectAdmin.id,
-        //   token: token
-        // }))
-        // .then(() => dispatch(getCurrentProject({
-        //   projectId: currentProject.id,
-        //   token: token
-        // })))
-        // .then(() => dispatch(refetchCurrentUser({
-        //   userId: 18,
-        //   token: token
-        // })))
         await dispatch(updateUser({
           userId: currentUser.id,
           firstName: firstName,
@@ -100,10 +85,6 @@ export default function ProfileSettingsSheet({ onClick, onClose }) {
             onClick={e => e.stopPropagation()}
             className='flex flex-col justify-between bg-platinum-secondary rounded-xl p-5 w-[70%] h-[40%] z-30 text-font-color-primary'
         >
-            {/* <h1>ProjectID : {currentProject.id}</h1>
-            <h1>{projectName}</h1>
-            <h1>{projectAdmin.firstName}</h1> */}
-
             <div className="flex justify-between px-7 py-2 bg-platinum-tertiary h-32 gap-4 items-end rounded-xl">
               <div className="flex gap-4 items-end">
               <div className="relative w-20 h-20 hover:opacity-50">
@@ -117,7 +98,7 @@ export default function ProfileSettingsSheet({ onClick, onClose }) {
                 />
               </div>
                 
-                <h1 className="flex text-xl font-bold">
+                <div className="flex flex-col justify-start leading-3 text-xl font-bold">
                   <input 
                     value={`${firstName}`} 
                     type='text' 
@@ -125,8 +106,14 @@ export default function ProfileSettingsSheet({ onClick, onClose }) {
                     ref={projectNameInputRef}
                     className='bg-transparent text-font-color-primary'
                   />
-                  
-                </h1>
+                  <input 
+                    value={`${lastName}`} 
+                    type='text' 
+                    onChange={e => setLastName(e.target.value)} 
+                    //ref={projectNameInputRef}
+                    className='bg-transparent text-font-color-primary'
+                  />   
+                </div>
               </div>
               <img 
                 src={pencil_icon} 

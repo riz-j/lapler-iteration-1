@@ -11,7 +11,7 @@ export default function ProfileSection() {
     const firstName = currentUser.firstName;
     const lastName = currentUser.lastName;
     const email = currentUser.email;
-    const profilePic = currentUser.profilePic;
+    const profilePic = currentUser.profilePicture;
 
     const [showMenuSheet, setShowMenuSheet] = useState(false);
     const [showEditProfileSheet, setShowEditProfileSheet] = useState(false);
