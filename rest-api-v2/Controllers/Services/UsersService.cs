@@ -76,7 +76,7 @@ public class UsersService : ControllerBase
         _user.FirstName = userDTO.FirstName;
         _user.LastName = userDTO.LastName;
         _user.Email = userDTO.Email;
-        _user.Password = userDTO.Password;
+        _user.Password = userDTO.Password != null ? userDTO.Password : _user.Password;
         _user.ProfilePicture = userDTO.ProfilePicture;
         _db.SaveChanges();
 
