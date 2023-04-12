@@ -45,9 +45,6 @@ export default function TopBar() {
                     { paramsArray.map(param => (
                         <FilterTag paramName={param.name} />
                     ))}
-                    <div className='border px-2 py-1 rounded border-dashed border-[#656565]'>
-                        <p>+ Filter</p>
-                    </div>
                 </div>
 
                 <div className='flex gap-2'>              
@@ -69,9 +66,6 @@ export default function TopBar() {
                             <option value="sort_by_due_date=DESC" >{`Due Date (Nearest)`}</option>
                             <option value="sort_by_due_date=ASC" >{`Due Date (Furthest)`}</option>
                         </select>
-                    </div>
-                    <div className='flex items-center gap-1 border px-2 py-1 rounded border-[#656565]'>
-                        <img src={ShareIcon} className='w-2.5 h-3'/>
                     </div>
                 </div>
             </div>
