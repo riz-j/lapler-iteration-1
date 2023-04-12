@@ -14,6 +14,7 @@ export default function ProjectNavigation() {
     const projects = currentUser.projects;
     
     const [showTooltip, setShowTooltip] = useState(null);
+    const [showCreateNewProjectTooltip, setShowCreateNewProjectTooltip] = useState(false);
 
     return (
         <div className="flex-none items-center h-screen w-12 bg-platinum-secondary border-r border-platinum-quarternary">
@@ -43,7 +44,20 @@ export default function ProjectNavigation() {
                         <hr className='border-2 mx-2.5 rounded my-2 border-[#3e3f43]' />
                     }
                     
-                    <CreateNewProject />
+                    <div
+                        onMouseEnter={() => setShowCreateNewProjectTooltip(true)}
+                        onMouseLeave={() => setShowCreateNewProjectTooltip(false)}
+                        className='flex items-center'
+                    >
+                        <CreateNewProject />
+
+                        { showCreateNewProjectTooltip &&
+                            <div className='left-14 absolute bg-platinum-tertiary px-3 py-2 rounded-md'>
+                                <h1 className='text-md font-semibold'>Create New Project</h1> 
+                            </div>
+                        }
+                    </div>
+
 
                 </div>
             </div>
