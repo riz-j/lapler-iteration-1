@@ -10,7 +10,7 @@ export default function ProjectNameHeader() {
 
     return (
         <div>
-            <div className='flex justify-between  items-center h-12 w-full top-0 left-0'>
+            <div className='flex justify-between items-center h-12 w-full top-0 left-0'>
                 <div className='flex justify-start items-center gap-2 ml-4'> 
                     <img src={currentProject.displayPicture || defaultDisplayPic} className='w-6 h-6 rounded' />
                     <h1 className='truncate overflow-hidden text-md font-semibold text-font-color-primary w-32'>
@@ -20,7 +20,8 @@ export default function ProjectNameHeader() {
                 <div>
                     <img 
                         onClick={() => setSheetPresented(!sheetPresented)}
-                        src={ProjectSettingsIcon} className='w-6 h-6 mr-4 cursor-pointer' 
+                        src={ProjectSettingsIcon} 
+                        className='w-6 h-6 mr-4 cursor-pointer hover:bg-platinum-secondary' 
                     />
                 </div>
             </div>
