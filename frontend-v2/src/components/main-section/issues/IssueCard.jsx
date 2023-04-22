@@ -26,7 +26,8 @@ import { useState } from 'react';
 export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfIssue, statusOfIssue, dueDate, summary, assigneeId, reporterId }) {
     const dispatch = useDispatch();
     const currentProject = useSelector(state => state.currentProject);
-    const currentProjectMembers = useSelector(state => state.currentProjectMembers)
+    const currentProjectMembers = useSelector(state => state.currentProjectMembers);
+    const currentUser = useSelector(state => state.currentUser);
 
     const reporter = (currentProject.users).find(user => user.id === parseInt(reporterId));
     const assignee = (currentProject.users).find(user => user.id === parseInt(assigneeId));
