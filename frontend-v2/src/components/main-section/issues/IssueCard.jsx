@@ -18,6 +18,7 @@ import YellowDot from '../../../static/img/YellowDot.png';
 import BlueDot from '../../../static/img/BlueDot.png';
 import BugIcon from '../../../static/img/BugIcon.png';
 import RedCalendarIcon from '../../../static/img/RedCalendarIcon.png';
+import emptyProfilePic from '../../../static/img/emptyProfilePic.png';
 
 
 import { useState } from 'react';
@@ -25,7 +26,7 @@ import { useState } from 'react';
 export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfIssue, statusOfIssue, dueDate, summary, assigneeId, reporterId }) {
     const dispatch = useDispatch();
     const currentProject = useSelector(state => state.currentProject);
-    const currentUser = useSelector(state => state.currentUser);
+    const currentProjectMembers = useSelector(state => state.currentProjectMembers)
 
     const reporter = (currentProject.users).find(user => user.id === parseInt(reporterId));
     const assignee = (currentProject.users).find(user => user.id === parseInt(assigneeId));
@@ -111,12 +112,15 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                                 <p>{typeOfIssue}</p>
                             </div> 
                         }
-                        { assignee && 
-                            <p>{assignee.firstName} {assignee.lastName}</p> 
-                        }   
-                        { reporter && 
+
+                        <img 
+                            src={ assignee && assignee.profilePicture ? assignee.profilePicture : emptyProfilePic }
+                            className='w-5 h-5 rounded-full'
+                        />
+
+                        {/* reporter && 
                             <p>{reporter.firstName} {reporter.lastName}</p> 
-                        }    
+                        */}    
                     </div>
                 </div>
             </Draggable>
