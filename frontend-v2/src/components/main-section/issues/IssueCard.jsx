@@ -127,20 +127,22 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
             </Draggable>
         </ContextMenuTrigger>
 
-        <ContextMenu id={`contextMenu${issueId}`} className='flex flex-col border rounded-sm'>
-            <button 
-                //onClick={() => { window.location.href = `/dashboard/project/${projectId}/issues/${issueId}/update`}}
-                onClick={() => setSheetPresented(!sheetPresented)}
-                className='px-2 py-1 border-b bg-slate-700 hover:bg-slate-600'
-            >
-                Edit
-            </button>
-            <button 
-                onClick={handleDelete}
-                className='px-2 py-1 text-red-400 font-bold bg-slate-700 hover:bg-slate-600'
-            >
-                Delete
-            </button>
+        <ContextMenu id={`contextMenu${issueId}`} >
+            <div className='flex flex-col rounded-md bg-slate-800 shadow-lg w-52 py-1'>
+                <button 
+                    //onClick={() => { window.location.href = `/dashboard/project/${projectId}/issues/${issueId}/update`}}
+                    onClick={() => setSheetPresented(!sheetPresented)}
+                    className='text-left px-2 py-1 hover:bg-slate-700'
+                >
+                    View & Edit
+                </button>
+                <button 
+                    onClick={handleDelete}
+                    className='text-left px-2 py-1 text-red-400 font-bold hover:bg-slate-700'
+                >
+                    Delete
+                </button>
+            </div>
         </ContextMenu>
 
         {   sheetPresented &&
