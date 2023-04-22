@@ -107,7 +107,6 @@ export default function IssuesSection() {
             { (doingIssues.length > 0) &&
                 <div className='flex justify-between items-center h-7 px-3 w-full bg-platinum-secondary border-b border-platinum-tertiary'>
                     <p>Doing</p>
-                    <p>+</p>
                 </div>        
             }
             
@@ -134,7 +133,6 @@ export default function IssuesSection() {
             { (waitingIssues.length > 0) &&
                 <div className='flex justify-between items-center h-7 px-3 w-full bg-platinum-secondary border-b border-t border-platinum-tertiary'>
                     <p>Waiting</p>
-                    <p>+</p>
                 </div> 
             }
             <Droppable key={'Waiting'} id={'Waiting'}>
@@ -160,7 +158,6 @@ export default function IssuesSection() {
                     <>
                     <div className='flex justify-between items-center h-7 px-3 w-full bg-platinum-secondary border-b border-t border-platinum-tertiary'>
                         <p>Backlog</p>
-                        <p>+</p>
                     </div> 
                 
                     <Droppable key={'Backlog'} id={'Backlog'}>
@@ -187,7 +184,6 @@ export default function IssuesSection() {
             { (doneIssues.length > 0) &&
                 <div className='flex justify-between items-center h-7 px-3 w-full bg-platinum-secondary border-b border-t border-platinum-tertiary'>
                     <p>Done</p>
-                    <p>+</p>
                 </div> 
             }
             <Droppable key={'Done'} id={'Done'}>
