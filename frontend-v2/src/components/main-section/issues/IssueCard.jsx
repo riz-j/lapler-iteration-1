@@ -127,6 +127,11 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                         {/* reporter && 
                             <p>{reporter.firstName} {reporter.lastName}</p> 
                         */}    
+                        {/* { showAssigneeNameTooltip &&
+                            <div className='absolute right-14 bg-platinum-tertiary px-3 py-2 rounded-md'>
+                                <h1 className='text-md font-semibold'>{assignee.firstName} {assignee.lastName}</h1> 
+                            </div>
+                        } */}
                     </div>
                 </div>
             </Draggable>
@@ -159,11 +164,11 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                 />
         }
 
-        { showAssigneeNameTooltip &&
-            <div className='absolute bg-platinum-tertiary px-3 py-2 rounded-md'>
-                <h1 className='text-md font-semibold'>{assignee.firstName} {assignee.lastName}</h1> 
-            </div>
-        }
+            { showAssigneeNameTooltip &&
+                <div className='absolute right-1 bg-platinum-tertiary px-3 py-2 rounded-md'>
+                    <h1 className='text-md font-semibold'>{assignee.firstName} {assignee.lastName}</h1> 
+                </div>
+            }
 
         </>
     )
