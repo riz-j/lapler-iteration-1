@@ -36,6 +36,7 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
     const [statusOfIssueImg, setStatusOfIssueImg] = useState('');
 
     const [sheetPresented, setSheetPresented] = useState(false);
+    const [showAssigneeNameTooltip, setShowAssigneeNameTooltip] = useState(false);
 
     const handleDelete = async () => {
         hideMenu();
@@ -114,10 +115,14 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                             </div> 
                         }
 
-                        <img 
-                            src={ assignee && assignee.profilePicture ? assignee.profilePicture : emptyProfilePic }
-                            className='w-5 h-5 rounded-full'
-                        />
+                        { assignee && 
+                            <img 
+                                src={ assignee && assignee.profilePicture ? assignee.profilePicture : emptyProfilePic }
+                                className='w-5 h-5 rounded-full'
+                                onMouseEnter={() => setShowAssigneeNameTooltip(true)}
+                                onMouseLeave={() => setShowAssigneeNameTooltip(false)}
+                            />
+                        }
 
                         {/* reporter && 
                             <p>{reporter.firstName} {reporter.lastName}</p> 
@@ -152,6 +157,12 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                     projectId={ projectId }
                     issueId={ issueId }
                 />
+        }
+
+        { showAssigneeNameTooltip &&
+            <div className='absolute bg-platinum-tertiary px-3 py-2 rounded-md'>
+                <h1 className='text-md font-semibold'>{assignee.firstName} {assignee.lastName}</h1> 
+            </div>
         }
 
         </>
