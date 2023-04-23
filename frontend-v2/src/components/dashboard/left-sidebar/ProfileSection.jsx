@@ -17,12 +17,10 @@ export default function ProfileSection() {
     const [showMenuSheet, setShowMenuSheet] = useState(false);
     const [showEditProfileSheet, setShowEditProfileSheet] = useState(false);
 
-    const handleLogout = async () => { 
-        await localStorage.removeItem('reduxState');
-        await Promise.all([
-            navigate("/"),
-            location.reload()
-        ])
+    const handleLogout = () => { 
+        localStorage.removeItem('reduxState');
+        navigate("/")
+        window.location.reload(); 
     }
 
     return (

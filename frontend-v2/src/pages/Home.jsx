@@ -1,16 +1,17 @@
 import { useSelector } from 'react-redux';
 import LoggedInHomepage from '../components/homepage/LoggedInHomepage';
 import VisitorHomepage from '../components/homepage/VisitorHomepage';
+import EmptyDashboard from './Dashboard';
 
 export default function Home() {
   const currentUser = useSelector(state => state.currentUser);
 
     return (
         <div>
-          { Object.keys(currentUser).length === 0 ? 
+          { currentUser.id === undefined || currentUser.id === null ? 
             <VisitorHomepage/>
             :
-            <LoggedInHomepage/>
+            <EmptyDashboard />
           }
         </div>
       );
