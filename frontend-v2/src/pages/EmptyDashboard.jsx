@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import LeftSidebar from '../components/dashboard/left-sidebar';
 import ProjectNavigation from '../components/dashboard/project-navigation';
-import MainSection from '../components/main-section/issues/index.jsx';
+// import MainSection from '../components/main-section/issues/index.jsx';
 
 export default function EmptyDashboard() {
     const initialShow = localStorage.getItem('left-sidebar-collapse') === 'true' ? true : false;
@@ -10,6 +10,8 @@ export default function EmptyDashboard() {
     useEffect(() => {
       localStorage.setItem('left-sidebar-collapse', show)
     }, [show])
+
+    console.log("Papa John's")
 
     function renderCloseButton() {
       return (

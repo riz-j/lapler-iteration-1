@@ -17,8 +17,8 @@ export default function ProfileSection() {
     const [showMenuSheet, setShowMenuSheet] = useState(false);
     const [showEditProfileSheet, setShowEditProfileSheet] = useState(false);
 
-    const handleLogout = () => { 
-        localStorage.removeItem('reduxState');
+    const handleLogout = async () => { 
+        await localStorage.removeItem('reduxState'); 
         navigate("/")
         window.location.reload(); 
     }
