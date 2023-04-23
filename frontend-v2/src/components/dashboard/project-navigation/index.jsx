@@ -40,7 +40,7 @@ export default function ProjectNavigation() {
                     ))
                     }
                     
-                    { currentUser.projects &&
+                    { currentUser.projects.length !== 0 &&
                         <hr className='border-2 mx-2.5 rounded my-2 border-[#3e3f43]' />
                     }
                     

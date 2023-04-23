@@ -1,11 +1,18 @@
 import { useEffect, useState } from 'react';
 import LeftSidebar from '../components/dashboard/left-sidebar';
 import ProjectNavigation from '../components/dashboard/project-navigation';
+import { useSelector } from 'react-redux';
 // import MainSection from '../components/main-section/issues/index.jsx';
 
 export default function EmptyDashboard() {
+    const currentUser = useSelector(state => state.currentUser);
     const initialShow = localStorage.getItem('left-sidebar-collapse') === 'true' ? true : false;
     const [show, setShow] = useState(initialShow);
+
+    const handleLogout = async () => { 
+      await localStorage.removeItem('reduxState'); 
+      window.location.reload(); 
+    }
 
     useEffect(() => {
       localStorage.setItem('left-sidebar-collapse', show)
@@ -38,14 +45,27 @@ export default function EmptyDashboard() {
     return (
         <div className='flex h-screen sm:text-sm text-font-color-primary'>
           
-          <div className={`flex ${!show && 'hidden'}`}>
+          <div className="flex">
             <ProjectNavigation />
-            <LeftSidebar />
+            {/* <LeftSidebar /> */}
           </div>
 
-          { show ? renderCloseButton() : renderOpenButton() }  
+          {/* { show ? renderCloseButton() : renderOpenButton() }   */}
           
-          <h1>Nothin to see here</h1>
+          <div className='flex flex-col justify-center items-center w-full h-full bg-platinum-main p-24'>
+            <div className='w-full'>
+              <h1 className='text-xl'>{`👋 Hello ${currentUser.firstName}! `}</h1>
+            </div>
+
+            <div className='w-full'>
+              { currentUser.projects.length !== 0 ? 
+                <p className='text-lg my-2'>Select one of the existing projects or click on the "+" icon to create a new project.</p>
+                :
+                <p className='text-lg my-2'>Click on the "+" icon to create a new project.</p>
+              }
+              <p className='text-lg my-2'>Not you? Click here to <b className='text-red-300 underline cursor-pointer' onClick={handleLogout}>Log Out</b></p>
+            </div>
+          </div>
 
         </div>
       );
