@@ -26,8 +26,6 @@ export default function AddUserToProjectSheet({ onClick, onClose }) {
       setEmailList(emailList.filter((email) => email !== emailToRemove));
     };
 
-    const [projectName, setProjectName] = useState("");
-
     const [loadingSaveChanges, setLoadingSaveChanges] = useState(false);
 
     const handleSubmit = async (e) => {
