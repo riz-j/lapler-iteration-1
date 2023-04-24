@@ -28,7 +28,7 @@ export default function Login() {
   return (
     <>
       <div className='grid grid-cols-10 w-screen h-screen'>
-          <div className='flex flex-col justify-center items-center col-span-4 bg-platinum-secondary text-white border-r border-[#4B4B4B]'>
+          <div className='flex flex-col justify-center items-center col-span-10 lg:col-span-4 bg-platinum-secondary text-white border-r border-[#4B4B4B]'>
               <h1 className='text-mm-lg font-black'>
                   Log In
               </h1>
@@ -57,7 +57,7 @@ export default function Login() {
               </div>
           </div>
 
-          <div className='flex flex-col col-span-6 bg-platinum-main'>
+          <div className='hidden lg:flex flex-col col-span-6 bg-platinum-main'>
               <div className='container h-full w-full px-[10vh] py-[5vw]'>
                   <img src={lapler_logo} className='h-10'/>
                   <div className='flex flex-col mt-10'>
