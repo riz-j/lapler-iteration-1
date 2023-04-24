@@ -22,6 +22,10 @@ export default function AddUserToProjectSheet({ onClick, onClose }) {
       }
     }
 
+    const handleRemoveEmail = (emailToRemove) => {
+      setEmailList(emailList.filter((email) => email !== emailToRemove));
+    };
+
     const [projectName, setProjectName] = useState("");
 
     const [loadingSaveChanges, setLoadingSaveChanges] = useState(false);
@@ -59,24 +63,32 @@ export default function AddUserToProjectSheet({ onClick, onClose }) {
           className='flex flex-col justify-between bg-platinum-secondary rounded-xl p-10 z-30 text-font-color-primary'
         >
             { emailList &&
-                emailList.map(email => <h1>{email}</h1>)
+                emailList.map(email => 
+                  <div className="flex justify-between items-center bg-gray-600 px-3 py-2 rounded-lg text-md font-semibold mb-3">
+                    <h1>{email}</h1>
+                    <h1 
+                      onClick={() => handleRemoveEmail(email)}
+                      className="cursor-pointer"
+                    >x</h1>
+                  </div>
+                )
             }
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 font-semibold">
               
               <div className="flex flex-col gap-1 text-md">
-                <label>Project Name</label>
-                <div className="flex">
+                <label>User Email</label>
+                <div className="flex items-center">
                   <input 
                       type='text' 
                       value={email} 
-                      placeholder='Project Name' 
+                      placeholder='User Email' 
                       className='border-2 text-black bg-gray-300 border-black px-3 py-3 my-1 h-10 rounded-md w-full'
                       onChange={e => setEmail(e.target.value)}
                   />
                   <button 
                     type="button"
-                    className='border-2 border-black px-2 py-1 rounded-lg'
+                    className='bg-green-500 h-10 px-2 py-1 rounded-lg border-2 border-black text-black'
                     onClick={handleAddEmail}
                   >Add</button>
                 </div>
