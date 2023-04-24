@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeUserFromProject } from '../../../redux/currentProjectSlice'
 import { refetchCurrentUser } from '../../../redux/currentUserSlice'
+import { useState } from 'react'
+import ConfirmLeaveProjectSheet from '../../sheets/ConfirmLeaveProjectSheet'
 
 export default function MembersSection() {
     const currentUser = useSelector(state => state.currentUser);
@@ -13,17 +15,9 @@ export default function MembersSection() {
     const navigate = useNavigate();
     const currentProjectMembers = useSelector(state => state.currentProject.users);
 
-    const handleLeaveProject = async () => {
-        await dispatch(removeUserFromProject({
-            projectId: currentProject.id,
-            userIdToRemove: currentUser.id,
-            token: currentUser.token
-        }))
-        .then(() => dispatch(refetchCurrentUser({
-            userId: currentUser.id
-        })))
-        .then(() => navigate("/"))
-    }
+    const [showCofirmLeaveProjectSheet, setShowConfirmLeaveProjectSheet] = useState(false);
+
+
 
     return (
         <div>
@@ -55,7 +49,7 @@ export default function MembersSection() {
                 </div>
 
                 <div 
-                    onClick={handleLeaveProject}
+                    onClick={() => setShowConfirmLeaveProjectSheet(true)}
                     className='flex items-center justify-center gap-2 mx-4 my-1 cursor-pointer'
                 >
                     <div>
@@ -66,6 +60,12 @@ export default function MembersSection() {
                     </div>
                 </div>
             </div>
+            { showCofirmLeaveProjectSheet && 
+                <ConfirmLeaveProjectSheet 
+                    onClick={() => setShowConfirmLeaveProjectSheet(!showCofirmLeaveProjectSheet)}
+                    onClose={() => setShowConfirmLeaveProjectSheet(false)}
+                />
+            }
         </div>
     )
 }
