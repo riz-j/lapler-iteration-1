@@ -60,11 +60,30 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
         console.log(`Clicked on ${data.item}`);
     };
 
+    const [showHint, setShowHint] = useState(false);
+    const handleShowHint = () => {
+        const firstRightClick = localStorage.getItem("first-right-click");
+        if (firstRightClick === null) {
+            showHint ? setShowHint(false) : setShowHint(true);
+        }
+    }
+    const handleFirstRightClick = () => {
+        setShowHint(false);
+        localStorage.setItem("first-right-click", "true");
+        console.log("first right click");
+    }
+
     return (
         <>
         <ContextMenuTrigger id={`contextMenu${issueId}`}>
             <Draggable id={issueId}>
-                <div onClick={() => hideMenu()} className='flex mx-3 my-1 justify-between  bg-platinum-main hover:bg-[#24262a] px-5 py-2 border-2 rounded-lg border-platinum-tertiary'>
+                <div 
+                    onClick={() => hideMenu()} 
+                    onMouseEnter={handleShowHint}
+                    onMouseLeave={handleShowHint}
+                    onContextMenu={handleFirstRightClick} 
+                    className='flex mx-3 my-1 justify-between  bg-platinum-main hover:bg-[#24262a] px-5 py-2 border-2 rounded-lg border-platinum-tertiary'
+                >
                 
                     <div className='col-span-10 flex justify-start items-center space-x-4 '>
                         <div className='flex justify-center w-6'>
@@ -164,11 +183,17 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                 />
         }
 
-            { showAssigneeNameTooltip &&
-                <div className='absolute right-1 bg-platinum-tertiary px-3 py-2 rounded-md'>
-                    <h1 className='text-md font-semibold'>{assignee.firstName} {assignee.lastName}</h1> 
-                </div>
-            }
+        { showAssigneeNameTooltip &&
+            <div className='absolute right-1 bg-platinum-tertiary px-3 py-2 rounded-md'>
+                <h1 className='text-md font-semibold'>{assignee.firstName} {assignee.lastName}</h1> 
+            </div>
+        }
+
+        { showHint && 
+            <div className='absolute mx-20 bg-slate-700 px-3 py-2 text-md rounded-lg'>
+                <h1>Right click to <b>view</b>, <b>edit</b>, or <b>delete</b></h1>
+            </div>
+        }
 
         </>
     )
