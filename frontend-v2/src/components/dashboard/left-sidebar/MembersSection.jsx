@@ -1,10 +1,29 @@
 import PeopleIcon from '../../../static/img/PeopleIcon.png'
 import AddPersonIcon from '../../../static/img/AddPersonIcon.png'
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import LeaveIcon from '../../../static/img/leave-icon.png'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeUserFromProject } from '../../../redux/currentProjectSlice'
+import { refetchCurrentUser } from '../../../redux/currentUserSlice'
 
 export default function MembersSection() {
+    const currentUser = useSelector(state => state.currentUser);
+    const currentProject = useSelector(state => state.currentProject);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const currentProjectMembers = useSelector(state => state.currentProject.users);
+
+    const handleLeaveProject = async () => {
+        await dispatch(removeUserFromProject({
+            projectId: currentProject.id,
+            userIdToRemove: currentUser.id,
+            token: currentUser.token
+        }))
+        .then(() => dispatch(refetchCurrentUser({
+            userId: currentUser.id
+        })))
+        .then(() => navigate("/"))
+    }
 
     return (
         <div>
@@ -33,6 +52,18 @@ export default function MembersSection() {
                     <Link to='users/add'>
                         <p className=''>Add Members</p>
                     </Link>
+                </div>
+
+                <div 
+                    onClick={handleLeaveProject}
+                    className='flex items-center justify-center gap-2 mx-4 my-1 cursor-pointer'
+                >
+                    <div>
+                        <img src={LeaveIcon} className='w-3' />
+                    </div>
+                    <div>
+                        <p className='text-red-400'>Leave Project</p>
+                    </div>
                 </div>
             </div>
         </div>
