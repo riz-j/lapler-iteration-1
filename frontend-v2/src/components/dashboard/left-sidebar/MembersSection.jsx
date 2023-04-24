@@ -7,6 +7,7 @@ import { removeUserFromProject } from '../../../redux/currentProjectSlice'
 import { refetchCurrentUser } from '../../../redux/currentUserSlice'
 import { useState } from 'react'
 import ConfirmLeaveProjectSheet from '../../sheets/ConfirmLeaveProjectSheet'
+import ConfirmRemoveMemberSheet from '../../sheets/ConfirmRemoveMemberSheet'
 
 export default function MembersSection() {
     const currentUser = useSelector(state => state.currentUser);
@@ -16,8 +17,11 @@ export default function MembersSection() {
     const currentProjectMembers = useSelector(state => state.currentProject.users);
 
     const [showCofirmLeaveProjectSheet, setShowConfirmLeaveProjectSheet] = useState(false);
-
-
+    
+    const [showConfirmRemoveMemberSheet, setShowConfirmRemoveMemberSheet] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState(0);
+    const [selectedUserFirstName, setSelectedUserFirstName] = useState("");
+    const [selectedUserLastName, setSelectedUserLastName] = useState("");
 
     return (
         <div>
@@ -34,7 +38,23 @@ export default function MembersSection() {
                 <div className='flex flex-col items-start justify-center text-font-color-secondary gap-1 mx-8 my-0.5'>
                     { currentProjectMembers &&
                         currentProjectMembers.map(member => 
-                            <p>{member.firstName} {member.lastName}</p>
+                            <div className='flex items-center gap-5'>
+                                <p>{member.firstName} {member.lastName}</p>
+
+                                { (member.id !== currentProject.adminId && currentUser.id === currentProject.adminId) && 
+                                    <p 
+                                        onClick={() => {
+                                            setShowConfirmRemoveMemberSheet(true)
+                                            setSelectedUserId(member.id)
+                                            setSelectedUserFirstName(member.firstName)
+                                            setSelectedUserLastName(member.lastName)
+                                        }}
+                                        className='font-semibold text-sm text-gray-500 hover:text-gray-400 cursor-pointer'
+                                    >
+                                        REMOVE
+                                    </p> 
+                                }
+                            </div>
                         )
                     }
                 </div>
@@ -64,6 +84,15 @@ export default function MembersSection() {
                 <ConfirmLeaveProjectSheet 
                     onClick={() => setShowConfirmLeaveProjectSheet(!showCofirmLeaveProjectSheet)}
                     onClose={() => setShowConfirmLeaveProjectSheet(false)}
+                />
+            }
+            { showConfirmRemoveMemberSheet &&
+                <ConfirmRemoveMemberSheet
+                    selectedUserId={selectedUserId}
+                    selectedUserFirstName={selectedUserFirstName}
+                    selectedUserLastName={selectedUserLastName}
+                    onClick={() => setShowConfirmRemoveMemberSheet(!showConfirmRemoveMemberSheet)}
+                    onClose={() => setShowConfirmRemoveMemberSheet(false)}
                 />
             }
         </div>
