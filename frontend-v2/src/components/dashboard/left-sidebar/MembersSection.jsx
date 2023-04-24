@@ -8,6 +8,7 @@ import { refetchCurrentUser } from '../../../redux/currentUserSlice'
 import { useState } from 'react'
 import ConfirmLeaveProjectSheet from '../../sheets/ConfirmLeaveProjectSheet'
 import ConfirmRemoveMemberSheet from '../../sheets/ConfirmRemoveMemberSheet'
+import AddUserToProjectSheet from '../../sheets/AddUserToProjectSheet'
 
 export default function MembersSection() {
     const currentUser = useSelector(state => state.currentUser);
@@ -22,6 +23,8 @@ export default function MembersSection() {
     const [selectedUserId, setSelectedUserId] = useState(0);
     const [selectedUserFirstName, setSelectedUserFirstName] = useState("");
     const [selectedUserLastName, setSelectedUserLastName] = useState("");
+
+    const [showAddUserToProjectSheet, setShowAddUserToProjectSheet] = useState(false);
 
     return (
         <div>
@@ -63,9 +66,12 @@ export default function MembersSection() {
                     <div>
                         <img src={AddPersonIcon} className='w-3' />
                     </div>
-                    <Link to='users/add'>
+                    <div 
+                        className='cursor-pointer'
+                        onClick={() => setShowAddUserToProjectSheet(true)}
+                    >
                         <p className=''>Add Members</p>
-                    </Link>
+                    </div>
                 </div>
 
                 <div 
@@ -93,6 +99,12 @@ export default function MembersSection() {
                     selectedUserLastName={selectedUserLastName}
                     onClick={() => setShowConfirmRemoveMemberSheet(!showConfirmRemoveMemberSheet)}
                     onClose={() => setShowConfirmRemoveMemberSheet(false)}
+                />
+            }
+            { showAddUserToProjectSheet &&
+                <AddUserToProjectSheet 
+                    onClick={() => setShowAddUserToProjectSheet(!showAddUserToProjectSheet)}
+                    onClose={() => setShowAddUserToProjectSheet(false)}
                 />
             }
         </div>
