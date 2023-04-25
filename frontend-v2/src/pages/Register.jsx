@@ -16,6 +16,8 @@ export default function Register() {
     const [password, setPassword] = useState();
     const [verifyPassword, setVerifyPassword] = useState('');
 
+    const [loading, setLoading] = useState(false);
+
     const handleRegisterFormSubmit = async (e) => {
         e.preventDefault();
 
@@ -23,6 +25,8 @@ export default function Register() {
             alert('Password does not match');
             return;
         }
+
+        setLoading(true);
 
         await dispatch(registerUser({
             firstName: firstName,
@@ -34,7 +38,10 @@ export default function Register() {
             email: email,
             password: password
         })))
-        .then(() => navigate('/'))
+        .then(() => {
+            setLoading(false);
+            navigate('/');
+        })
         .catch(err => console.log(err));
     }
     
@@ -81,8 +88,8 @@ export default function Register() {
                         />
                         <input
                             type='submit'
-                            value='Create Account'
-                            className='px-2 py-1.5 mb-3 mt-3 bg-blue-800 h-10 text-md font-semibold bg-transparent rounded cursor-pointer' 
+                            value={loading ? 'Loading...' : 'Create Account'}
+                            className={`px-2 py-1.5 mb-3 mt-3 bg-blue-800 h-10 text-md font-semibold bg-transparent rounded cursor-pointer ${ loading && 'italic' }`}
                         />
                     </form>
                     <div className='flex text-md'>

@@ -15,13 +15,20 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [loading, setLoading] = useState(false);
+    
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     await dispatch(getCurrentUser({
       email: email,
       password: password
     }))
-    .then(() => navigate("/"))
+    .then(() => {
+        setLoading(false);
+        navigate("/");
+    })
     .catch(err => console.log(err));
   }
     
@@ -48,8 +55,8 @@ export default function Login() {
                   />
                   <input
                       type='submit'
-                      value='Log In'
-                      className='px-2 py-1.5 mb-3 mt-3 bg-blue-800 h-10 text-md font-semibold bg-transparent rounded cursor-pointer' 
+                      value={loading ? 'Loading...' : 'Log In'}
+                      className={`px-2 py-1.5 mb-3 mt-3 bg-blue-800 h-10 text-md font-semibold bg-transparent rounded cursor-pointer ${ loading && 'italic' }`}
                   />
               </form>
               <div className='flex text-md'>
