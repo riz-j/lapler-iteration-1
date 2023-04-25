@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Cors;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(option => 
+builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseNpgsql("Host=172.104.46.87:5432;Username=rizki;Password=arrahman;Database=lapler-api-v2");
 });
@@ -23,10 +23,12 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
 
-builder.Services.AddAuthentication(x => {
+builder.Services.AddAuthentication(x =>
+{
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(x => {
+}).AddJwtBearer(x =>
+{
     x.RequireHttpsMetadata = false;
     x.SaveToken = true;
     x.TokenValidationParameters = new TokenValidationParameters
@@ -38,23 +40,25 @@ builder.Services.AddAuthentication(x => {
     };
 });
 
-builder.Services.AddControllers().AddJsonOptions(options => {
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
     options.JsonSerializerOptions.MaxDepth = 32;
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => {
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme 
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header uses the bearer scheme.",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Scheme = "Bearer"
     });
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement() 
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
     {
-        { 
+        {
             new OpenApiSecurityScheme
             {
                 Reference = new OpenApiReference
@@ -79,9 +83,9 @@ builder.Services.AddTransient<AuthService>();
 
 var app = builder.Build();
 
-app.UseCors(options => 
+app.UseCors(options =>
 {
-    options.WithOrigins("http://localhost:5173")
+    options.WithOrigins("http://localhost:5173", "http://172.104.46.87:5173")
         .AllowAnyMethod()
         .AllowAnyHeader()
         .WithExposedHeaders("Authorization");
