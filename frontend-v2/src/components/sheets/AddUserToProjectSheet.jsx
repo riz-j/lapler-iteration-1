@@ -1,15 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentProject, createIssue, addUsersToProject } from "../../redux/currentProjectSlice";
-import { updateProject } from "../../redux/currentProjectSlice";
-import { convertToBase64 } from "../../utils/convertToBase64";
-import pencil_icon from "../../static/img/pencil-icon.png"
-import { createProject } from "../../redux/projectSlice";
-import { refetchCurrentUser } from "../../redux/currentUserSlice";
+import { getCurrentProject, addUsersToProject } from "../../redux/currentProjectSlice";
 
 export default function AddUserToProjectSheet({ onClick, onClose }) {
     const dispatch = useDispatch();
-    const currentUser = useSelector(state => state.currentUser);
     const currentProject = useSelector(state => state.currentProject);
     const token = useSelector(state => state.currentUser.token);
     

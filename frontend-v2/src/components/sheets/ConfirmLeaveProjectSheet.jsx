@@ -1,10 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentProject, createIssue } from "../../redux/currentProjectSlice";
-import { updateProject } from "../../redux/currentProjectSlice";
-import { convertToBase64 } from "../../utils/convertToBase64";
-import pencil_icon from "../../static/img/pencil-icon.png"
-import { createProject } from "../../redux/projectSlice";
 import { removeUserFromProject } from "../../redux/currentProjectSlice";
 import { refetchCurrentUser } from "../../redux/currentUserSlice";
 import { useNavigate } from "react-router-dom";
@@ -14,10 +9,7 @@ export default function ConfirmLeaveProjectSheet({ onClick, onClose }) {
     const navigate = useNavigate();
     const currentProject = useSelector(state => state.currentProject);
     const currentUser = useSelector(state => state.currentUser);
-    const token = useSelector(state => state.currentUser.token);
     
-    const [projectName, setProjectName] = useState("");
-
     const [loadingSaveChanges, setLoadingSaveChanges] = useState(false);
 
     const handleLeaveProject = async (e) => {
@@ -36,8 +28,6 @@ export default function ConfirmLeaveProjectSheet({ onClick, onClose }) {
         .then(() => navigate("/"))
     }
 
-    useEffect(() => console.log(projectName), [projectName]);
-
     return (
       <div className='absolute inset-0 z-20'>
       <div 
@@ -50,17 +40,6 @@ export default function ConfirmLeaveProjectSheet({ onClick, onClose }) {
         >
             <form onSubmit={handleLeaveProject} className="flex flex-col gap-3 font-semibold">
               <h1 className="text-lg">Are you sure you want to leave the project?</h1>
-              {/* <div className="flex flex-col gap-1 text-md">
-                <label>Project Name</label>
-                <input 
-                    type='text' 
-                    value={projectName} 
-                    placeholder='Project Name' 
-                    className='border-2 text-black bg-gray-300 border-black px-3 py-3 my-1 h-10 rounded-md w-full'
-                    onChange={e => setProjectName(e.target.value)} 
-                />
-              </div> */}
-
             </form>
               
             

@@ -3,7 +3,7 @@ import PersonIcon from '../../../static/img/PersonIcon.png'
 import ReportIcon from '../../../static/img/ReportIcon.png'
 import DoneIcon from '../../../static/img/DoneIcon.png'
 import ArchiveIcon from '../../../static/img/ArchiveIcon.png'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function QuickFilterSection() {

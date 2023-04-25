@@ -4,7 +4,6 @@ export function Droppable(props) {
     const {isOver, setNodeRef} = useDroppable({
       id: props.id,
     });
-    //const buttonText = isOver ? 'text-blue-800' : ''
     const buttonBg = isOver ? 'bg-gray-700' : ''
     const _transform = {
       transition: 'transform: 2s'

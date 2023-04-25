@@ -1,13 +1,8 @@
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import ProjectProfilePic1 from '../../../static/img/ProjectProfilePic1.png'
-import ProjectProfilePic2 from '../../../static/img/ProjectProfilePic2.png'
-import ProjectProfilePic3 from '../../../static/img/ProjectProfilePic3.png'
-import ProjectProfilePic4 from '../../../static/img/ProjectProfilePic4.png'
 import CreateNewProject from './CreateNewProject'
 import { useState } from 'react'
-
-import ProjectCard from './ProjectCard'
 
 export default function ProjectNavigation() {
     const currentUser = useSelector(state => state.currentUser);
@@ -61,8 +56,6 @@ export default function ProjectNavigation() {
                             </div>
                         }
                     </div>
-
-
                 </div>
             </div>
         </div>

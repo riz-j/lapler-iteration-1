@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentProject, createIssue } from "../../redux/currentProjectSlice";
-import { updateProject } from "../../redux/currentProjectSlice";
-import { convertToBase64 } from "../../utils/convertToBase64";
-import pencil_icon from "../../static/img/pencil-icon.png"
 
 export default function CreateIssueSheet({ onClick, onClose }) {
     const dispatch = useDispatch();
@@ -13,76 +10,13 @@ export default function CreateIssueSheet({ onClick, onClose }) {
     const projectId = useSelector(state => state.currentProject.id)
 
     const projectMembers = currentProject.users;
-    const projectAdminId = currentProject.adminId;
-    const projectDisplayPicture = currentProject.displayPicture;
 
-    const [projectName, setProjectName] = useState(currentProject.projectName);
-    const [projectAdmin, setProjectAdmin] = useState(projectMembers.find(n => n.id === projectAdminId));
-    const [projectDisplayPicFile, setProjectDisplayPicFile] = useState(null);
-    const [projectDisplayPic, setProjectDisplayPic] = useState(projectDisplayPicture);
     const [loadingSaveChanges, setLoadingSaveChanges] = useState(false);
 
-    //-------------------------------------------
-
-    // const [typeOfIssue, setTypeOfIssue] = useState(currentIssue.typeOfIssue || null);
-    // const [priorityOfIssue, setPriorityOfIssue] = useState(currentIssue.priorityOfIssue || null);
-    // const [statusOfIssue, setStatusOfIssue] = useState(currentIssue.statusOfIssue || null);
-    // const [summary, setSummary] = useState(currentIssue.summary || null);
-    // const [toggleDueDate, setToggleDueDate] = useState(!(currentIssue.dueDate === null || currentIssue.dueDate === "" || currentIssue.dueDate === undefined));
-    // const [assigneeId, setAssigneeId] = useState(currentIssue.assigneeId || null);
-    // const [reporterId, setReporterId] = useState(currentIssue.reporterId || null);
-
-    // const [dueDateDay, setDueDateDay] = useState(1);
-    // const [dueDateMonth, setDueDateMonth] = useState(2);
-    // const [dueDateYear, setDueDateYear] = useState(2023);
-    // const dueDate = new Date(dueDateYear, dueDateMonth - 1, dueDateDay, 0, 0, 0).toISOString();
-    // useEffect(() => { console.log(dueDate) }, [dueDate]);
-
-    // let _dueDate;
-    // if (currentIssue.dueDate) {
-    //   const dueDateString = currentIssue.dueDate;
-    //   const year = parseInt(dueDateString.slice(0,4));
-    //   const month = parseInt(dueDateString.slice(5, 7)) - 1;
-    //   const day = parseInt(dueDateString.slice(8, 10));
-    //   const parsedDueDate = new Date(Date.UTC(year, month, day));
-    //   _dueDate = parsedDueDate;
-    // } else {
-    //   _dueDate = null;
-    // }
-    // const [dueDate, setDueDate] = useState(_dueDate);
-    // useEffect(() => console.log(dueDate), [dueDate]);
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     setLoadingSaveChanges(true);
-
-    //     await dispatch(updateIssue({
-    //         issueId: issueId, 
-    //         typeOfIssue: typeOfIssue, 
-    //         priorityOfIssue: priorityOfIssue, 
-    //         statusOfIssue: statusOfIssue, 
-    //         summary: summary, 
-    //         projectId: projectId, 
-    //         dueDate: dueDate,
-    //         assigneeId: (assigneeId !== "") ? assigneeId : null,
-    //         reporterId: reporterId, 
-    //         token: token
-    //     }))
-    //     .then(() => dispatch(getCurrentProject({
-    //         projectId: projectId,
-    //         token: token
-    //     })))
-    //     .then(() => { 
-    //       setLoadingSaveChanges(false);
-    //       onClose(); 
-    //     })
-    //     .catch(err => console.log(err));
-    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoadingSaveChanges(true);
-          //navigate(-1);
           await dispatch(createIssue({
               token: currentUser.token,
               projectId: projectId,
@@ -207,20 +141,6 @@ export default function CreateIssueSheet({ onClick, onClose }) {
                       }
                   </select>
                 </div>
-                {/* <div className="flex flex-col gap-1">
-                  <label>Reporter</label>
-                  <select 
-                      value={reporterId} 
-                      onChange={e => setReporterId(e.target.value)} 
-                      className='border-2 text-black bg-gray-300 border-black px-3 py-2 h-10 rounded-md w-full'
-                  >
-                      { projectMembers && 
-                          projectMembers.map(user => 
-                              <option value={user.id}>{user.firstName} {user.lastName}</option>
-                          ) 
-                      }
-                  </select>
-                </div> */}
               </div>
             </form>
               

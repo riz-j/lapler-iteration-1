@@ -6,7 +6,6 @@ import { addUsersToProject, getCurrentProject } from '../redux/currentProjectSli
 export default function AddUserToProject() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const currentProject = useSelector(state => state.currentProject);
     const token = useSelector(state => state.currentUser.token);
     const { projectId } = useParams();
     

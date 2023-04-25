@@ -1,7 +1,6 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import SearchIcon from '../../../static/img/SearchIcon.png'
 import SortIcon from '../../../static/img/SortIcon.png'
-import ShareIcon from '../../../static/img/ShareIcon.png'
 import FilterTag from './filterTag';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSearchState } from '../../../redux/searchSlice';

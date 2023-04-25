@@ -1,5 +1,4 @@
 import CreateNewProjectIcon from '../../../static/img/CreateNewProjectIcon.png'
-import { Link } from 'react-router-dom'
 import CreateProjectSheet from '../../sheets/CreateProjectSheet';
 import { useState } from 'react';
 

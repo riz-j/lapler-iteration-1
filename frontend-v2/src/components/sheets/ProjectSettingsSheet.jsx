@@ -83,9 +83,6 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
             onClick={e => e.stopPropagation()}
             className='flex flex-col justify-between bg-platinum-secondary rounded-xl p-5 w-[70%] h-[40%] z-30 text-font-color-primary'
         >
-            {/* <h1>ProjectID : {currentProject.id}</h1>
-            <h1>{projectName}</h1>
-            <h1>{projectAdmin.firstName}</h1> */}
 
             <div className="flex justify-between px-7 py-2 bg-platinum-tertiary h-32 gap-4 items-end rounded-xl">
               <div className="flex gap-4 items-end">
@@ -149,10 +146,3 @@ export default function ProjectSettingsSheet({ onClick, onClose }) {
   }
 
 
-     {/* FOR CHANGING PROJECT ADMIN */}
-
-     {/* <select onChange={ e => setProjectAdmin(e.target.value) }>
-       { Object.entries(projectMembers).map(([memberId, member]) => 
-         <option key={memberId} value={member.id}>{member.firstName} {member.lastName}</option>
-       )}
-     </select> */}

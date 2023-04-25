@@ -1,10 +1,7 @@
 import PeopleIcon from '../../../static/img/PeopleIcon.png'
 import AddPersonIcon from '../../../static/img/AddPersonIcon.png'
 import LeaveIcon from '../../../static/img/leave-icon.png'
-import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { removeUserFromProject } from '../../../redux/currentProjectSlice'
-import { refetchCurrentUser } from '../../../redux/currentUserSlice'
+import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import ConfirmLeaveProjectSheet from '../../sheets/ConfirmLeaveProjectSheet'
 import ConfirmRemoveMemberSheet from '../../sheets/ConfirmRemoveMemberSheet'
@@ -13,8 +10,6 @@ import AddUserToProjectSheet from '../../sheets/AddUserToProjectSheet'
 export default function MembersSection() {
     const currentUser = useSelector(state => state.currentUser);
     const currentProject = useSelector(state => state.currentProject);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
     const currentProjectMembers = useSelector(state => state.currentProject.users);
 
     const [showCofirmLeaveProjectSheet, setShowConfirmLeaveProjectSheet] = useState(false);

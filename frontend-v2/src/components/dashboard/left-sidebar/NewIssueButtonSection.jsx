@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import WriteNewIcon from '../../../static/img/WriteNewIcon.png'
 import { useState } from 'react'
 import CreateIssueSheet from '../../sheets/CreateIssueSheet';

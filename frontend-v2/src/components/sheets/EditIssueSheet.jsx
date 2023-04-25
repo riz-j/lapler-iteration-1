@@ -223,10 +223,4 @@ export default function EditIssueSheet({ onClick, onClose, projectId, issueId })
   }
 
 
-     {/* FOR CHANGING PROJECT ADMIN */}
-
-     {/* <select onChange={ e => setProjectAdmin(e.target.value) }>
-       { Object.entries(projectMembers).map(([memberId, member]) => 
-         <option key={memberId} value={member.id}>{member.firstName} {member.lastName}</option>
-       )}
-     </select> */}
+  

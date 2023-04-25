@@ -1,8 +1,6 @@
 import { useSelector } from 'react-redux'
-//import ProfilePic from '../../../static/img/ProfilePic.png'
 import { useState } from 'react';
 import ProfileSettingsSheet from '../../sheets/ProfileSettingsSheet';
-import EditIssueSheet from '../../sheets/EditIssueSheet';
 import emptyProfilePic from '../../../static/img/emptyProfilePic.png'
 import { useNavigate } from 'react-router-dom';
 

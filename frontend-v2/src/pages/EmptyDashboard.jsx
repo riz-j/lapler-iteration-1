@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import LeftSidebar from '../components/dashboard/left-sidebar';
 import ProjectNavigation from '../components/dashboard/project-navigation';
 import { useSelector } from 'react-redux';
-// import MainSection from '../components/main-section/issues/index.jsx';
 
 export default function EmptyDashboard() {
     const currentUser = useSelector(state => state.currentUser);
@@ -47,10 +46,7 @@ export default function EmptyDashboard() {
           
           <div className="flex">
             <ProjectNavigation />
-            {/* <LeftSidebar /> */}
           </div>
-
-          {/* { show ? renderCloseButton() : renderOpenButton() }   */}
           
           <div className='flex flex-col justify-center items-center w-full h-full bg-platinum-main p-24'>
             <div className='w-full'>

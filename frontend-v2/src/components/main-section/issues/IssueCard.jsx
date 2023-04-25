@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteIssue, getCurrentProject } from '../../../redux/currentProjectSlice';
 import { dateParser } from '../../../utils/dateHandler';
-import { Link } from 'react-router-dom';
-import { ContextMenu, ContextMenuTrigger, MenuItem, hideMenu } from "react-contextmenu";
+import { ContextMenu, ContextMenuTrigger, hideMenu } from "react-contextmenu";
 import { Draggable } from '../../../dnd-kit/Draggable';
 import EditIssueSheet from '../../sheets/EditIssueSheet';
 
@@ -26,14 +25,10 @@ import { useState } from 'react';
 export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfIssue, statusOfIssue, dueDate, summary, assigneeId, reporterId }) {
     const dispatch = useDispatch();
     const currentProject = useSelector(state => state.currentProject);
-    const currentProjectMembers = useSelector(state => state.currentProjectMembers);
     const currentUser = useSelector(state => state.currentUser);
 
-    const reporter = (currentProject.users).find(user => user.id === parseInt(reporterId));
     const assignee = (currentProject.users).find(user => user.id === parseInt(assigneeId));
     const readableDate = dueDate ? dateParser(dueDate) : '';
-
-    const [statusOfIssueImg, setStatusOfIssueImg] = useState('');
 
     const [sheetPresented, setSheetPresented] = useState(false);
     const [showAssigneeNameTooltip, setShowAssigneeNameTooltip] = useState(false);
@@ -55,10 +50,6 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
         ))
         .catch(err => console.log(err));
     }
-
-    const handleClick = (e, data) => {
-        console.log(`Clicked on ${data.item}`);
-    };
 
     const [showHint, setShowHint] = useState(false);
     const handleShowHint = () => {
@@ -142,15 +133,6 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
                                 onMouseLeave={() => setShowAssigneeNameTooltip(false)}
                             />
                         }
-
-                        {/* reporter && 
-                            <p>{reporter.firstName} {reporter.lastName}</p> 
-                        */}    
-                        {/* { showAssigneeNameTooltip &&
-                            <div className='absolute right-14 bg-platinum-tertiary px-3 py-2 rounded-md'>
-                                <h1 className='text-md font-semibold'>{assignee.firstName} {assignee.lastName}</h1> 
-                            </div>
-                        } */}
                     </div>
                 </div>
             </Draggable>
@@ -159,7 +141,6 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
         <ContextMenu id={`contextMenu${issueId}`} >
             <div className='flex flex-col rounded-md bg-slate-800 shadow-lg w-52 py-1'>
                 <button 
-                    //onClick={() => { window.location.href = `/dashboard/project/${projectId}/issues/${issueId}/update`}}
                     onClick={() => setSheetPresented(!sheetPresented)}
                     className='text-left px-2 py-1 hover:bg-slate-700'
                 >
@@ -200,31 +181,3 @@ export default function IssueCard({ projectId, issueId, typeOfIssue, priorityOfI
 }
 
 
-
-{/* <div className='grid grid-cols-12'>
-
-<div className='col-span-10 flex space-x-4 bg-blue-200 px-5 py-2 rounded-lg border-b-2'>
-    <p>{issueId}</p>
-    <p>{typeOfIssue}</p>
-    <p className='font-bold'>{priorityOfIssue}</p>
-    <p className='italic'>{statusOfIssue}</p>
-    <p className={line_style}>{summary}</p>
-    { readableDate && <p>{readableDate}</p> }
-    { assignee && <p>{assignee.firstName} {assignee.lastName}</p> }     
-    <p>{reporter.firstName} {reporter.lastName}</p>
-</div>
-
-<button 
-    onClick={handleDelete}
-    className='col-span-1 flex justify-center text-2xl text-red-500'
->
-    x
-</button> 
-
-<Link to={`/dashboard/project/${projectId}/issues/${issueId}/update`}>
-    <button className='col-span-1 flex justify-center text-xl text-green-500'>
-        Edit
-    </button> 
-</Link>
-
-</div> */}

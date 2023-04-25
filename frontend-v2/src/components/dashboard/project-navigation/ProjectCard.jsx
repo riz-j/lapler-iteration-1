@@ -25,15 +25,3 @@ export default function ProjectCard({projectId, projectName}) {
        
     )
 }
-
-{/* <div className='flex'>
-
-<Link to={`/dashboard/project/${projectId}`}>
-    <p className='bg-blue-100 text-3xl px-4 py-2 rounded-lg'>{projectName}</p>
-</Link>
-
-<button onClick={handleClick} className='text-3xl text-red-500'>
-    x
-</button>
-
-</div> */}

@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentProject, updateIssue } from "../../redux/currentProjectSlice";
-import { updateProject } from "../../redux/currentProjectSlice";
 import { convertToBase64 } from "../../utils/convertToBase64";
 import pencil_icon from "../../static/img/pencil-icon.png"
 import { refetchCurrentUser, updateUser } from "../../redux/currentUserSlice";
@@ -18,8 +16,6 @@ export default function ProfileSettingsSheet({ onClick, onClose }) {
     const _firstName = currentUser.firstName;
     const _lastName = currentUser.lastName;
 
-    //const [projectName, setProjectName] = useState(currentProject.projectName);
-    //const [projectAdmin, setProjectAdmin] = useState(projectMembers.find(n => n.id === projectAdminId));
     const [profilePictureFile, setProfilePictureFile] = useState(null);
     const [profilePicture, setProfilePicture] = useState(_profilePicture);
     
@@ -110,7 +106,6 @@ export default function ProfileSettingsSheet({ onClick, onClose }) {
                     value={`${lastName}`} 
                     type='text' 
                     onChange={e => setLastName(e.target.value)} 
-                    //ref={projectNameInputRef}
                     className='bg-transparent text-font-color-primary'
                   />   
                 </div>
@@ -152,11 +147,3 @@ export default function ProfileSettingsSheet({ onClick, onClose }) {
     )
   }
 
-
-     {/* FOR CHANGING PROJECT ADMIN */}
-
-     {/* <select onChange={ e => setProjectAdmin(e.target.value) }>
-       { Object.entries(projectMembers).map(([memberId, member]) => 
-         <option key={memberId} value={member.id}>{member.firstName} {member.lastName}</option>
-       )}
-     </select> */}
