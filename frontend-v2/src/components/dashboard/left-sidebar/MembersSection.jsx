@@ -41,7 +41,7 @@ export default function MembersSection() {
                 <div className='flex flex-col items-start justify-center text-font-color-secondary gap-1 mx-8 my-0.5'>
                     { currentProjectMembers &&
                         currentProjectMembers.map(member => 
-                            <div className='flex items-center gap-5'>
+                            <div className='flex items-center gap-5 justify-between w-44'>
                                 <p>{member.firstName} {member.lastName}</p>
 
                                 { (member.id !== currentProject.adminId && currentUser.id === currentProject.adminId) && 
