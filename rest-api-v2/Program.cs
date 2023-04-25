@@ -85,7 +85,14 @@ var app = builder.Build();
 
 app.UseCors(options =>
 {
-    options.WithOrigins("http://localhost:5173", "http://172.104.46.87:5173")
+    options.WithOrigins(
+        "http://localhost:5173",
+        "http://172.104.46.87:5173",
+        "http://172.104.46.87",
+        "http://172.104.46.87:5173:80",
+        "http://lapler.com",
+        "https://lapler.com"
+        )
         .AllowAnyMethod()
         .AllowAnyHeader()
         .WithExposedHeaders("Authorization");
