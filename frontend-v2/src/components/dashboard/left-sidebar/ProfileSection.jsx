@@ -42,6 +42,7 @@ export default function ProfileSection() {
             </div>
             { showMenuSheet &&
                 <div className='absolute bottom-12 w-56 bg-platinum-secondary font-semibold'>
+                    <hr className='border-platinum-tertiary' />
                     <div 
                         onClick={() => setShowEditProfileSheet(true)}
                         className='flex justify-start items-center px-3 py-2 bg-platinum-secondary hover:bg-platinum-tertiary cursor-pointer'
@@ -49,9 +50,6 @@ export default function ProfileSection() {
                         Edit Profile
                     </div>
                     <hr className='border-platinum-tertiary' />
-                    <div className='flex justify-start items-center px-3 py-2 bg-platinum-secondary hover:bg-platinum-tertiary cursor-pointer'>
-                        Invitations
-                    </div>
                     <div 
                         onClick={handleLogout}
                         className='flex justify-start items-center px-3 py-2 bg-red-800 hover:bg-red-700 cursor-pointer'
