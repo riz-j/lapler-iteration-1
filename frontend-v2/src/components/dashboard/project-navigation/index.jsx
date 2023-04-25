@@ -11,6 +11,7 @@ import ProjectCard from './ProjectCard'
 
 export default function ProjectNavigation() {
     const currentUser = useSelector(state => state.currentUser);
+    const currentProject = useSelector(state => state.currentProject);
     const projects = currentUser.projects;
     
     const [showTooltip, setShowTooltip] = useState(null);
@@ -23,11 +24,14 @@ export default function ProjectNavigation() {
 
                     { projects && (
                     Object.entries(currentUser.projects).map(([projectId, project]) => 
-                        <Link to={`/dashboard/project/${projectId}`} className="flex justify-center items-center h-12 w-12">
+                        <Link 
+                            to={`/dashboard/project/${projectId}`} 
+                            className={`flex justify-center items-center h-12 w-12 ${ currentProject.id === project.id && 'border-l-4 border-green-500' }`}
+                        >
                             <img 
                                 key={projectId} 
                                 src={project.displayPicture || ProjectProfilePic1} 
-                                className='w-2/3 h-2/3 rounded-full'
+                                className='h-2/3 rounded-full'
                                 onMouseEnter={() => setShowTooltip(projectId)}
                                 onMouseLeave={() => setShowTooltip(null)}
                             />
