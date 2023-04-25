@@ -3,7 +3,7 @@ import { updateIssue } from './currentProjectSlice';
 
 export const registerUser = createAsyncThunk('currentUser/registerUser', async (input) => {
     const { firstName, lastName, email, password } = input;
-    return await fetch('http://localhost:5080/api/UsersAuth/register', {
+    return await fetch('http://170.64.176.135:5080/api/UsersAuth/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -19,7 +19,7 @@ export const registerUser = createAsyncThunk('currentUser/registerUser', async (
 
 export const getCurrentUser = createAsyncThunk('currentUser/getCurrentUser', async (input) => {
     const { email, password } = input;
-    return await fetch('http://localhost:5080/api/UsersAuth/login', {
+    return await fetch('http://170.64.176.135:5080/api/UsersAuth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -35,14 +35,14 @@ export const getCurrentUser = createAsyncThunk('currentUser/getCurrentUser', asy
 
 export const refetchCurrentUser = createAsyncThunk('currentUser/refetchCurrentUser', async (input) => {
     const { userId, token } = input;
-    return await fetch(`http://localhost:5080/api/Users/${userId}`)
+    return await fetch(`http://170.64.176.135:5080/api/Users/${userId}`)
     .then(res => res.json())
     .catch(err => console.log(err))
 })
 
 export const updateUser = createAsyncThunk('currentUser/updateUser', async (input) => {
     const { userId, firstName, lastName, profilePicture, email } = input;
-    return await fetch(`http://localhost:5080/api/Users/${userId}`, {
+    return await fetch(`http://170.64.176.135:5080/api/Users/${userId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
