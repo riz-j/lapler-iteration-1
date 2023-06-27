@@ -20,6 +20,7 @@
           "net7.0"
         ],
         "sources": {
+          "/snap/dotnet-sdk/212/sdk/7.0.305/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -58,7 +59,7 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.2, )"
+              "version": "[7.0.8, )"
             },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
@@ -96,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.200/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/212/sdk/7.0.305/RuntimeIdentifierGraph.json"
         }
       }
     }

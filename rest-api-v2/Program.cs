@@ -16,7 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
-    option.UseNpgsql("Host=194.195.121.36:5432;Username=rizki;Password=arrahman;Database=lapler-api-v2");
+    // option.UseNpgsql("Host=194.195.121.36:5432;Username=rizki;Password=arrahman;Database=lapler-api-v2");
+    option.UseNpgsql("Host=170.64.176.135:5432;Username=new_user_1;Password=test123;Database=lapler-db");
 });
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
