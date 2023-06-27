@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const getCurrentProject = createAsyncThunk('currentProject/getCurrentProject', async (input) => {
     const { projectId, token } = input;
-    return await fetch(`http://170.64.176.135:5080/api/Projects/${projectId}`, {
+    return await fetch(`https://api.lapler.com/api/Projects/${projectId}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}` 
@@ -14,7 +14,7 @@ export const getCurrentProject = createAsyncThunk('currentProject/getCurrentProj
 
 export const createIssue = createAsyncThunk('currentProject/createIssue', async (input) => {
     const { token, projectId, typeOfIssue, priorityOfIssue, statusOfIssue, summary, dueDate, assigneeId } = input;
-    return await fetch('http://170.64.176.135:5080/api/Issues', {
+    return await fetch('https://api.lapler.com/api/Issues', {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -36,7 +36,7 @@ export const createIssue = createAsyncThunk('currentProject/createIssue', async 
 
 export const updateIssue = createAsyncThunk('currentProject/updateIssue', async (input) => {
     const { issueId, typeOfIssue, priorityOfIssue, statusOfIssue, summary, dueDate, assigneeId, reporterId, token, projectId } = input;
-    return await fetch(`http://170.64.176.135:5080/api/Issues/${issueId}`, {
+    return await fetch(`https://api.lapler.com/api/Issues/${issueId}`, {
         method: 'PUT',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -57,7 +57,7 @@ export const updateIssue = createAsyncThunk('currentProject/updateIssue', async 
 
 export const deleteIssue = createAsyncThunk('currentProject/deleteIssue', async (input) => {
     const { projectId, issueId, token } = input;
-    return await fetch(`http://170.64.176.135:5080/api/Issues/project/${projectId}/issue/${issueId}`, {
+    return await fetch(`https://api.lapler.com/api/Issues/project/${projectId}/issue/${issueId}`, {
         method: 'DELETE',
         headers: {
             'Authorization': `Bearer ${token}`
@@ -69,7 +69,7 @@ export const deleteIssue = createAsyncThunk('currentProject/deleteIssue', async 
 
 export const addUsersToProject = createAsyncThunk('currentProject/addUsersToProject', async (input) => {
     const { projectId, emailList, token } = input;
-    return await fetch(`http://170.64.176.135:5080/api/Projects/${projectId}`, {
+    return await fetch(`https://api.lapler.com/api/Projects/${projectId}`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -83,7 +83,7 @@ export const addUsersToProject = createAsyncThunk('currentProject/addUsersToProj
 
 export const removeUserFromProject = createAsyncThunk('currentProject/removeUserFromProject', async (input) => {
     const { projectId, userIdToRemove, token } = input;
-    return await fetch(`http://170.64.176.135:5080/api/Projects/${projectId}/remove/${userIdToRemove}`, {
+    return await fetch(`https://api.lapler.com/api/Projects/${projectId}/remove/${userIdToRemove}`, {
         method: 'DELETE',
         headers: {
             'Authorization': `Bearer ${token}`
@@ -93,7 +93,7 @@ export const removeUserFromProject = createAsyncThunk('currentProject/removeUser
 
 export const updateProject = createAsyncThunk('currentProject/updateProject', async (input) => {
     const { projectId, name, displayPicture, adminId, token } = input;
-    return await fetch(`http://170.64.176.135:5080/api/Projects/${projectId}`, {
+    return await fetch(`https://api.lapler.com/api/Projects/${projectId}`, {
         method: 'PUT',
         headers: {
             'Authorization': `Bearer ${token}`,

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const createProject = createAsyncThunk('project/createProject', async (input) => {
     const { projectName, token } = input;
-    return await fetch('http://170.64.176.135:5080/api/Projects', {
+    return await fetch('https://api.lapler.com/api/Projects', {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -18,7 +18,7 @@ export const createProject = createAsyncThunk('project/createProject', async (in
 
 export const deleteProject = createAsyncThunk('project/deleteProject', async (input) => {
     const { projectIdToDelete, token } = input;
-    return await fetch(`http://170.64.176.135:5080/api/Projects/${projectIdToDelete}`, {
+    return await fetch(`https://api.lapler.com/api/Projects/${projectIdToDelete}`, {
         method: 'DELETE',
         headers: {
             'Authorization': `Bearer ${token}`
